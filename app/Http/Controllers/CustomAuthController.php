@@ -11,6 +11,7 @@ class CustomAuthController extends Controller
    public function login(){
     return view('login');
    }
+
    public function loginUser(Request $request){
       $request->validate([
          'username' => ['required', 'string'],
@@ -28,10 +29,11 @@ class CustomAuthController extends Controller
          
          }else{
          return back()->with('fail','This username is not registered');
-      }
-     
-
    }
+     
+   }
+
+   
    public function dashboard(Request $request){
       $data = array();
       if(Session::has('loginId')){
