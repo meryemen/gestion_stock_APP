@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome to your dashboard {{ $data->nom }} {{ $data->prenom }} </h1>
+    <h1>Welcome to your dashboard Mrs {{ $data->nom }} {{ $data->prenom }} </h1>
     <a href="logout">Se deconnecter </a>
 </body>
 </html>
