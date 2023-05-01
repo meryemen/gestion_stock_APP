@@ -18,7 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/', [CustomAuthController::class, 'login']);
+Route::get('/login', [CustomAuthController::class, 'login'])->middleware('alreadyLoggedIn');
+Route::get('/what', [CustomAuthController::class, 'createNewUser']);
 
 Route::post('login-user',[CustomAuthController::class,'loginUser'])->name('login-user');
-Route::get('/dashboard',[CustomAuthController::class,'dashboard']);
+Route::get('/dashboard',[CustomAuthController::class,'dashboard'])->middleware('isLoggedIn');
+Route::get('/logout',[CustomAuthController::class,'logout']);
