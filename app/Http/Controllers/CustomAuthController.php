@@ -16,12 +16,12 @@ class CustomAuthController extends Controller
    public function createNewUser()
    {
       $user = new User;
-      $user->nom = 'Ihda';
-      $user->prenom = 'Driss';
-      $user->username = 'ihdadi';
-      $user->email = 'Driss.IHDA@external.danone.com';
+      $user->nom = 'En-najibi';
+      $user->prenom = 'Meryem';
+      $user->username = 'ennajime';
+      $user->email = 'Meryem.ENNAJIBI@external.danone.com';
       $user->password = Hash::make('ihdadi2022');
-      $user->profil= 'admin';
+      $user->profil= 'user';
       $user->has_access_to_user_management="1";
       $user->has_access_to_inventory_management="1";
       $user->has_access_to_view_inventory="1";
@@ -66,6 +66,14 @@ class CustomAuthController extends Controller
       Session::pull('loginId');
       return redirect('login');
    }
+  }
+
+  public function profile(){
+   $data = array();
+      if(Session::has('loginId')){
+         $data = User::where('id','=',Session::get('loginId'))->first();
+      }
+      return view('profile', compact('data'));
   }
 
 
