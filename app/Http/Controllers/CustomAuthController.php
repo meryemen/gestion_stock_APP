@@ -75,6 +75,21 @@ class CustomAuthController extends Controller
       }
       return view('profile', compact('data'));
   }
+   
+  public function updateProfil(Request $request){
+   $userID = Session::get('loginId');
+
+   $user= User::find($userID);
+   
+    $user->fonction = $request->input('fonction');
+    $user->site = $request->input('site');
+    $user->region = $request->input('region');
+    $user->direction = $request->input('direction');
+
+    $user->save();
+
+    return redirect()->route('profile')->with('success', 'profile updated successfuly');
+}
 
 
 }

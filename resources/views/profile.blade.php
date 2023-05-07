@@ -15,8 +15,6 @@
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
@@ -170,14 +168,16 @@
           
           
         </ul>
-      </li><!-- End Components Nav -->
+      </li><!-- End materiels Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
-      </li><!-- End Forms Nav -->
+
+        
+      </li><!-- End Accessories Nav -->
 
       
 
@@ -221,6 +221,7 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+  
   <main id="main" class="main">
 
     <div class="pagetitle">
@@ -228,12 +229,15 @@
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
-          <li class="breadcrumb-item">Compte</li>
           <li class="breadcrumb-item active"><a href="profile">Profile</a></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
+     @if (session('success'))
+       <div class="alert alert-success">
+       {{ session('success') }}
+      </div>
+     @endif
     <section class="section profile">
       <div class="row">
         <div class="col-xl-4">
@@ -242,7 +246,7 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
               <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2>{{ $data->nom }} {{ $data->prenom }}</h2>
+              <h2 style="margin-bottom: 10px">{{ $data->nom }} {{ $data->prenom }}</h2>
               <h3>{{ $data->profil }}</h3>
               
             </div>
@@ -263,8 +267,10 @@
                 
                 <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editer Profile</button>
-                  </li>
-
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Changer mot de passe</button>
+                </li>
               </ul>
               <div class="tab-content pt-2">
 
@@ -304,38 +310,38 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+
+                  <form action="{{ route('update-profil') }}" method="POST">
+                    @csrf
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
                         <img src="assets/img/profile-img.jpg" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
+                        
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="nom" class="col-md-4 col-lg-3 col-form-label">Nom :</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="nom" type="text" class="form-control" id="nom" value="{{ $data->nom }}" > 
+                        <input name="nom" type="text" class="form-control" disabled id="nom" value="{{ $data->nom }}" > 
                       </div>
                     </div>
 
                     <div class="row mb-3">
                         <label for="prenom" class="col-md-4 col-lg-3 col-form-label">Prenom :</label>
                         <div class="col-md-8 col-lg-9">
-                          <input name="prenom" type="text" class="form-control" id="prenom" value="{{ $data->prenom }}" > 
+                          <input name="prenom" type="text" class="form-control" disabled id="prenom" value="{{ $data->prenom }}" > 
                         </div>
                       </div>
 
                     <div class="row mb-3">
                       <label for="email" class="col-md-4 col-lg-3 col-form-label">Email :</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="text" class="form-control" id="email" value="{{ $data->email }}">
+                        <input name="email" type="text" class="form-control" disabled id="email" value="{{ $data->email }}">
                       </div>
                     </div>
+                    
 
                     <div class="row mb-3">
                       <label for="fonction" class="col-md-4 col-lg-3 col-form-label">Fonction :</label>
@@ -369,81 +375,41 @@
          
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                      <button type="submit" class="btn btn-outline-primary">Confirmer</button>
                     </div>
                   </form><!-- End Profile Edit Form -->
 
                 </div>
 
-                <div class="tab-pane fade pt-3" id="profile-settings">
-
-                  <!-- Settings Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End settings Form -->
-
-                </div>
+         
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
                   <form>
 
                     <div class="row mb-3">
-                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <label for="mot de passe actuel" class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel :</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
+                        <input name="password" type="password" class="form-control" id="password">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nouveau mot de passe :</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="newpassword" type="password" class="form-control" id="newPassword">
                       </div>
                     </div>
 
                     <div class="row mb-3">
-                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Confirmer le mot de passe :</label>
                       <div class="col-md-8 col-lg-9">
                         <input name="renewpassword" type="password" class="form-control" id="renewPassword">
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" class="btn btn-outline-primary">Confirmer</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
