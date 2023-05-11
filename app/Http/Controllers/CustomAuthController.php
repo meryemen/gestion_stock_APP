@@ -60,6 +60,13 @@ class CustomAuthController extends Controller
       }
       return view('dashboard', compact('data'));
   }
+  public function admindash(Request $request){
+   $data = array();
+   if(Session::has('loginId')){
+      $data = User::where('id','=',Session::get('loginId'))->first();
+   }
+   return view('dashboard', compact('data'));
+}
 
   public function logout(){
    if(Session::has('loginId')){
@@ -90,6 +97,14 @@ class CustomAuthController extends Controller
 
     return redirect()->route('profile')->with('success', 'profile updated successfuly');
 }
+public function stock(Request $request){
+   $data = array();
+   if(Session::has('loginId')){
+      $data = User::where('id','=',Session::get('loginId'))->first();
+   }
+   return view('stock', compact('data'));
+}
+
 
 
 }

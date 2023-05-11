@@ -15,6 +15,8 @@
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
@@ -27,12 +29,16 @@
 
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
+   <style>
+    th{
+      color: rgb(104, 123, 251);
+    }
+   </style>
 </head>
 
 <body>
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center" >
 
     <div class="d-flex align-items-center justify-content-between ">
       <a href="dashboard" class="logo d-flex align-items-center">
@@ -69,7 +75,7 @@
             <li class="dropdown-header">
               <h6>{{ $data->nom }} {{ $data->prenom }}</h6>
               <span>{{ $data->profil }}</span>
-            </li>
+             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
@@ -131,18 +137,18 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-                <a href="stock">
+                <a href="components-alerts.html">
                   <i class="bi bi-circle"></i><span>Stock</span>
                 </a>
               </li>
             <li>
             <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Laptop</span>
+              <i class="bi bi-circle"></i><span>PC /laptop</span>
             </a>
           </li>
           <li>
             <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Desktop</span>
+              <i class="bi bi-circle"></i><span>PC /Desktop</span>
             </a>
           </li>
           <li>
@@ -168,16 +174,14 @@
           
           
         </ul>
-      </li><!-- End materiels Nav -->
+      </li><!-- End Components Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
-
-        
-      </li><!-- End Accessories Nav -->
+      </li><!-- End Forms Nav -->
 
       
 
@@ -221,169 +225,66 @@
     </ul>
 
   </aside><!-- End Sidebar-->
-  
+
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Profile</h1>
+      <h1>Stock des materiels</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
-          <li class="breadcrumb-item active"><a href="profile">Profile</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Materiels</a></li>
+          <li class="breadcrumb-item">Stock</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
-     @if (session('success'))
-       <div class="alert alert-success">
-       {{ session('success') }}
-      </div>
-     @endif
-    <section class="section profile">
+
+    <section class="section">
       <div class="row">
-        <div class="col-xl-4">
+        <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+          <div class="card ">
+            <div class="card-body">
+             <div >
+              <h5 class="card-title" style="display: inline-block">Stock</h5>
+              <button class="btn btn-outline-secondary"style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-box-arrow-in-down"></i> Importer</button>
+              <button class="btn btn-outline-secondary"style="display: inline-block; float:right; margin-top:10px; margin-right: 10px ;padding:6px" ><i class="bi bi-box-arrow-up"></i> Exporter</button>
 
-              <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-              <h2 style="margin-bottom: 10px">{{ $data->nom }} {{ $data->prenom }}</h2>
-              <h3>{{ $data->profil }}</h3>
-              
-            </div>
-          </div>
+             </div>
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th >Catégorie</th>
+                    <th>Produit</th>
+                    <th >Numéro de série</th>
+                    <th >Caracteristique Tech</th>
+                    <th >Statut</th>
+                    <th >NetBios</th>
+                    <th >Nom & Prénom</th>
+                    <th >Site</th>
+                    <th >Région</th>
+                   
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+              <button class="btn btn-outline-secondary"style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button>
 
-        </div>
-
-        <div class="col-xl-8">
-
-          <div class="card">
-            <div class="card-body pt-3">
-              <!-- Bordered Tabs -->
-              <ul class="nav nav-tabs nav-tabs-bordered">
-
-                <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Cordonnées</button>
-                </li>
-                
-                <li class="nav-item">
-                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editer Profile</button>
-                </li>
-                
-              </ul>
-              <div class="tab-content pt-2">
-
-                <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                  
-
-                  <h5 class="card-title">Profile </h5>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Nom Complet :</div>
-                    <div class="col-lg-9 col-md-8">{{ $data->nom }} {{ $data->prenom }}</div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Email :</div>
-                    <div class="col-lg-9 col-md-8">{{ $data->email }}</div>
-                  </div>
-
-                  
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Fonction :</div>
-                    <div class="col-lg-9 col-md-8">{{ $data->Fonction }}</div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Site :</div>
-                    <div class="col-lg-9 col-md-8">{{ $data->Site }}</div>
-                  </div><div class="row">
-                    <div class="col-lg-3 col-md-4 label">Region :</div>
-                    <div class="col-lg-9 col-md-8">{{ $data->Region }}</div>
-                  </div><div class="row">
-                    <div class="col-lg-3 col-md-4 label">Direction :</div>
-                    <div class="col-lg-9 col-md-8">{{ $data->Direction }}</div>
-                  </div>
-
-                </div>
-
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-
-                  <!-- Profile Edit Form -->
-
-                  <form action="{{ route('update-profil') }}" method="POST">
-                    @csrf
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
-                        
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="nom" class="col-md-4 col-lg-3 col-form-label">Nom :</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="nom" type="text" class="form-control" disabled id="nom" value="{{ $data->nom }}" > 
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                        <label for="prenom" class="col-md-4 col-lg-3 col-form-label">Prenom :</label>
-                        <div class="col-md-8 col-lg-9">
-                          <input name="prenom" type="text" class="form-control" disabled id="prenom" value="{{ $data->prenom }}" > 
-                        </div>
-                      </div>
-
-                    <div class="row mb-3">
-                      <label for="email" class="col-md-4 col-lg-3 col-form-label">Email :</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="text" class="form-control" disabled id="email" value="{{ $data->email }}">
-                      </div>
-                    </div>
-                    
-
-                    <div class="row mb-3">
-                      <label for="fonction" class="col-md-4 col-lg-3 col-form-label">Fonction :</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="fonction" type="text" class="form-control" id="fonction" value="{{ $data->fonction }}">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="site" class="col-md-4 col-lg-3 col-form-label">Site</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="site" type="text" class="form-control" id="site" value="{{ $data->site }}">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="region" class="col-md-4 col-lg-3 col-form-label">Region :</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="region" type="text" class="form-control" id="region" value="{{ $data->region }}">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="direction" class="col-md-4 col-lg-3 col-form-label">Direction</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="direction" type="text" class="form-control" id="direction" value="{{ $data->direction }}">
-                      </div>
-                    </div>
-
-                    
-         
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-outline-primary">Confirmer</button>
-                    </div>
-                  </form><!-- End Profile Edit Form -->
-
-                </div>
-
-         
-
-                
-
-              </div><!-- End Bordered Tabs -->
+              <!-- End Table with stripped rows -->
 
             </div>
           </div>
@@ -393,8 +294,6 @@
     </section>
 
   </main><!-- End #main -->
-
-  
 
   
 

@@ -11,6 +11,7 @@ class User extends Model
     public $table="users";
 
     public $fillable = [
+        'is_admin',
         'nom',
         'prenom',
         'username',

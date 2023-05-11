@@ -15,6 +15,11 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $next($request);
+        $user=$request->user();
+        if($user && $user->profil === 'Admin'){
+            return $next($request);
+        }else{
+            return redirect ('dashboard')->with('error','You have no access');
+        }
     }
 }

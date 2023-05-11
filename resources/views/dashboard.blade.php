@@ -133,7 +133,7 @@
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
             <li>
-                <a href="components-alerts.html">
+                <a href="stock">
                   <i class="bi bi-circle"></i><span>Stock</span>
                 </a>
               </li>
@@ -221,7 +221,73 @@
     </ul>
 
   </aside><!-- End Sidebar-->
+  <main id="main" class="main">
+   
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Pie Chart</h5>
 
+          <!-- Pie Chart -->
+          <div id="pieChart" style="min-height: 400px;" class="echart"></div>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              echarts.init(document.querySelector("#pieChart")).setOption({
+                title: {
+                  text: 'Referer of a Website',
+                  subtext: 'Fake Data',
+                  left: 'center'
+                },
+                tooltip: {
+                  trigger: 'item'
+                },
+                legend: {
+                  orient: 'vertical',
+                  left: 'left'
+                },
+                series: [{
+                  name: 'Access From',
+                  type: 'pie',
+                  radius: '50%',
+                  data: [{
+                      value: 1048,
+                      name: 'Search Engine'
+                    },
+                    {
+                      value: 735,
+                      name: 'Direct'
+                    },
+                    {
+                      value: 580,
+                      name: 'Email'
+                    },
+                    {
+                      value: 484,
+                      name: 'Union Ads'
+                    },
+                    {
+                      value: 300,
+                      name: 'Video Ads'
+                    }
+                  ],
+                  emphasis: {
+                    itemStyle: {
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                  }
+                }]
+              });
+            });
+          </script>
+          <!-- End Pie Chart -->
+
+        </div>
+      </div>
+    </div>
+  </main>
   
 
   
