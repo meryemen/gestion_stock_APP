@@ -49,7 +49,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: none;  border-bottom: 2px solid rgb(64, 134, 232);">
+        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(64, 134, 232);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -68,7 +68,9 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right: 5px">
+           
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ $data->nom }} {{ $data->prenom }}</span>
+           
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -132,49 +134,11 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-laptop"></i><span>Materiels</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="stock">
+          <i class="bi bi-laptop"></i>
+          <span>Materiels</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-                <a href="components-alerts.html">
-                  <i class="bi bi-circle"></i><span>Stock</span>
-                </a>
-              </li>
-            <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>PC /laptop</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>PC /Desktop</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Monitor</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Printer</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Scanner</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Video projecteur</span>
-            </a>
-          </li>
-          
-          
-        </ul>
-      </li><!-- End Components Nav -->
+      </li><!-- End Forms Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
@@ -251,7 +215,8 @@
 
              </div>
               <!-- Table with stripped rows -->
-              <table class="table datatable">
+              <table class="table table-striped">
+              
                 <thead>
                   <tr>
                     <th >Catégorie</th>
@@ -263,24 +228,28 @@
                     <th >Nom & Prénom</th>
                     <th >Site</th>
                     <th >Région</th>
-                   
+                    <th >Action</th>
                   </tr>
                 </thead>
                 <tbody>
+
+                  @foreach ($equipments as $equip)
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $equip->categorie }}</td>
+                    <td>{{ $equip->produit }}</td>
+                    <td>{{ $equip->n_serie }}</td>
+                    <td>{{ $equip->caracteristique_tech}}</td>
+                    <td>{{ $equip->statut }}</td>
+                    <td>{{ $equip->netbios }}</td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                   </tr>
+                  @endforeach
                  
                 </tbody>
+                
               </table>
               <button class="btn btn-outline-secondary"style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button>
 
@@ -291,6 +260,7 @@
 
         </div>
       </div>
+      
     </section>
 
   </main><!-- End #main -->

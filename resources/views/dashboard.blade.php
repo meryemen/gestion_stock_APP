@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
+  <title>Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -17,6 +17,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-zo/xTlU8Tr3N7HkryELNcv+LwRtk/VXeq1FzU3a3jPupcK1do6tS1V43GUnnqQ2FV8sCvLj9JYdWfPQWljgnzA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.6.1/font/bootstrap-icons.min.css" integrity="sha512-cvjHJjONhj0xOy/cLpJQcuz4IVN9Yws/T+nAbdei98bGxRLvS9Hmy3MQLV8ZmIenbv+mEUpO8nUZUAG+ETph0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
@@ -45,7 +48,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: none;  border-bottom: 2px solid rgb(64, 134, 232);">
+        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style=" border: 2px solid rgb(64, 134, 232);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -128,49 +131,11 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-laptop"></i><span>Materiels</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link collapsed" href="stock">
+          <i class="bi bi-laptop"></i>
+          <span>Materiels</span>
         </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-                <a href="stock">
-                  <i class="bi bi-circle"></i><span>Stock</span>
-                </a>
-              </li>
-            <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>PC /laptop</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>PC /Desktop</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Monitor</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Printer</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Scanner</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Video projecteur</span>
-            </a>
-          </li>
-          
-          
-        </ul>
-      </li><!-- End Components Nav -->
+      </li><!-- End Forms Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
@@ -222,21 +187,112 @@
 
   </aside><!-- End Sidebar-->
   <main id="main" class="main">
-   
-    <div class="col-lg-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Pie Chart</h5>
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col-lg-9">
+    <div class="row">
+    <!-- Sales Card -->
+    <div class="col-xxl-4 col-md-6">
+      <div class="card info-card sales-card"  style="border-radius: 15px;">
 
+        <div class="card-body">
+          <h5 class="card-title">Materiels </h5>
+
+          <div class="d-flex align-items-center">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i class="bi bi-laptop display-6 text-danger"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ $materiel }}</h6>
+              <span class="text-secondary">| in use </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- End Sales Card -->
+  
+    <!-- Revenue Card -->
+    <div class="col-xxl-4 col-md-6">
+      <div class="card info-card revenue-card "  style="border-radius: 15px;">
+
+
+        <div class="card-body">
+          <h5 class="card-title">Accessoires   
+         </h5>
+
+          <div class="d-flex align-items-center col">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i class="bi bi-headset display-6 text-success"></i>
+            </div>
+          
+            <div class="ps-3">
+              <h6>{{ $accessoire }}</h6>
+              <span class="text-secondary">| in use </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- End Revenue Card -->
+
+    <!-- Customers Card -->
+    <div class="col-xxl-4 col-xl-12">
+
+      <div class="card info-card customers-card"  style="border-radius: 15px;">
+
+
+        <div class="card-body">
+          <h5 class="card-title">Utilisateurs </h5>
+
+          <div class="d-flex align-items-center">
+            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+              <i class="bi bi-people display-6 text-primary"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ $user }}</h6>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div><!-- End Customers Card -->
+    
+  </div>
+</div>
+ <div class="row">
+    <div class="col-lg-6">
+      <div class="card"  style="border-radius: 15px;">
+        <div class="card-body">
+          <h5 class="card-title">Materiels</h5>
+          
           <!-- Pie Chart -->
           <div id="pieChart" style="min-height: 400px;" class="echart"></div>
 
           <script>
             document.addEventListener("DOMContentLoaded", () => {
+             var inuse = {{ $inuse ?? 0 }};
+             var munisys = {{ $munisys ?? 0 }};
+             var louisrey = {{ $louisrey ?? 0 }};
+             var site = {{ $site ?? 0 }};
+             var maintenance = {{ $maintenance ?? 0 }};
+             var pending = {{ $pending ?? 0 }};
+             var retirement = {{ $retirement ?? 0 }};
+             var stolen = {{ $stolen ?? 0 }};
+             var don = {{ $don ?? 0 }};
+              
               echarts.init(document.querySelector("#pieChart")).setOption({
                 title: {
-                  text: 'Referer of a Website',
-                  subtext: 'Fake Data',
+                  text: 'Statut',
+                  
                   left: 'center'
                 },
                 tooltip: {
@@ -251,25 +307,42 @@
                   type: 'pie',
                   radius: '50%',
                   data: [{
-                      value: 1048,
-                      name: 'Search Engine'
+                      value: inuse,
+                      name: 'In Use'
                     },
                     {
-                      value: 735,
-                      name: 'Direct'
+                      value: munisys,
+                      name: 'In Stock / Munisys'
                     },
                     {
-                      value: 580,
-                      name: 'Email'
+                      value: louisrey,
+                      name: 'In Stock / Louis Rey'
                     },
                     {
-                      value: 484,
-                      name: 'Union Ads'
+                      value: site,
+                      name: 'In Stock / Site'
                     },
                     {
-                      value: 300,
-                      name: 'Video Ads'
+                      value: maintenance,
+                      name: 'In Maintenace'
+                    },
+                    {
+                      value: pending,
+                      name: 'Pending Install'
+                    },
+                    {
+                    value: retirement,
+                      name: 'Retirement'
+                    },
+                    {
+                    value: stolen,
+                      name: 'Stolen'
+                    },
+                    {
+                    value: don,
+                      name: 'Don'
                     }
+                    
                   ],
                   emphasis: {
                     itemStyle: {
@@ -287,6 +360,43 @@
         </div>
       </div>
     </div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Equipements <span>| Quantité </span></h5>
+          <!-- Polar Area Chart -->
+          <canvas id="polarAreaChart" style="max-height: 400px;"></canvas>
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              var materiel = {{ $materiel ?? 0 }};
+              var access = {{ $access ?? 0 }};
+              new Chart(document.querySelector('#polarAreaChart'), {
+                type: 'polarArea',
+                data: {
+                  labels: [
+                    'Materiels',
+                    'Accessoires',
+                    
+                  ],
+                  datasets: [{
+                    label: 'Quantité',
+                    data: [materiel, access],
+                    backgroundColor: [
+                      'rgb(255, 99, 132)',
+                      'rgb(75, 192, 192)',
+                     
+                    ]
+                  }]
+                }
+              });
+            });
+          </script>
+          <!-- End Polar Area Chart -->
+
+        </div>
+      </div>
+    </div>
+  </div>
   </main>
   
 

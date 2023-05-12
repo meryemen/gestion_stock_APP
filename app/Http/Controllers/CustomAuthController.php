@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Equipement;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -51,23 +53,8 @@ class CustomAuthController extends Controller
          return back()->with('fail','Pseudo incorrect');
    }}
 
-
-
-   public function dashboard(Request $request){
-      $data = array();
-      if(Session::has('loginId')){
-         $data = User::where('id','=',Session::get('loginId'))->first();
-      }
-      return view('dashboard', compact('data'));
-  }
-  public function admindash(Request $request){
-   $data = array();
-   if(Session::has('loginId')){
-      $data = User::where('id','=',Session::get('loginId'))->first();
-   }
-   return view('dashboard', compact('data'));
-}
-
+  
+  
   public function logout(){
    if(Session::has('loginId')){
       Session::pull('loginId');

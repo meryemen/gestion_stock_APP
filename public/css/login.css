@@ -5,7 +5,6 @@
 
 body{
   background-color: rgb(206, 227, 251);
-    /*background-image: url('background.png');*/
     background-size: cover;
 
   }
@@ -17,9 +16,7 @@ img{
     width: 50%;
     position: absolute;
     left: 5%;
-    /* définit une position absolue pour l'image à gauche */
     bottom: 8%;
-    /* ajuste la position verticale de l'image si besoin */
  
 }
 input{

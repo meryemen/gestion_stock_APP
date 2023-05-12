@@ -15,19 +15,18 @@ use App\Http\Controllers\StockController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Route::get('/login', [CustomAuthController::class, 'login'])->middleware('alreadyLoggedIn');
 Route::get('/create', [CustomAuthController::class, 'createNewUser']);
 
 Route::post('login-user',[CustomAuthController::class,'loginUser'])->name('login-user');
 
-Route::get('/dashboard',[CustomAuthController::class,'dashboard'])->middleware('isLoggedIn');
+Route::get('/dashboard', [StockController::class, 'dashboard'])->middleware('isLoggedIn');
+
 
 Route::get('/logout',[CustomAuthController::class,'logout']);
 Route::get('/profile',[CustomAuthController::class,'profile'])->name('profile');;
 
 Route::post('update-profil',[CustomAuthController::class,'updateProfil'])->name('update-profil');
-Route::get('/stock',[CustomAuthController::class,'stock']);
+Route::get('/stock', [StockController::class, 'stock']);
