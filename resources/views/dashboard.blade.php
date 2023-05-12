@@ -48,7 +48,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style=" border: 2px solid rgb(64, 134, 232);">
+        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->

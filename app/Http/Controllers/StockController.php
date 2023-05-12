@@ -45,6 +45,14 @@ class StockController extends Controller
 return view('dashboard', compact('retirement','stolen','don','inuse','munisys','louisrey','site','maintenance','pending','data','materiel','user','accessoire'));
 
 }
+
+  public function ajout(){
+    $data = array();
+    if(Session::has('loginId')){
+       $data = User::where('id','=',Session::get('loginId'))->first();
+    }
+    return view ('ajoutequip',compact('data'));
+  }
  
   
 }

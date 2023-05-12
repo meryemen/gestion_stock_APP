@@ -29,11 +29,7 @@
 
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-   <style>
-    th{
-      color: rgb(104, 123, 251);
-    }
-   </style>
+  
 </head>
 
 <body>
@@ -49,7 +45,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(64, 134, 232);">
+        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -209,49 +205,61 @@
           <div class="card ">
             <div class="card-body">
              <div >
-              <h5 class="card-title" style="display: inline-block">Stock</h5>
-              <button class="btn btn-outline-secondary"style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-box-arrow-in-down"></i> Importer</button>
-              <button class="btn btn-outline-secondary"style="display: inline-block; float:right; margin-top:10px; margin-right: 10px ;padding:6px" ><i class="bi bi-box-arrow-up"></i> Exporter</button>
+              <h5 class="card-title" style="display: inline-block">Materiels</h5>
+              
+                <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
+                <a href="#deleteEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
+             
 
              </div>
-              <!-- Table with stripped rows -->
-              <table class="table table-striped">
-              
+             
+              <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th >Catégorie</th>
-                    <th>Produit</th>
-                    <th >Numéro de série</th>
-                    <th >Caracteristique Tech</th>
-                    <th >Statut</th>
-                    <th >NetBios</th>
-                    <th >Nom & Prénom</th>
-                    <th >Site</th>
-                    <th >Région</th>
-                    <th >Action</th>
+                    <th></th>
+                    <th class="text-success">Catégorie</th>
+                    <th class="text-success">Produit</th>
+                    <th class="text-success">Numéro de série</th>
+                    <th class="text-success">Caracteristique Tech</th>
+                    <th class="text-success">Statut</th>
+                    <th class="text-success">NetBios</th>
+                    <th class="text-success">Nom & Prénom</th>
+                    <th class="text-success">Site</th>
+                    <th class="text-success">Région</th>
+                    <th class="text-success">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-
                   @foreach ($equipments as $equip)
                   <tr>
+                    <td>
+                      <span class="custom-checkbox">
+                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                        <label for="checkbox1"></label>
+                      </span>
+                    </td>
                     <td>{{ $equip->categorie }}</td>
                     <td>{{ $equip->produit }}</td>
                     <td>{{ $equip->n_serie }}</td>
-                    <td>{{ $equip->caracteristique_tech}}</td>
+                    <td>{{ $equip->cracteristique_tech}}</td>
                     <td>{{ $equip->statut }}</td>
                     <td>{{ $equip->netbios }}</td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
+                    <td>
+                      <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="bi bi-pencil-square"></i></a>
+                      <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="bi bi-trash"></i>
+                      </a>
+                    </td>
                   </tr>
+                  
                   @endforeach
+                  	
                  
                 </tbody>
-                
               </table>
-              <button class="btn btn-outline-secondary"style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button>
+             <a href="formulaire"><button class="btn btn-outline-primary btn-sm " style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
 
               <!-- End Table with stripped rows -->
 

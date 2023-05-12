@@ -30,3 +30,7 @@ Route::get('/profile',[CustomAuthController::class,'profile'])->name('profile');
 
 Route::post('update-profil',[CustomAuthController::class,'updateProfil'])->name('update-profil');
 Route::get('/stock', [StockController::class, 'stock']);
+
+//formulaire d'ajout d'un equipement
+Route::get('/formulaire', [StockController::class, 'ajout']);
+
