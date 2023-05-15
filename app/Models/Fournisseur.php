@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Fournisseur extends Model
 {
     use HasFactory;
+    public $table="fournisseur";
+
+    public $fillable = [
+        'id_fourni',
+        'nom_four',
+        
+    ];
 }

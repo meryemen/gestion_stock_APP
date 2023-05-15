@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\FourniController;
 use App\Http\Controllers\StockController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +28,14 @@ Route::get('/dashboard', [StockController::class, 'dashboard'])->middleware('isL
 
 
 Route::get('/logout',[CustomAuthController::class,'logout']);
-Route::get('/profile',[CustomAuthController::class,'profile'])->name('profile');;
+Route::get('/profile',[CustomAuthController::class,'profile'])->name('profile')->middleware('isLoggedIn');
 
 Route::post('update-profil',[CustomAuthController::class,'updateProfil'])->name('update-profil');
-Route::get('/stock', [StockController::class, 'stock']);
+Route::get('/stock', [StockController::class, 'stock'])->name('stock')->middleware('isLoggedIn');
 
 //formulaire d'ajout d'un equipement
-Route::get('/formulaire', [StockController::class, 'ajout']);
+Route::get('/formulaire', [StockController::class, 'formulaire'])->middleware('isLoggedIn');
+Route::post('ajout-equipement',[StockController::class,'ajout'])->name('ajout-equipement');
+Route::get('/fournisseur', [FourniController::class, 'fournisseur'])->middleware('isLoggedIn');
+    
 

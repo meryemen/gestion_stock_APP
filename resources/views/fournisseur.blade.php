@@ -12,11 +12,8 @@
 
 
   <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.1/css/bootstrap.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
@@ -25,11 +22,8 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/quill/quill.bubble.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/remixicon/remixicon.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/simple-datatables/style.css') }}">
-
-
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-  
 </head>
 
 <body>
@@ -196,11 +190,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Stock des materiels</h1>
+      <h1>Table des Fournisseur</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Materiels</a></li>
-          <li class="breadcrumb-item">Stock</li>
+          <li class="breadcrumb-item"><a href="index.html">Fournisseur</a></li>
+          
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -212,10 +206,9 @@
           <div class="card ">
             <div class="card-body">
              <div >
-              <h5 class="card-title" style="display: inline-block">Materiels</h5>
+              <h5 class="card-title" style="display: inline-block">Fournisseur</h5>
               
-                <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
-                <a href="#deleteEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
+               
              
 
              </div>
@@ -224,20 +217,12 @@
                 <thead>
                   <tr>
                     <th></th>
-                    <th class="text-success">Catégorie</th>
-                    <th class="text-success">Produit</th>
-                    <th class="text-success">Numéro de série</th>
-                    <th class="text-success">Caracteristique Tech</th>
-                    <th class="text-success">Statut</th>
-                    <th class="text-success">NetBios</th>
-                    <th class="text-success">Nom & Prénom</th>
-                    <th class="text-success">Site</th>
-                    <th class="text-success">Région</th>
+                    <th class="text-success">Fournisseur</th>
                     <th class="text-success">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($equipments as $equip)
+                  @foreach ($fournisseur as $fourni)
                   <tr>
                     <td>
                       <span class="custom-checkbox">
@@ -245,15 +230,8 @@
                         <label for="checkbox1"></label>
                       </span>
                     </td>
-                    <td>{{ $equip->categorie }}</td>
-                    <td>{{ $equip->produit }}</td>
-                    <td>{{ $equip->n_serie }}</td>
-                    <td>{{ $equip->cracteristique_tech}}</td>
-                    <td>{{ $equip->statut }}</td>
-                    <td>{{ $equip->netbios }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $fourni->nom_four }}</td>
+                    
                     <td>
                       <a href="#editEmployeeModal" class="edit" ><i class="ri ri-pencil-fill"></i></a>
                       <a href="#deleteEmployeeModal" class="delete" ><i class="bi bi-trash"></i>
@@ -266,9 +244,25 @@
                  
                 </tbody>
               </table>
-             <a href="formulaire"><button class="btn btn-outline-primary btn-sm " style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
+             <button  type="button" class="btn btn-outline-primary btn-sm "data-mdb-toggle="modal"data-mdb-target="#exampleModal" style="float:right"><i class="bi bi-plus"></i> Ajouter un fournisseur</button>
 
-              <!-- End Table with stripped rows -->
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">...</div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
 
             </div>
           </div>
@@ -293,7 +287,10 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 

@@ -18,8 +18,10 @@ class Equipement extends Model
         'statut',
         'prix',
         'netbios',
-        'caracteristique_tech',
+        'cracteristique_tech',
         'id_pers',
         'id_fourni',
+        'updated_at',
+        'created_at',
     ];
 }

@@ -128,21 +128,28 @@
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="stock">
           <i class="bi bi-laptop"></i>
           <span>Materiels</span>
         </a>
-      </li><!-- End Forms Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
-      </li><!-- End Forms Nav -->
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="fournisseur">
+          <i class="bi bi-person-lines-fill"></i>
+          <span>Fournisseurs</span>
+        </a>
+      </li>
 
       
 
@@ -303,7 +310,7 @@
                   left: 'left'
                 },
                 series: [{
-                  name: 'Access From',
+                  name: 'Quantité',
                   type: 'pie',
                   radius: '50%',
                   data: [{

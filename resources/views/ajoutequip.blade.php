@@ -128,23 +128,29 @@
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="stock">
           <i class="bi bi-laptop"></i>
           <span>Materiels</span>
         </a>
-      </li><!-- End Forms Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
-      </li><!-- End Forms Nav -->
+      </li>
 
       
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="fournisseur">
+          <i class="bi bi-person-lines-fill"></i>
+          <span>Fournisseurs</span>
+        </a>
+      </li>
 
 
       <li class="nav-heading">Compte</li>
@@ -192,173 +198,221 @@
 
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Ajout d'un equipement</h5>
-
+            <div class="card-title">
+              <h3>Ajout d'un equipement</h3>
+              <nav>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">Information</li>
+                </ol>
+              </nav>
+            </div>
             <!-- General Form Elements -->
-            <form>
+            <form method="POST" action="{{ route('ajout-equipement') }}">
+             
+              @csrf
+              @method('POST')
+              @if (Session::has('success'))
+              <div class="alert alert-success">{{ Session::get('success') }}</div>
+                @endif
                 <div class="row mb-3">
-                    <legend class="col-form-label col-sm-2 pt-0">Type</legend>
-                    <div class="col-sm-4">
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                              <label class="form-check-label" for="gridRadios1">
-                                Materiel
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-check">
-                              <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                              <label class="form-check-label" for="gridRadios2">
-                                Accessoire
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                  <label class="col-sm-2 col-form-label">Type</label>
+                  <div class="col-sm-4">
+                     <div class="col-sm-6">
+                   <select class="form-select" id="type" name="type">
+                     
+                     <option value="1">materiel</option>
+                     <option value="2">accessoire</option>
+                    
+                   </select>
+                   </div>
+                  </div>
                       
-                <label class="col-sm-2 col-form-label">Categorie</label>
-                <div class="col-sm-4">
-                    <div class="col-sm-6">
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                  </div>
+                  
+                  
+                    <label class="col-sm-2 col-form-label">Catégorie</label>
+                    <div class="col-sm-4">
+                      <div class="col-sm-6">
+                        <select class="form-select" id="categorie" name="categorie">
+                          <option disabled selected>Sélectionner une catégorie</option>
+                          <option disabled >Materiel</option>
+                          <option value="1">PC</option>
+                          <option value="2">Monitor</option>
+                          <option value="3">Printer</option>
+                          <option value="4">Scanner</option>
+                          <option value="5">Video projector</option>
+                          <option disabled>Accessoire</option>
+                          <option value="6">Printer</option>
+                          <option value="7">Printer</option>
+                          <option value="8">Printer</option>
+                          <option value="9">Printer</option>
+                          <option value="10">Printer</option>
+                          <option value="11">Printer</option>
+                        </select>
+                      </div>
+                    </div>
+                  
                 </div>
-                  </div>
+                <div class="row mb-3">
+                  <label for="produit" class="col-sm-2 col-form-label">Produit</label>
+                <div class="col-sm-4">
+                  <input type="text" id="produit" name="produit" class="form-control">
+                </div>
+                      
+                <label for="numero_serie" class="col-sm-2 col-form-label">Numéro de série</label>
+                <div class="col-sm-4">
+                  <input type="text" id="numero_serie" name="numero_serie" class="form-control">
+                </div>
+                  
+                </div>
                   
               <div class="row mb-3">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                <div class="col-sm-4">
-                  <input type="password" class="form-control">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputNumber" class="col-sm-2 col-form-label">Number</label>
-                <div class="col-sm-4">
-                  <input type="number" class="form-control">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputNumber" class="col-sm-2 col-form-label">File Upload</label>
-                <div class="col-sm-4">
-                  <input class="form-control" type="file" id="formFile">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputDate" class="col-sm-2 col-form-label">Date</label>
-                <div class="col-sm-4">
-                  <input type="date" class="form-control">
-                </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputTime" class="col-sm-2 col-form-label">Time</label>
-                <div class="col-sm-4">
-                  <input type="time" class="form-control">
-                </div>
+                <label class="col-sm-2 col-form-label">Statut</label>
+                    <div class="col-sm-4">
+                      <div class="col-sm-6">
+                        <select class="form-select" id="statut" name="statut">
+                          <option disabled selected>Sélectionner un statut</option>
+                          <option value="1" >In Use</option>
+                          <option value="2" >In Stock / Site</option>
+                          <option value="3">In Stock / Munisys</option>
+                          <option value="4">In Stock / Louis Rey</option>
+                          <option value="5">In Maintenace</option>
+                          <option value="6">Pending Install</option>
+                          <option value="7">Retirement </option>
+                          <option value="8">Stolen</option>
+                          <option value="9">Don</option>
+                        </select>
+                      </div>
+                    </div>
+                    <label for="prix" class="col-sm-2 col-form-label">Prix</label>
+                    <div class="col-sm-4">
+                      <input type="text" id="prix" name="prix" class="form-control">
+                    </div>
+
               </div>
 
               <div class="row mb-3">
-                <label for="inputColor" class="col-sm-2 col-form-label">Color Picker</label>
-                <div class="col-sm-4">
-                  <input type="color" class="form-control form-control-color" id="exampleColorInput" value="#4154f1" title="Choose your color">
-                </div>
+                <label for="cracteristique_tech" class="col-sm-2 col-form-label">Caractéristique Tech</label>
+              <div class="col-sm-4">
+                <input type="text" id="cracteristique_tech" name="cracteristique_tech" class="form-control">
+              </div>
+              <label for="netbios" class="col-sm-2 col-form-label">Nebios</label>
+              <div class="col-sm-4">
+                <input type="text" id="netbios" name="netbios" class="form-control">
+              </div>
+                
               </div>
               <div class="row mb-3">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Textarea</label>
+               
+                <label class="col-sm-2 col-form-label">Fournisseur</label>
                 <div class="col-sm-4">
-                  <textarea class="form-control" style="height: 100px"></textarea>
-                </div>
-              </div>
-              <fieldset class="row mb-3">
-                <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-                <div class="col-sm-4">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                    <label class="form-check-label" for="gridRadios1">
-                      First radio
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
-                    <label class="form-check-label" for="gridRadios2">
-                      Second radio
-                    </label>
-                  </div>
-                  <div class="form-check disabled">
-                    <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios" value="option" disabled>
-                    <label class="form-check-label" for="gridRadios3">
-                      Third disabled radio
-                    </label>
+                  <div class="col-sm-6">
+                    <select class="form-select" name="fournisseur" id="fournisseur">
+                      @foreach ($fournisseur as $fournisseur )
+                      <option value="1" >{{ $fournisseur }}</option>
+                      @endforeach
+                    </select>
                   </div>
                 </div>
-              </fieldset>
-              <div class="row mb-3">
-                <legend class="col-form-label col-sm-2 pt-0">Checkboxes</legend>
-                <div class="col-sm-4">
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck1">
-                    <label class="form-check-label" for="gridCheck1">
-                      Example checkbox
-                    </label>
-                  </div>
-
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck2" checked>
-                    <label class="form-check-label" for="gridCheck2">
-                      Example checkbox 2
-                    </label>
-                  </div>
-
-                </div>
+                
               </div>
 
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Disabled</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" value="Read only / Disabled" disabled>
-                </div>
+              <div class="card-title">
+              
+              <nav>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item">Affectation</li>
+                </ol>
+              </nav>
+            </div>
+            
+            <div class="row mb-3">
+              <label for="nom_prenom" class="col-sm-2 col-form-label">Nom & Prenom</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="nom_prenom" name="nom_prenom">
+              </div>
+              <label for="nom_prenom" class="col-sm-2 col-form-label">Username</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" id="username" name="username">
+              </div>
+              
+            </div>
+            
+            <div class="row mb-3">
+              <label for="date_affectation" class="col-sm-2 col-form-label">Date d'affectation</label>
+              <div class="col-sm-4">
+                <input type="date" class="form-control" name="date_affectation" id="date_affectation">
+              </div>
+              <label for="region" class="col-sm-2 col-form-label">Région</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="region" id="region">
+              </div>
+             
+            </div>
+            
+            <div class="row mb-3">
+              <label for="direction" class="col-sm-2 col-form-label">Direction</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="direction" id="direction">
+              </div>
+              <label for="site" class="col-sm-2 col-form-label">Site</label>
+              <div class="col-sm-4">
+                <input type="text" class="form-control" name="site" id="site">
               </div>
 
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Select</label>
-                <div class="col-sm-10">
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
               </div>
 
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Multi Select</label>
-                <div class="col-sm-10">
-                  <select class="form-select" multiple aria-label="multiple select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Submit Button</label>
-                <div class="col-sm-10">
-                  <button type="submit" class="btn btn-primary">Submit Form</button>
-                </div>
-              </div>
+              <button class="btn btn-outline-primary btn-xs px-3" id="submit" type="submit">Ajouter</button>
 
             </form><!-- End General Form Elements -->
+           <script>
+               document.addEventListener('DOMContentLoaded', function() {
+                var username = document.getElementById('champ1');
+                var nom_prenom = document.getElementById('nom_prenom');
+                var username = document.getElementById('username');
+                var date_affectation = document.getElementById('date_affectation');
+                var region = document.getElementById('region');
+                var direction = document.getElementById('direction');
+                var site = document.getElementById('site');
 
+              statut.addEventListener('change', function() {
+                if (statut.value === '1') {
+                  username.disabled = false;
+                  username.required = true;
+                  nom_prenom.disabled = false;
+                  nom_prenom.required = true;
+                  username.disabled = false;
+                  username.required = true;
+                  date_affectation.disabled = false;
+                  date_affectation.required = true;
+                  region.disabled = false;
+                  region.required = true;
+                  direction.disabled = false;
+                  direction.required = true;
+                  site.disabled = false;
+                  site.required = true;
+                } else {
+                  username.disabled = true;
+                  username.required = false;
+                  nom_prenom.disabled = true;
+                  nom_prenom.required = false;
+                  username.disabled = true;
+                  username.required = false;
+                  date_affectation.disabled = true;
+                  date_affectation.required = false;
+                  region.disabled = true;
+                  region.required = false;
+                  direction.disabled = true;
+                  direction.required = false;
+                  site.disabled = true;
+                  site.required = false;
+                }
+              });
+               });
+
+           </script>
+            
+            
+            
           </div>
         </div>
 

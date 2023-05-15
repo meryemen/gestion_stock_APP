@@ -126,49 +126,10 @@
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-laptop"></i><span>Materiels</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-            <li>
-                <a href="stock">
-                  <i class="bi bi-circle"></i><span>Stock</span>
-                </a>
-              </li>
-            <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Laptop</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-alerts.html">
-              <i class="bi bi-circle"></i><span>Desktop</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-accordion.html">
-              <i class="bi bi-circle"></i><span>Monitor</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-badges.html">
-              <i class="bi bi-circle"></i><span>Printer</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-breadcrumbs.html">
-              <i class="bi bi-circle"></i><span>Scanner</span>
-            </a>
-          </li>
-          <li>
-            <a href="components-buttons.html">
-              <i class="bi bi-circle"></i><span>Video projecteur</span>
-            </a>
-          </li>
-          
-          
-        </ul>
-      </li><!-- End materiels Nav -->
+        <a class="nav-link collapsed" href="stock">
+          <i class="bi bi-laptop"></i>
+          <span>Materiels</span>
+        </a><!-- End materiels Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="users-profile.html">
@@ -179,7 +140,12 @@
         
       </li><!-- End Accessories Nav -->
 
-      
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="fournisseur">
+          <i class="bi bi-person-lines-fill"></i>
+          <span>Fournisseurs</span>
+        </a>
+      </li>
 
 
       <li class="nav-heading">Compte</li>
