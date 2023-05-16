@@ -23,8 +23,6 @@
                   <div class="mb-md-5 mt-md-4 pb-5">
                     <img src="logo.jpg" alt="">
 
-                    
-
                     <form action="{{ route('login-user') }}" method="post">
                       @if (Session::has('success'))
                       <div class="alert alert-success">{{ Session::get('success') }}</div>

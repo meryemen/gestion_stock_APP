@@ -74,7 +74,14 @@ class CustomAuthController extends Controller
    $userID = Session::get('loginId');
 
    $user= User::find($userID);
-   
+
+   $request->validate([
+      'fonction' => 'required',
+      'site' => 'required',
+      'region' => 'required',
+      'direction' => 'required',
+  ]);
+  
     $user->fonction = $request->input('fonction');
     $user->site = $request->input('site');
     $user->region = $request->input('region');

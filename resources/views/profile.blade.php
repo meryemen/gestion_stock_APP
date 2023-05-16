@@ -61,7 +61,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right: 5px">
+            <img src="css/profil.png" alt="Profile" class="rounded-circle" style="margin-right: 5px">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ $data->nom }} {{ $data->prenom }}</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -211,7 +211,7 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-              <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+              <img src="css/profil.png" alt="Profile" class="rounded-circle">
               <h2 style="margin-bottom: 10px">{{ $data->nom }} {{ $data->prenom }}</h2>
               <h3>{{ $data->profil }}</h3>
               
@@ -280,7 +280,7 @@
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                       <div class="col-md-8 col-lg-9">
-                        <img src="assets/img/profile-img.jpg" alt="Profile">
+                        <img src="css/profil.png" alt="Profile">
                         
                       </div>
                     </div>
@@ -310,28 +310,28 @@
                     <div class="row mb-3">
                       <label for="fonction" class="col-md-4 col-lg-3 col-form-label">Fonction :</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fonction" type="text" class="form-control" id="fonction" value="{{ $data->fonction }}">
+                        <input name="fonction" type="text" class="form-control" required id="fonction" value="{{ $data->fonction }}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="site" class="col-md-4 col-lg-3 col-form-label">Site</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="site" type="text" class="form-control" id="site" value="{{ $data->site }}">
+                        <input name="site" type="text" class="form-control" required id="site" value="{{ $data->site }}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="region" class="col-md-4 col-lg-3 col-form-label">Region :</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="region" type="text" class="form-control" id="region" value="{{ $data->region }}">
+                        <input name="region" type="text" class="form-control" required id="region" value="{{ $data->region }}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="direction" class="col-md-4 col-lg-3 col-form-label">Direction</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="direction" type="text" class="form-control" id="direction" value="{{ $data->direction }}">
+                        <input name="direction" type="text" class="form-control" required id="direction" value="{{ $data->direction }}">
                       </div>
                     </div>
 

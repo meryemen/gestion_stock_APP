@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FourniController;
 use App\Http\Controllers\StockController;
 
@@ -36,6 +37,9 @@ Route::get('/stock', [StockController::class, 'stock'])->name('stock')->middlewa
 //formulaire d'ajout d'un equipement
 Route::get('/formulaire', [StockController::class, 'formulaire'])->middleware('isLoggedIn');
 Route::post('ajout-equipement',[StockController::class,'ajout'])->name('ajout-equipement');
-Route::get('/fournisseur', [FourniController::class, 'fournisseur'])->middleware('isLoggedIn');
-    
 
+Route::get('/fournisseur', [FourniController::class, 'fournisseur'])->middleware('isLoggedIn')->name('fournisseur');
+Route::post('ajout-fournisseur', [FourniController::class, 'ajouter'])->name('ajout-fournisseur');
+Route::post('/delete-fournisseur/{$id_fourni}', [FourniController::class, 'delete'])->name('delete-fournisseur');
+    
+Route::get('exporter', [ExportController::class, 'export'])->name('exporter');

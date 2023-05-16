@@ -5,17 +5,10 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
 
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
@@ -63,7 +56,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right: 5px">
+            <img src="css/profil.png" alt="Profile" class="rounded-circle" style="margin-right: 5px">
            
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ $data->nom }} {{ $data->prenom }}</span>
            
@@ -215,13 +208,13 @@
               <h5 class="card-title" style="display: inline-block">Materiels</h5>
               
                 <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
-                <a href="#deleteEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
+                <a href="{{ route('exporter') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
              
 
              </div>
              
-              <table class="table table-hover">
-                <thead>
+             <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
+              <thead>
                   <tr>
                     <th></th>
                     <th class="text-success">Catégorie</th>
@@ -245,16 +238,16 @@
                         <label for="checkbox1"></label>
                       </span>
                     </td>
-                    <td>{{ $equip->categorie }}</td>
-                    <td>{{ $equip->produit }}</td>
-                    <td>{{ $equip->n_serie }}</td>
-                    <td>{{ $equip->cracteristique_tech}}</td>
-                    <td>{{ $equip->statut }}</td>
-                    <td>{{ $equip->netbios }}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td>
+                    <td  class="text-overflow">{{ $equip->categorie }}</td>
+                    <td class="text-overflow">{{ $equip->produit }}</td>
+                    <td class="text-overflow">{{ $equip->n_serie }}</td>
+                    <td class="text-overflow">{{ $equip->cracteristique_tech}}</td>
+                    <td class="text-overflow">{{ $equip->statut }}</td>
+                    <td class="text-overflow">{{ $equip->netbios }}</td>
+                    <td class="text-overflow"></td>
+                    <td class="text-overflow"></td>
+                    <td class="text-overflow"></td>
+                    <td class="text-overflow">
                       <a href="#editEmployeeModal" class="edit" ><i class="ri ri-pencil-fill"></i></a>
                       <a href="#deleteEmployeeModal" class="delete" ><i class="bi bi-trash"></i>
                       </a>
@@ -266,9 +259,10 @@
                  
                 </tbody>
               </table>
-             <a href="formulaire"><button class="btn btn-outline-primary btn-sm " style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
-
-              <!-- End Table with stripped rows -->
+             <a href="formulaire"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
+             
+             
+            
 
             </div>
           </div>
@@ -293,7 +287,9 @@
   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+  
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 

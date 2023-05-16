@@ -5,15 +5,11 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
 
 
   <!-- Google Fonts -->
-
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.1/css/bootstrap.min.css">
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap-icons/bootstrap-icons.css') }}">
@@ -22,8 +18,11 @@
   <link rel="stylesheet" href="{{ asset('assets/vendor/quill/quill.bubble.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/remixicon/remixicon.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendor/simple-datatables/style.css') }}">
+
+
   <!-- Template Main CSS File -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+  
 </head>
 
 <body>
@@ -57,7 +56,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right: 5px">
+            <img src="css/profil.png" alt="Profile" class="rounded-circle" style="margin-right: 5px">
            
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ $data->nom }} {{ $data->prenom }}</span>
            
@@ -198,7 +197,15 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
+    @if (session('success'))
+      <div class="alert alert-success">
+      {{ session('success') }}
+      </div>
+    @elseif (session('fail'))
+    <div class="alert alert-danger">
+      {{ session('fail') }}
+      </div>
+    @endif
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -213,7 +220,7 @@
 
              </div>
              
-              <table class="table table-hover">
+              <table class="table table-hover table-sm">
                 <thead>
                   <tr>
                     <th></th>
@@ -224,44 +231,83 @@
                 <tbody>
                   @foreach ($fournisseur as $fourni)
                   <tr>
-                    <td>
-                      <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                        <label for="checkbox1"></label>
-                      </span>
-                    </td>
-                    <td>{{ $fourni->nom_four }}</td>
-                    
-                    <td>
-                      <a href="#editEmployeeModal" class="edit" ><i class="ri ri-pencil-fill"></i></a>
-                      <a href="#deleteEmployeeModal" class="delete" ><i class="bi bi-trash"></i>
-                      </a>
-                    </td>
+                      <td></td>
+                      <td>{{ $fourni->nom_four }}</td>
+                      <td>
+                          <a href="#editEmployeeModal" class="edit"><i class="ri ri-pencil-fill"></i></a>
+                          <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $fourni->id }}" class="delete" data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id }}"><i class="bi bi-trash"></i></a>
+                      </td>
                   </tr>
-                  
-                  @endforeach
-                  	
-                 
-                </tbody>
-              </table>
-             <button  type="button" class="btn btn-outline-primary btn-sm "data-mdb-toggle="modal"data-mdb-target="#exampleModal" style="float:right"><i class="bi bi-plus"></i> Ajouter un fournisseur</button>
+              
+                  <!-- Modal -->
+                      <div class="modal fade" id="deleteModal{{ $fourni->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $fourni->id }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h1 class="modal-title fs-5 text-danger" id="deleteModalLabel{{ $fourni->id }}"> <i class="bi bi-trash text-danger"></i> Suppression</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <span>Êtes vous sûr de supprimer le fournisseur : <span id="fournisseurNom"></span></p>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                      <form action="{{ route('delete-fournisseur', $fourni->id_fourni ) }}" method="POST">
+                                        @csrf
+                                      <button type="submit" class="btn btn-danger">Confirmer</button>
+                                    </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      @endforeach
+                        </tbody>
 
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                      <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">...</div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+
+                        <script>
+                          document.querySelectorAll('.delete').forEach(function(element) {
+                              element.addEventListener('click', function() {
+                                  var fournisseurNom = this.getAttribute('data-fournisseur-nom');
+                                  var fournisseurId = this.getAttribute('data-fournisseur-id');
+                      
+                                  document.getElementById('fournisseurNom').textContent = fournisseurNom;
+                              });
+                          });
+                      </script>
+
+
+                      </table>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: right"><i class="bi bi-plus"></i>
+                    Ajouter un fournisseur
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajout d'un fournisseur</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                         <form action="{{ route('ajout-fournisseur') }}" method="POST">
+                          @csrf
+                          <label for="nom_four" class="form-label">Fournisseur</label>
+                          <div >
+                            <input type="text" class="form-control" id="nom_four" name="nom_four">
+                          </div>
+                        </div>
+                      
+
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                      </form>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
 
             </div>
@@ -273,6 +319,7 @@
     </section>
 
   </main><!-- End #main -->
+
 
   
 
@@ -288,9 +335,8 @@
   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.5.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+  
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 

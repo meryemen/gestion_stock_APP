@@ -66,7 +66,8 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle" style="margin-right: 5px">
+            <img src="css/profil.png" alt="Profile" class="rounded-circl
+            e" style="margin-right: 5px">
             <span class="d-none d-md-block dropdown-toggle ps-2">{{ $data->nom }} {{ $data->prenom }}</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -205,48 +206,98 @@
     </div>
     <div class="col-lg-9">
     <div class="row">
-    <!-- Sales Card -->
+    <!-- materiel Card -->
     <div class="col-xxl-4 col-md-6">
-      <div class="card info-card sales-card"  style="border-radius: 15px;">
-
+      <div class="card info-card sales-card" style="border-radius: 15px;">
         <div class="card-body">
-          <h5 class="card-title">Materiels </h5>
-
+          <div class="d-flex align-items-center justify-content-between">
+            <h5 class="card-title">Matériels</h5>
+            <div class="dropdown">
+              <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
+                <li><a class="dropdown-item" selected href="#">Pc/ Laptop</a></li>
+                <li><a class="dropdown-item" href="#">Pc/ Desktop</a></li>
+                <li><a class="dropdown-item" href="#">Monitor</a></li>
+                <li><a class="dropdown-item" href="#">Printer</a></li>
+                <li><a class="dropdown-item" href="#">Scanner</a></li>
+                <li><a class="dropdown-item" href="#">Video projector</a></li>
+              </ul>
+            </div>
+          </div>
           <div class="d-flex align-items-center">
             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
               <i class="bi bi-laptop display-6 text-danger"></i>
             </div>
             <div class="ps-3">
-              <h6>{{ $materiel }}</h6>
-              <span class="text-secondary">| in use </span>
+              <h6 id="nombre">{{ $laptop }}</h6>
+              <span class="text-secondary" id="selectedOption">| Pc/ Laptop</span>
             </div>
           </div>
         </div>
-
       </div>
-    </div><!-- End Sales Card -->
+    </div>
+    <script>
+      // script pour les dropdown items
+      const dropdownItems = document.querySelectorAll('.dropdown-item');
+      const selectedOption = document.getElementById('selectedOption');
+      const nombre = document.getElementById('nombre');
+      const laptopCount = {{ $laptop ?? 0 }};
+      const desktopCount = {{ $desktop ?? 0 }};
+      const monitorCount = {{ $monitor ?? 0 }};
+      const scannerCount = {{ $scanner ?? 0 }};
+      const printerCount = {{ $printer ?? 0 }};
+      const projectorCount = {{ $projector ?? 0 }};
+    
+      dropdownItems.forEach(item => {
+        item.addEventListener('click', () => {
+          selectedOption.textContent = '| ' + item.textContent;
+          if (item.textContent == 'Pc/ Laptop') {
+            nombre.textContent = laptopCount;
+          } else if (item.textContent == 'Pc/ Desktop') {
+            nombre.textContent = desktopCount;
+          }  else if (item.textContent == 'Monitor') {
+            nombre.textContent = monitorCount;
+          }  else if (item.textContent == 'Printer') {
+            nombre.textContent = scannerCount;
+          }  else if (item.textContent == 'Scanner') {
+            nombre.textContent = printerCount;
+          }  else  {
+            nombre.textContent = projectorCount;
+          } 
+        });
+      });
+    </script>
+    <!-- End materiel Card -->
   
     <!-- Revenue Card -->
     <div class="col-xxl-4 col-md-6">
-      <div class="card info-card revenue-card "  style="border-radius: 15px;">
-
-
+      <div class="card info-card sales-card" style="border-radius: 15px;">
         <div class="card-body">
-          <h5 class="card-title">Accessoires   
-         </h5>
-
-          <div class="d-flex align-items-center col">
+          <div class="d-flex align-items-center justify-content-between">
+            <h5 class="card-title">Accessoires</h5>
+            <div class="dropdown">
+              <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-three-dots-vertical"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
+                <li><a class="dropdown-item" href="#">Option 1</a></li>
+                <li><a class="dropdown-item" href="#">Option 2</a></li>
+                <li><a class="dropdown-item" href="#">Option 3</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="d-flex align-items-center">
             <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
               <i class="bi bi-headset display-6 text-success"></i>
             </div>
-          
             <div class="ps-3">
               <h6>{{ $accessoire }}</h6>
-              <span class="text-secondary">| in use </span>
+              <span class="text-secondary">| Option</span>
             </div>
           </div>
         </div>
-
       </div>
     </div><!-- End Revenue Card -->
 
@@ -423,6 +474,8 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="js/app.js"></script>
+  
 
 </body>
 

@@ -26,6 +26,7 @@ class StockController extends Controller
     if(Session::has('loginId')){
        $data = User::where('id','=',Session::get('loginId'))->first();
     }
+         //Status des materiels
           $inuse = Equipement::where('statut', 'In Use')->where('type','materiel')->count();
           $munisys = Equipement::where('statut', 'In Stock / Munisys')->where('type','materiel')->count();
           $louisrey = Equipement::where('statut', 'In Stock / Louis Rey')->where('type','materiel')->count();
@@ -35,16 +36,29 @@ class StockController extends Controller
           $retirement = Equipement::where('statut', 'Retirement')->where('type','materiel')->count();
           $stolen = Equipement::where('statut', 'Stolen')->where('type','materiel')->count();
           $don = Equipement::where('statut', 'Don')->where('type','materiel')->count();
+
+         // materiel et accessoires en general
           $materiel = Equipement::where('type', 'materiel')->count();
-          $access = Equipement::where('type', 'accessoire')->count();
-          $accessoire = Equipement::where('type', 'accessoire')
-             ->where('statut', 'in use')
-             ->count();
+          $accessoire = Equipement::where('type', 'accessoire')->count();
+         
+          //type des materiels
+          $laptop= Equipement::where('categorie','PC')->where('produit','laptop')->count();
+          $desktop=Equipement::where('categorie','PC')->where('produit','desktop')->count();
+          $monitor=Equipement::where('categorie','Monitor')->count();
+          $scanner=Equipement::where('categorie','Scanner')->count();
+          $printer=Equipement::where('categorie','Printer')->count();
+          $projector=Equipement::where('categorie','Video projector')->count();
+
+
+
           $user = User::where('profil', 'Utilisateur')->count();
 
 
 
-return view('dashboard', compact('retirement','stolen','don','inuse','munisys','louisrey','site','maintenance','pending','data','materiel','user','accessoire'));
+        return view('dashboard', compact('retirement','stolen','don','inuse',
+        'munisys','louisrey','site','maintenance','pending','data',
+        'materiel','user','accessoire','laptop','desktop','monitor',
+        'scanner','printer','projector'));
 
 }
 
@@ -60,8 +74,8 @@ return view('dashboard', compact('retirement','stolen','don','inuse','munisys','
     return view ('ajoutequip',compact('data','fournisseur'));
   }
 
-  public function ajout(Request $request)
-      { $data = array();
+  public function ajout(Request $request){ 
+    $data = array();
         if(Session::has('loginId')){
           $data = User::where('id','=',Session::get('loginId'))->first();
         }
@@ -146,4 +160,6 @@ return view('dashboard', compact('retirement','stolen','don','inuse','munisys','
     
     
   }
+
+ 
 }
