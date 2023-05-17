@@ -5,9 +5,10 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard</title>
+  <title>It Asset Control-Dashboard</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <link href="assets/img/TYPOTYPE.png" rel="icon">
 
 
 
@@ -161,7 +162,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="utilisateurs">
           <i class="bi bi-people"></i>
           <span>Utilisateurs</span>
         </a>

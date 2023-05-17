@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>It Asset Control-Ajout d'un equipement</title>
+  <title>It Asset Control-Créer un utilisateur</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
   <link href="assets/img/TYPOTYPE.png" rel="icon">
@@ -198,7 +198,7 @@
     <div >
 
         <div class="card">
-          <div class="card-body">
+          <div class="card-body ">
             <div class="card-title">
               <h3>Ajout d'un equipement</h3>
               <nav>
@@ -308,9 +308,9 @@
                 <div class="col-sm-4">
                   <div class="col-sm-6">
                     <select class="form-select" name="fournisseur" id="fournisseur">
-                      @foreach ($fournisseur as $fournisseur )
-                      <option value="1" >{{ $fournisseur }}</option>
-                      @endforeach
+                      
+                      <option value="1" >AAAA</option>
+                     
                     </select>
                   </div>
                 </div>
@@ -365,53 +365,7 @@
               <button class="btn btn-outline-primary btn-xs px-3" id="submit" type="submit">Ajouter</button>
 
             </form><!-- End General Form Elements -->
-           <script>
-               document.addEventListener('DOMContentLoaded', function() {
-                var username = document.getElementById('champ1');
-                var nom_prenom = document.getElementById('nom_prenom');
-                var username = document.getElementById('username');
-                var date_affectation = document.getElementById('date_affectation');
-                var region = document.getElementById('region');
-                var direction = document.getElementById('direction');
-                var site = document.getElementById('site');
-
-              statut.addEventListener('change', function() {
-                if (statut.value === '1') {
-                  username.disabled = false;
-                  username.required = true;
-                  nom_prenom.disabled = false;
-                  nom_prenom.required = true;
-                  username.disabled = false;
-                  username.required = true;
-                  date_affectation.disabled = false;
-                  date_affectation.required = true;
-                  region.disabled = false;
-                  region.required = true;
-                  direction.disabled = false;
-                  direction.required = true;
-                  site.disabled = false;
-                  site.required = true;
-                } else {
-                  username.disabled = true;
-                  username.required = false;
-                  nom_prenom.disabled = true;
-                  nom_prenom.required = false;
-                  username.disabled = true;
-                  username.required = false;
-                  date_affectation.disabled = true;
-                  date_affectation.required = false;
-                  region.disabled = true;
-                  region.required = false;
-                  direction.disabled = true;
-                  direction.required = false;
-                  site.disabled = true;
-                  site.required = false;
-                }
-              });
-               });
-
-           </script>
-            
+    
             
             
           </div>

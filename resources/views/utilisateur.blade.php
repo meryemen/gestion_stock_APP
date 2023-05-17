@@ -5,8 +5,9 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>It Asset Control-Stock-materiel</title>
+  <title>It Asset Control-Utilisateurs</title>
   <link href="assets/img/TYPOTYPE.png" rel="icon">
+
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -190,11 +191,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Stock des materiels</h1>
+      <h1>Utilisateurs</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Materiels</a></li>
-          <li class="breadcrumb-item">Stock</li>
+          <li class="breadcrumb-item"><a href="index.html">Comptes</a></li>
+          <li class="breadcrumb-item">Utilisateurs</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -206,32 +207,29 @@
           <div class="card ">
             <div class="card-body">
              <div >
-              <h5 class="card-title" style="display: inline-block">Materiels</h5>
-              
-                <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
-                <a href="{{ route('exporter') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
-             
-
+              <h5 class="card-title" style="display: inline-block">Utilisateurs</h5>
              </div>
              
              <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
               <thead>
                   <tr>
                     <th></th>
-                    <th class="text-success">Catégorie</th>
-                    <th class="text-success">Produit</th>
-                    <th class="text-success">Numéro de série</th>
-                    <th class="text-success">Caracteristique Tech</th>
-                    <th class="text-success">Statut</th>
-                    <th class="text-success">NetBios</th>
-                    <th class="text-success">Nom & Prénom</th>
+                    <th class="text-success">Nom</th>
+                    <th class="text-success">Prénom</th>
+                    <th class="text-success">Username</th>
+                    <th class="text-success">Email</th>
+                    <th class="text-success">Fonction</th>
                     <th class="text-success">Site</th>
-                    <th class="text-success">Région</th>
+                    <th class="text-success">Region</th>
+                    <th class="text-success">Direction</th>
+                    <th class="text-success">Profil</th>
                     <th class="text-success">Action</th>
+                    <th class="text-success">droit d'accès</th>
+
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($equipments as $equip)
+                    @foreach ($utilisateur as $user)
                   <tr>
                     <td>
                       <span class="custom-checkbox">
@@ -239,28 +237,28 @@
                         <label for="checkbox1"></label>
                       </span>
                     </td>
-                    <td  class="text-overflow">{{ $equip->categorie }}</td>
-                    <td class="text-overflow">{{ $equip->produit }}</td>
-                    <td class="text-overflow">{{ $equip->n_serie }}</td>
-                    <td class="text-overflow">{{ $equip->cracteristique_tech}}</td>
-                    <td class="text-overflow">{{ $equip->statut }}</td>
-                    <td class="text-overflow">{{ $equip->netbios }}</td>
-                    <td class="text-overflow"></td>
-                    <td class="text-overflow"></td>
-                    <td class="text-overflow"></td>
+                    <td  class="text-overflow">{{ $user->nom }}</td>
+                    <td class="text-overflow">{{ $user->prenom }}</td>
+                    <td class="text-overflow">{{ $user->username }}</td>
+                    <td class="text-overflow">{{ $user->email }}</td>
+                    <td class="text-overflow">{{ $user->Fonction }}</td>
+                    <td class="text-overflow">{{ $user->Site }}</td>
+                    <td class="text-overflow">{{ $user->Region }}</td>
+                    <td class="text-overflow">{{ $user->Direction }}</td>
+                    <td class="text-overflow">{{ $user->profil }}</td>
                     <td class="text-overflow">
-                      <a href="#editEmployeeModal" class="edit" ><i class="ri ri-pencil-fill"></i></a>
-                      <a href="#deleteEmployeeModal" class="delete" ><i class="bi bi-trash"></i>
+                      <a href="#editEmployeeModal" class="text-warning" ><i class="ri ri-pencil-fill"></i></a>
+                      <a href="#deleteEmployeeModal" class="text-danger" ><i class="bi bi-trash"></i>
                       </a>
                     </td>
+                    <td class="text-overflow">
+                        <a href="#editEmployeeModal" class="text-secondary" ><i class="bi bi-gear" style="float:center"></i></a>
+                      </td>
                   </tr>
-                  
                   @endforeach
-                  	
-                 
                 </tbody>
               </table>
-             <a href="formulaire"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
+             <a href="createUser"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateurs</button></a> 
              
              
             

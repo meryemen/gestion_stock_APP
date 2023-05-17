@@ -5,7 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-
+  <title>It Asset Control-Fournisseur</title>
+  <link href="assets/img/TYPOTYPE.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -152,7 +153,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="utilisateurs">
           <i class="bi bi-people"></i>
           <span>Utilisateurs</span>
         </a>
@@ -189,7 +190,7 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Table des Fournisseur</h1>
+      <h1>Table des Fournisseurs</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.html">Fournisseur</a></li>
@@ -220,35 +221,46 @@
 
              </div>
              
-              <table class="table table-hover table-sm">
+              <table class="table table-hover table-sm"  style="table-layout: fixed; width: 100%;">
                 <thead>
                   <tr>
-                    <th></th>
+                    
                     <th class="text-success">Fournisseur</th>
+                    <th class="text-success">Responsable</th>
+                    <th class="text-success">Email</th>
+                    <th class="text-success">Adresse</th>
+                    <th class="text-success">Téléphone-Site</th>
+                    <th class="text-success">Téléphone-Agence</th>
                     <th class="text-success">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($fournisseur as $fourni)
                   <tr>
-                      <td></td>
+                     
                       <td>{{ $fourni->nom_four }}</td>
+                      <td>{{ $fourni->responsable }}</td>
+                      <td>{{ $fourni->email }}</td>
+                      <td>{{ $fourni->adresse }}</td>
+                      <td>{{ $fourni->tele_siege }}</td>
+                      <td>{{ $fourni->tele_agence }}</td>
+                      
                       <td>
-                          <a href="#editEmployeeModal" class="edit"><i class="ri ri-pencil-fill"></i></a>
-                          <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $fourni->id }}" class="delete" data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id }}"><i class="bi bi-trash"></i></a>
+                          <a href="#editEmployeeModal" class="edit text-warning"><i class="ri ri-pencil-fill"></i></a>
+                          <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $fourni->id_fourni }}" class="delete text-danger " data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id_fourni }}"><i class="bi bi-trash"></i></a>
                       </td>
                   </tr>
               
                   <!-- Modal -->
-                      <div class="modal fade" id="deleteModal{{ $fourni->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $fourni->id }}" aria-hidden="true">
+                      <div class="modal fade" id="deleteModal{{ $fourni->id_fourni }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $fourni->id_fourni }}" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h1 class="modal-title fs-5 text-danger" id="deleteModalLabel{{ $fourni->id }}"> <i class="bi bi-trash text-danger"></i> Suppression</h1>
+                                      <h1 class="modal-title fs-5 text-danger" id="deleteModalLabel{{ $fourni->id_fourni }}"> <i class="bi bi-trash text-danger"></i> Suppression</h1>
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body">
-                                      <span>Êtes vous sûr de supprimer le fournisseur : <span id="fournisseurNom"></span></p>
+                                      <span>Êtes vous sûr de supprimer le fournisseur : <span id="fournisseurNom{{ $fourni->id_fourni }}"></span></p>
                                   </div>
                                   <div class="modal-footer">
                                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -270,7 +282,7 @@
                                   var fournisseurNom = this.getAttribute('data-fournisseur-nom');
                                   var fournisseurId = this.getAttribute('data-fournisseur-id');
                       
-                                  document.getElementById('fournisseurNom').textContent = fournisseurNom;
+                                  document.getElementById('fournisseurNom' + fournisseurId).textContent = fournisseurNom;
                               });
                           });
                       </script>
@@ -284,24 +296,57 @@
 
                   <!-- Modal -->
                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5" id="exampleModalLabel">Ajout d'un fournisseur</h1>
+                          <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel"><i class="bi bi-plus"></i>Ajout d'un fournisseur</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
 
                          <form action="{{ route('ajout-fournisseur') }}" method="POST">
                           @csrf
-                          <label for="nom_four" class="form-label">Fournisseur</label>
-                          <div >
-                            <input type="text" class="form-control" id="nom_four" name="nom_four">
+                          
+                          <div class="row mb-3">
+                            <label for="fournisseur" class="col-sm-2 col-form-label">Fournisseur :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="fournisseur" name="fournisseur" required class="form-control">
                           </div>
-                        </div>
-                      
+                                
+                          <label for="responsable" class="col-sm-2 col-form-label">Responsable :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="responsable" name="responsable" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="email" class="col-sm-2 col-form-label">Email :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="email" name="email" required class="form-control">
+                          </div>
+                                
+                          <label for="adresse" class="col-sm-2 col-form-label">Adresse :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="adresse" name="adresse" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="site" class="col-sm-2 col-form-label">Télephone-Site :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="site" name="site" required class="form-control">
+                          </div>
+                                
+                          <label for="agence" class="col-sm-2 col-form-label">Télephone-Agence :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="agence" name="agence" required class="form-control">
+                          </div>
+                            
+                          </div>
+                       </div>
 
                         <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                           <button type="submit" class="btn btn-primary">Ajouter</button>
                         </div>
                       </form>

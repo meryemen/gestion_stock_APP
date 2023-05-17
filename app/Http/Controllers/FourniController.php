@@ -25,10 +25,20 @@ class FourniController extends Controller
         $data = User::where('id','=',Session::get('loginId'))->first();
       }
 
-      $nom_four = $request->input('nom_four');
+      $nom_four = $request->input('fournisseur');
+      $responsable = $request->input('responsable');
+      $email = $request->input('email');
+      $adresse = $request->input('adresse');
+      $tele_siege = $request->input('site');
+      $tele_agence = $request->input('agence');
 
       $fournisseur = new Fournisseur();
       $fournisseur->nom_four = $nom_four;
+      $fournisseur->responsable = $responsable;
+      $fournisseur->email = $email;
+      $fournisseur->adresse = $adresse;
+      $fournisseur->tele_siege = $tele_siege;
+      $fournisseur->tele_agence = $tele_agence;
       $fournisseur->save();
 
       return redirect()->route('fournisseur',compact('data'))->with('success', 'Fournisseur ajouté ');

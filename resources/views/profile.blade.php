@@ -4,12 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard - NiceAdmin Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-
+  <title>It Asset Control-Profile-{{  $data->nom  }} {{ $data->prenom }}</title>
+  <link href="assets/img/TYPOTYPE.png" rel="icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -154,7 +150,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="utilisateurs">
           <i class="bi bi-people"></i>
           <span>Utilisateurs</span>
         </a>

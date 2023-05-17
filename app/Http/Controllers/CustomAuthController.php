@@ -99,6 +99,23 @@ public function stock(Request $request){
    return view('stock', compact('data'));
 }
 
+public function table(){
+   $data = array();
+   if(Session::has('loginId')){
+      $data = User::where('id','=',Session::get('loginId'))->first();
+   }
 
+   $utilisateur = array();
+   $utilisateur = User::all();
+   return view('utilisateur', compact('data','utilisateur'));
+}
+
+public function createUser(){
+   $data = array();
+   if(Session::has('loginId')){
+      $data = User::where('id','=',Session::get('loginId'))->first();
+   }
+   return view('userCreate', compact('data'));
+}
 
 }
