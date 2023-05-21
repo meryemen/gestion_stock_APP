@@ -139,7 +139,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="accessoire">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
@@ -174,7 +174,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="historique">
           <i class="bi bi-clock-history"></i>
           <span>Historique</span>
         </a>
@@ -216,13 +216,13 @@
               <div class="alert alert-success">{{ Session::get('success') }}</div>
                 @endif
                 <div class="row mb-3">
-                  <label class="col-sm-2 col-form-label">Type</label>
+                  <label class="col-sm-2 col-form-label">Profil</label>
                   <div class="col-sm-4">
                      <div class="col-sm-6">
                    <select class="form-select" id="type" name="type">
                      
-                     <option value="1">materiel</option>
-                     <option value="2">accessoire</option>
+                     <option value="1">Admin</option>
+                     <option value="2">Utilisateur</option>
                     
                    </select>
                    </div>

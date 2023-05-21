@@ -128,7 +128,7 @@
         </a><!-- End materiels Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="accessoire">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
@@ -164,7 +164,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="historique">
           <i class="bi bi-clock-history"></i>
           <span>Historique</span>
         </a>

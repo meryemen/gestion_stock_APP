@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,11 +18,14 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user=$request->user();
-        if($user && $user->profil === 'Admin'){
-            return $next($request);
-        }else{
-            return redirect ('dashboard')->with('error','You have no access');
+        $loginId = Session::get('loginId');
+        if ($loginId) {
+            $user = User::find($loginId);
+            if ($user && $user->profil === 'Admin') {
+                return $next($request);
+            }
         }
+
+        return Redirect::route('error');
     }
 }

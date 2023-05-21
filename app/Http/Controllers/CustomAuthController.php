@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 
 class CustomAuthController extends Controller
 {
+   public function error(){
+      return view('error');
+   }
    public function login(){
 
     return view('login');
@@ -104,7 +107,7 @@ public function table(){
    if(Session::has('loginId')){
       $data = User::where('id','=',Session::get('loginId'))->first();
    }
-
+   
    $utilisateur = array();
    $utilisateur = User::all();
    return view('utilisateur', compact('data','utilisateur'));
@@ -116,6 +119,67 @@ public function createUser(){
       $data = User::where('id','=',Session::get('loginId'))->first();
    }
    return view('userCreate', compact('data'));
+}
+
+public function search(Request $request){
+    if($request->ajax()){
+      $data= User::where('nom','like','%'.$request->search.'%')
+      ->orwhere('prenom','like','%'.$request->search.'%')
+      ->orwhere('username','like','%'.$request->search.'%')->get();
+      $output='';
+      if(count($data)>0){
+          $output ='
+          
+              <table class="table" style="table-layout: fixed; width: 100%;">
+              <thead>
+              <tr>
+              
+              <th class="text-success">Nom</th>
+              <th class="text-success">Prénom</th>
+              <th class="text-success">Username</th>
+              <th class="text-success">Email</th>
+              <th class="text-success">Fonction</th>
+              <th class="text-success">Site</th>
+              <th class="text-success">Region</th>
+              <th class="text-success">Direction</th>
+              <th class="text-success">Profil</th>
+              <th class="text-success">Action</th>
+              <th class="text-success">droit d accès</th>
+              </tr>
+              </thead>
+              <tbody>';
+                  foreach($data as $row){
+                      $output .='
+                      <tr>
+                      <td>'.$row->nom.'</td>
+                      <td>'.$row->prenom.'</td>
+                      <td>'.$row->username.'</td>
+                      <td>'.$row->email.'</td>
+                      <td>'.$row->Fonction.'</td>
+                      <td>'.$row->Site.'</td>
+                      <td>'.$row->Region.'</td>
+                      <td>'.$row->Direction.'</td>
+                      <td>'.$row->profil.'</td>
+                      <td class="text-overflow">
+                      <a href="#editEmployeeModal" class="text-warning" ><i class="ri ri-pencil-fill"></i></a>
+                      <a href="#deleteEmployeeModal" class="text-danger" ><i class="bi bi-trash"></i>
+                      </a>
+                    </td>
+                    <td class="text-overflow">
+                        <a href="#editEmployeeModal" class="text-secondary" ><i class="bi bi-gear" style="float:center"></i></a>
+                      </td>
+                      </tr>
+                      ';
+                  }
+          $output .= '
+              </tbody>
+              </table>';
+      }
+      else{
+          $output .='No results';
+      }
+      return $output;
+  }
 }
 
 }

@@ -140,7 +140,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="accessoire">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
@@ -176,7 +176,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="historique">
           <i class="bi bi-clock-history"></i>
           <span>Historique</span>
         </a>
@@ -207,6 +207,15 @@
     </div>
     <div class="col-lg-9">
     <div class="row">
+      @if (session('success'))
+      <div class="alert alert-success">
+      {{ session('success') }}
+      </div>
+    @elseif (session('fail'))
+    <div class="alert alert-danger">
+      {{ session('fail') }}
+      </div>
+    @endif
     <!-- materiel Card -->
     <div class="col-xxl-4 col-md-6">
       <div class="card info-card sales-card" style="border-radius: 15px;">

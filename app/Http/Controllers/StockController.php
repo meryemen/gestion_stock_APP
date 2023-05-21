@@ -161,5 +161,13 @@ class StockController extends Controller
     
   }
 
+  public function accessoire(){
+    $data = array();
+    if(Session::has('loginId')){
+      $data = User::where('id','=',Session::get('loginId'))->first();
+    }
+    return view('accessoire', compact('data'));
+  }
+
  
 }

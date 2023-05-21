@@ -131,7 +131,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="accessoire">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
@@ -167,7 +167,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="historique">
           <i class="bi bi-clock-history"></i>
           <span>Historique</span>
         </a>
@@ -246,12 +246,70 @@
                       <td>{{ $fourni->tele_agence }}</td>
                       
                       <td>
-                          <a href="#editEmployeeModal" class="edit text-warning"><i class="ri ri-pencil-fill"></i></a>
+                          <a data-bs-toggle="modal" data-bs-target="#editModal{{ $fourni->id_fourni }}" class="edit text-success " data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id_fourni }}" data-fournisseur-responsable="{{ $fourni->responsable }}" data-fournisseur-email="{{ $fourni->email }}" data-fournisseur-adresse="{{ $fourni->adresse }}" data-fournisseur-tele_siege="{{ $fourni->tele_siege }}" data-fournisseur-tele_agence="{{ $fourni->tele_agence }}"><i class="ri ri-pencil-fill"></i></a>
                           <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $fourni->id_fourni }}" class="delete text-danger " data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id_fourni }}"><i class="bi bi-trash"></i></a>
                       </td>
                   </tr>
-              
-                  <!-- Modal -->
+                   <!-- Modal edit-->
+                   <div class="modal fade" id="editModal{{ $fourni->id_fourni }}" tabindex="-1" aria-labelledby="editModalLabel{{ $fourni->id_fourni }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5 text-success" id="editModalLabel{{ $fourni->id_fourni }}"><i class="bi bi-pencil"></i>  Modifier</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                         <form action="{{ route('edit-fournisseur' , $fourni->id_fourni) }}" method="POST">
+                          @csrf
+                          
+                          <div class="row mb-3">
+                            <label for="fournisseur" class="col-sm-2 col-form-label">Fournisseur :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="fournisseur{{ $fourni->id_fourni }}" name="fournisseur" required class="form-control">
+                          </div>
+                                
+                          <label for="responsable" class="col-sm-2 col-form-label">Responsable :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="responsable{{ $fourni->id_fourni }}" name="responsable" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="email" class="col-sm-2 col-form-label">Email :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="email{{ $fourni->id_fourni }}" name="email" required class="form-control">
+                          </div>
+                                
+                          <label for="adresse" class="col-sm-2 col-form-label">Adresse :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="adresse{{ $fourni->id_fourni }}" name="adresse" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="site" class="col-sm-2 col-form-label">Télephone-Site :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="site{{ $fourni->id_fourni }}" name="site" required class="form-control">
+                          </div>
+                                
+                          <label for="agence" class="col-sm-2 col-form-label">Télephone-Agence :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="agence{{ $fourni->id_fourni }}" name="agence" required class="form-control">
+                          </div>
+                            
+                          </div>
+                       </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                          <button type="submit" class="btn btn-success">Confirmer</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Modal Delete-->
                       <div class="modal fade" id="deleteModal{{ $fourni->id_fourni }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $fourni->id_fourni }}" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">
@@ -275,26 +333,13 @@
                       @endforeach
                         </tbody>
 
-
-                        <script>
-                          document.querySelectorAll('.delete').forEach(function(element) {
-                              element.addEventListener('click', function() {
-                                  var fournisseurNom = this.getAttribute('data-fournisseur-nom');
-                                  var fournisseurId = this.getAttribute('data-fournisseur-id');
-                      
-                                  document.getElementById('fournisseurNom' + fournisseurId).textContent = fournisseurNom;
-                              });
-                          });
-                      </script>
-
-
                       </table>
                   <!-- Button trigger modal -->
                   <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: right"><i class="bi bi-plus"></i>
                     Ajouter un fournisseur
                   </button>
 
-                  <!-- Modal -->
+                  <!-- Modal Ajout-->
                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                       <div class="modal-content">
@@ -384,6 +429,7 @@
   
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 

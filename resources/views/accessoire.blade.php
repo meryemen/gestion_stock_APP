@@ -131,7 +131,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="accessoire">
+        <a class="nav-link collapsed" href="users-profile.html">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
@@ -190,10 +190,10 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Stock des materiels</h1>
+      <h1>Stock des accessoires</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Materiels</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Accessoires</a></li>
           <li class="breadcrumb-item">Stock</li>
         </ol>
       </nav>
@@ -206,7 +206,7 @@
           <div class="card ">
             <div class="card-body">
              <div >
-              <h5 class="card-title" style="display: inline-block">Materiels</h5>
+              <h5 class="card-title" style="display: inline-block">Accessoires</h5>
               
                 <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
                 <a href="{{ route('exporter') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
@@ -218,20 +218,12 @@
               <thead>
                   <tr>
                     <th></th>
-                    <th class="text-success">Catégorie</th>
-                    <th class="text-success">Produit</th>
-                    <th class="text-success">Numéro de série</th>
-                    <th class="text-success">Caracteristique Tech</th>
-                    <th class="text-success">Statut</th>
-                    <th class="text-success">NetBios</th>
-                    <th class="text-success">Nom & Prénom</th>
-                    <th class="text-success">Site</th>
-                    <th class="text-success">Région</th>
-                    <th class="text-success">Action</th>
+                    <th class="text-success"></th>
+                    
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($equipments as $equip)
+                 
                   <tr>
                     <td>
                       <span class="custom-checkbox">
@@ -239,15 +231,8 @@
                         <label for="checkbox1"></label>
                       </span>
                     </td>
-                    <td  class="text-overflow">{{ $equip->categorie }}</td>
-                    <td class="text-overflow">{{ $equip->produit }}</td>
-                    <td class="text-overflow">{{ $equip->n_serie }}</td>
-                    <td class="text-overflow">{{ $equip->cracteristique_tech}}</td>
-                    <td class="text-overflow">{{ $equip->statut }}</td>
-                    <td class="text-overflow">{{ $equip->netbios }}</td>
-                    <td class="text-overflow"></td>
-                    <td class="text-overflow"></td>
-                    <td class="text-overflow"></td>
+                    <td  class="text-overflow"></td>
+                    
                     <td class="text-overflow">
                       <a href="#editEmployeeModal" class="edit" ><i class="ri ri-pencil-fill"></i></a>
                       <a href="#deleteEmployeeModal" class="delete" ><i class="bi bi-trash"></i>
@@ -255,7 +240,6 @@
                     </td>
                   </tr>
                   
-                  @endforeach
                   	
                  
                 </tbody>

@@ -11,6 +11,7 @@
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">  <!-- Vendor CSS Files -->
   <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}">
@@ -40,7 +41,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
+        <input type="text" name="search" id="search" placeholder="Enter un mot clé" title="Enter search keyword" onfocus="this.value=''" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -132,7 +133,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="accessoire">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
@@ -168,7 +169,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="historique">
           <i class="bi bi-clock-history"></i>
           <span>Historique</span>
         </a>
@@ -199,7 +200,7 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
+    
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -209,11 +210,11 @@
              <div >
               <h5 class="card-title" style="display: inline-block">Utilisateurs</h5>
              </div>
-             
+             <div id="search_list">
              <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
               <thead>
                   <tr>
-                    <th></th>
+                    
                     <th class="text-success">Nom</th>
                     <th class="text-success">Prénom</th>
                     <th class="text-success">Username</th>
@@ -231,12 +232,7 @@
                 <tbody>
                     @foreach ($utilisateur as $user)
                   <tr>
-                    <td>
-                      <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                        <label for="checkbox1"></label>
-                      </span>
-                    </td>
+                    
                     <td  class="text-overflow">{{ $user->nom }}</td>
                     <td class="text-overflow">{{ $user->prenom }}</td>
                     <td class="text-overflow">{{ $user->username }}</td>
@@ -258,6 +254,7 @@
                   @endforeach
                 </tbody>
               </table>
+            </div>
              <a href="createUser"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateurs</button></a> 
              
              
@@ -288,9 +285,28 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    $(document).ready(function(){
+        $('#search').on('keyup',function(){
+            var query= $(this).val(); 
+            $.ajax({
+              url:"search" ,
+              type:"GET",
+              data:{'search' : query},
+              success:function(data){
+                $('#search_list').html(data);
+                $('#search_results table').addClass('table table-hover table-sm');
+                $('#search_results td').addClass('text-overflow');
+              }
+            });
+            //end of ajax call 
+        });
+    });
+</script>
 
 </body>
 
