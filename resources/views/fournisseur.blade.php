@@ -39,7 +39,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
+        <input type="text" name="query" id="fournisseur_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -220,8 +220,8 @@
              
 
              </div>
-             
-              <table class="table table-hover table-sm"  style="table-layout: fixed; width: 100%;">
+             <div id="search_list">
+             <table class="table table-hover table-sm"  style="table-layout: fixed; width: 100%;">
                 <thead>
                   <tr>
                     
@@ -398,8 +398,8 @@
                       </div>
                     </div>
                   </div>
-
-
+               </table>
+          </div>
             </div>
           </div>
 
@@ -426,10 +426,24 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    //fournisseur
+// Delete Modal fournisseur 
+document.querySelectorAll('.delete').forEach(function(element) {
+    element.addEventListener('click', function() {
+        var fournisseurNom = this.getAttribute('data-fournisseur-nom');
+        var fournisseurId = this.getAttribute('data-fournisseur-id');
+
+        document.getElementById('fournisseurNom' + fournisseurId).textContent = fournisseurNom;
+    });
+});
+
+  </script>
 
 </body>
 

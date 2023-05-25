@@ -27,7 +27,7 @@ Route::post('login-user',[CustomAuthController::class,'loginUser'])->name('login
 Route::get('/logout',[CustomAuthController::class,'logout']);
 Route::get('/profile',[CustomAuthController::class,'profile'])->name('profile')->middleware('isLoggedIn');
 
-Route::get('/utilisateurs', [CustomAuthController::class, 'table'])->middleware('isLoggedIn');
+Route::get('/utilisateurs', [CustomAuthController::class, 'table'])->middleware('isLoggedIn')->name('utilisateur');
 Route::get('/createUser', [CustomAuthController::class, 'createUser'])->middleware('isLoggedIn');
 
 
@@ -49,6 +49,12 @@ Route::post('/delete-fournisseur/{id_fourni}', [FourniController::class, 'delete
 Route::get('exporter', [ExportController::class, 'export'])->name('exporter');
 Route::get('historique', [HistoriqueController::class, 'show'])->middleware('isLoggedIn','is_admin');
 
-Route::get('/search', [CustomAuthController::class,'search']);
+Route::get('/search-utilisateur', [CustomAuthController::class,'search']);
+Route::get('/search-fournisseur', [FourniController::class,'search']);
 
 Route::get('/error',[CustomAuthController::class,'error'])->middleware('isLoggedIn')->name('error');
+
+Route::post('Addutilisateur', [CustomAuthController::class,'insert'])->name('ajout-utilisateur');
+Route::post('/delete-utilisateur/{id}', [CustomAuthController::class, 'delete'])->name('delete-utilisateur');
+Route::post('/droit-acces/{id}', [CustomAuthController::class, 'updateDroitAcces'])->name('droit-acces');
+

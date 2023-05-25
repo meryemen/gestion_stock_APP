@@ -11,7 +11,6 @@ class User extends Model
     public $table="users";
 
     public $fillable = [
-        'is_admin',
         'nom',
         'prenom',
         'username',
@@ -22,10 +21,10 @@ class User extends Model
         'Region',
         'Direction',
         'profil',
-        'has_access_to_user_management',
-        'has_access_to_inventory_management',
-        'has_access_to_view_inventory',
-        'has_access_to_view_history'
+        'accessStock',
+        'manageStock',
+        'manageUsers',
+        'manageSuppliers'
     ];
     protected $hidden = [
         'password',

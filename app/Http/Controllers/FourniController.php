@@ -32,6 +32,11 @@ class FourniController extends Controller
       $tele_siege = $request->input('site');
       $tele_agence = $request->input('agence');
 
+      $existingFournisseur = Fournisseur::where('nom_four', $nom_four)->first();
+      if ($existingFournisseur) {
+          return redirect()->route('fournisseur', compact('data'))->with('fail', 'Ce fournisseur existe déjà');
+      }
+
       $fournisseur = new Fournisseur();
       $fournisseur->nom_four = $nom_four;
       $fournisseur->responsable = $responsable;
@@ -82,5 +87,60 @@ class FourniController extends Controller
 
 
     }
+
+    public function search(Request $request){
+      if($request->ajax()){
+        $data= Fournisseur::where('nom_four','like','%'.$request->search.'%')
+        ->orwhere('responsable','like','%'.$request->search.'%')->get();
+        $output='';
+        if(count($data)>0){
+            $output ='
+            
+                <table class="table" style="table-layout: fixed; width: 100%;">
+                <thead>
+                <tr>
+                
+                <th class="text-success">Fournisseur</th>
+                <th class="text-success">Responsable</th>
+                <th class="text-success">Email</th>
+                <th class="text-success">Adresse</th>
+                <th class="text-success">Téléphone-Site</th>
+                <th class="text-success">Téléphone-Agence</th>
+                <th class="text-success">Action</th>
+                
+                </tr>
+                </thead>
+                <tbody>';
+                    foreach($data as $row){
+                        $output .='
+                        <tr>
+                        <td>'.$row->nom_four.'</td>
+                        <td>'.$row->responsable.'</td>
+                        <td>'.$row->email.'</td>
+                        <td>'.$row->adresse.'</td>
+                        <td>'.$row->tele_siege.'</td>
+                        <td>'.$row->tele_agence.'</td>
+                       
+                        <td class="text-overflow">
+                        <a href="#editEmployeeModal" class="text-warning" ><i class="ri ri-pencil-fill"></i></a>
+                        <a href="#deleteEmployeeModal" class="text-danger" ><i class="bi bi-trash"></i>
+                        </a>
+                      </td>
+                     
+                        </tr>
+                        
+                        ';
+                    }
+            $output .= '
+                </tbody>
+                </table>';
+        }
+        else{
+            $output .='Aucun résultat trouvé';
+        }
+        return $output;
+    }
+  }
+  
     
 }

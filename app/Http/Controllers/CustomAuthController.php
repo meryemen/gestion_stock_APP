@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Equipement;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -176,10 +174,69 @@ public function search(Request $request){
               </table>';
       }
       else{
-          $output .='No results';
+          $output .='Aucun résultat trouvé';
       }
       return $output;
   }
 }
+public function insert(Request $request){
+   $request->validate([
+            'profil' => 'required',
+            'nom' => 'required',
+            'prenom' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'passwordconfirm' => 'required',
+            'fonction' => 'required',
+            'site' => 'required',
+            'region' => 'required',
+            'direction' => 'required',
+           
+
+
+   ]);
+        $utilisateur = new User();
+        $utilisateur->nom = $request->input('nom');
+        $utilisateur->prenom = $request->input('prenom');
+        $utilisateur->username = $request->input('username');
+        $utilisateur->email = $request->input('email');
+        $utilisateur->password = Hash::make($request->input('password'));
+        $utilisateur->fonction = $request->input('fonction');
+        $utilisateur->site = $request->input('site');
+        $utilisateur->region = $request->input('region');
+        $utilisateur->direction = $request->input('direction');
+        $utilisateur->profil = $request->input('profil');
+
+        
+        $utilisateur->save();
+
+        return redirect()->route('utilisateur')->with('success', 'Utilisateur ajouté avec succès.');
+
+}
+public function delete($id){
+   $data = array();
+   if(Session::has('loginId')){
+     $data = User::where('id','=',Session::get('loginId'))->first();
+   }
+
+   $utilisateur = User::find($id);
+   $utilisateur->delete();
+   return redirect()->route('utilisateur',compact('data'))->with('fail', 'utilisateur supprimer ');
+
+ }
+
+ public function updateDroitAcces(Request $request, $userId){
+   $user = User::find($userId);
+   
+   $user->accessStock = $request->has('accessStock') ? 1 : 0;
+   $user->manageStock = $request->has('manageStock') ? 1 : 0;
+   $user->manageUsers = $request->has('manageUsers') ? 1 : 0;
+   $user->manageSuppliers = $request->has('manageSuppliers') ? 1 : 0;
+
+    $user->save();
+    return redirect()->route('utilisateur')->with('success', 'Done');
+
+ }
 
 }

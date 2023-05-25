@@ -19,6 +19,10 @@ class Personne extends Model
         'Site',
         'updated_at',
         'created_at',
+        'accessStock',
+        'manageStock',
+        'manageUsers',
+        'manageSuppliers',
         
     ];
 }

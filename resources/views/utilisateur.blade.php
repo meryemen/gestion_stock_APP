@@ -41,7 +41,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="search" id="search" placeholder="Enter un mot clé" title="Enter search keyword" onfocus="this.value=''" style="border: 2px solid rgb(255, 255, 255);">
+        <input type="text" name="search" id="user_search" placeholder="Enter un mot clé" title="Enter search keyword" onfocus="this.value=''" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -200,7 +200,13 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    
+    @if (Session::has('success'))
+    <div class="alert alert-success">{{ Session::get('success') }}</div>
+      @endif
+      
+      @if (Session::has('fail'))
+      <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+     @endif
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -244,20 +250,196 @@
                     <td class="text-overflow">{{ $user->profil }}</td>
                     <td class="text-overflow">
                       <a href="#editEmployeeModal" class="text-warning" ><i class="ri ri-pencil-fill"></i></a>
-                      <a href="#deleteEmployeeModal" class="text-danger" ><i class="bi bi-trash"></i>
+                      <a data-bs-toggle="modal" data-bs-target="#deleteuserModal{{ $user->id }}" class="delete text-danger " data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-id="{{ $user->id }}" ><i class="bi bi-trash"></i>
+                          <!-- Modal Delete-->
+                          <div class="modal fade" id="deleteuserModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteuserModalLabel{{ $user->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5 text-danger" id="deleteuserModalLabel{{ $user->id }}"> <i class="bi bi-trash text-danger"></i> Suppression</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <span class="text-black">Êtes-vous sûr de supprimer l'utilisateur : <span id="utilisateurNom{{ $user->id }}"></span></span>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <form action="{{ route('delete-utilisateur', $user->id  ) }}" method="POST">
+                                          @csrf
+                                        <button type="submit" class="btn btn-danger">Confirmer</button>
+                                      </form>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                          <script>
+                            document.querySelectorAll('.delete').forEach(function(element) {
+                            element.addEventListener('click', function() {
+                                var UtilisateurNom = this.getAttribute('data-utilisateur-nom');
+                                var UtilisateurId = this.getAttribute('data-utilisateur-id');
+                                var UtilisateurPrenom = this.getAttribute('data-utilisateur-prenom');
+                          
+                                var utilisateurNomElement = document.querySelector('#utilisateurNom' + UtilisateurId);
+                                utilisateurNomElement.textContent = UtilisateurNom + " " +UtilisateurPrenom;
+                            });
+                          });
+                          </script>
                       </a>
                     </td>
                     <td class="text-overflow">
-                        <a href="#editEmployeeModal" class="text-secondary" ><i class="bi bi-gear" style="float:center"></i></a>
-                      </td>
+                      <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{ $user->id }}"><i class="bi bi-gear" style="float:center"></i></a>
+                  </td>
+                  
+                  <!-- Modal droits d'accès -->
+                  <div class="modal fade" id="exampleModalCenter{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                          <div class="modal-content">
+                              <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLongTitle">Droits d'accès</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="form-check form-switch">
+                                      <input class="form-check-input" type="checkbox" id="accessStock{{ $user->id }}" name="accessStock" value="1">
+                                      <label class="form-check-label" for="accessStock{{ $user->id }}">Accès au stock des équipements</label>
+                                  </div>
+                                  <div class="form-check form-switch">
+                                      <input class="form-check-input" type="checkbox" id="manageStock{{ $user->id }}" name="manageStock" value="1">
+                                      <label class="form-check-label" for="manageStock{{ $user->id }}">Droits de gestion du stock</label>
+                                  </div>
+                                  <div class="form-check form-switch">
+                                      <input class="form-check-input" type="checkbox" id="manageUsers{{ $user->id }}" name="manageUsers" value="1">
+                                      <label class="form-check-label" for="manageUsers{{ $user->id }}">Droit de gestion des utilisateurs</label>
+                                  </div>
+                                  <div class="form-check form-switch">
+                                      <input class="form-check-input" type="checkbox" id="manageSuppliers{{ $user->id }}" name="manageSuppliers" value="1">
+                                      <label class="form-check-label" for="manageSuppliers{{ $user->id }}">Droit de gestion des fournisseurs</label>
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                  <form action="{{ route('droit-acces', $user->id) }}" method="POST">
+                                      @csrf
+                                      <button type="submit" class="btn btn-primary">Confirmer</button>
+                                  </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                   </tr>
                   @endforeach
                 </tbody>
               </table>
             </div>
-             <a href="createUser"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateurs</button></a> 
+             <button class="btn btn-outline-primary btn-sm " data-bs-toggle="modal" data-bs-target="#addModal" style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateur</button> 
              
              
+                  <!-- Modal Ajout-->
+                  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5 text-primary" id="addModalLabel"><i class="bi bi-plus"></i>Créer un utilisateur</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                         <form action="{{ route('ajout-utilisateur') }}" id="ajout-utilisateur-form" method="POST">
+                          @csrf
+                          <div class="row mb-3">
+                          <label for="site" class="col-sm-2 col-form-label">Profil:</label>
+                          <div class="col-sm-4">
+                            <div class="col-sm-6">
+                          <select class="form-select" id="profil" name="profil" >
+                            
+                            <option value="Admin">Admin</option>
+                            <option value="Utilisateur">Utilisateur</option>
+                           
+                          </select>
+                          </div>
+                         </div>
+                        </div>
+                        <nav>
+                          <ol class="breadcrumb">
+                            <li class="breadcrumb-item"> Données personnelles</li>
+                          </ol>
+                        </nav>
+                          <div class="row mb-3">
+                            <label for="fournisseur" class="col-sm-2 col-form-label">Nom :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="nom" name="nom"  class="form-control">
+                          </div>
+                                
+                          <label for="responsable" class="col-sm-2 col-form-label">Prenom :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="prenom" name="prenom"  class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="email" class="col-sm-2 col-form-label">Username :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="username" name="username"  class="form-control">
+                          </div>
+                                
+                          <label for="adresse" class="col-sm-2 col-form-label">Email :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="email" name="email"  class="form-control">
+                          </div>
+                            
+                          </div>
+                          <nav>
+                            <ol class="breadcrumb">
+                              <li class="breadcrumb-item">Mot de passe</li>
+                            </ol>
+                          </nav>
+                          <div class="row mb-3">
+                            <label for="site" class="col-sm-2 col-form-label">Mot de passe:</label>
+                          <div class="col-sm-4">
+                            <input type="password" id="password" name="password"  class="form-control">
+                          </div>
+                                
+                          <label for="agence" class="col-sm-2 col-form-label">Confirmer le mot de passe :</label>
+                          <div class="col-sm-4">
+                            <input type="password" id="passwordconfirm" name="passwordconfirm"  class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="site" class="col-sm-2 col-form-label">Fonction:</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="fonction" name="fonction"  class="form-control">
+                          </div>
+                                
+                          <label for="agence" class="col-sm-2 col-form-label">Site :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="site" name="site"  class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="site" class="col-sm-2 col-form-label">Region:</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="region" name="region"  class="form-control">
+                          </div>
+                                
+                          <label for="agence" class="col-sm-2 col-form-label">Direction :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="direction" name="direction"  class="form-control">
+                          </div>
+                            
+                          </div>
+                          
+                       </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                          <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
             
 
             </div>
@@ -267,7 +449,7 @@
       </div>
       
     </section>
-
+          
   </main><!-- End #main -->
 
   
@@ -289,24 +471,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script>
-    $(document).ready(function(){
-        $('#search').on('keyup',function(){
-            var query= $(this).val(); 
-            $.ajax({
-              url:"search" ,
-              type:"GET",
-              data:{'search' : query},
-              success:function(data){
-                $('#search_list').html(data);
-                $('#search_results table').addClass('table table-hover table-sm');
-                $('#search_results td').addClass('text-overflow');
-              }
-            });
-            //end of ajax call 
-        });
-    });
-</script>
+  <script src="js/app.js"></script>
+
+
 
 </body>
 
