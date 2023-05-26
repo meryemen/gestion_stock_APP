@@ -249,83 +249,188 @@
                     <td class="text-overflow">{{ $user->Direction }}</td>
                     <td class="text-overflow">{{ $user->profil }}</td>
                     <td class="text-overflow">
-                      <a href="#editEmployeeModal" class="text-warning" ><i class="ri ri-pencil-fill"></i></a>
-                      <a data-bs-toggle="modal" data-bs-target="#deleteuserModal{{ $user->id }}" class="delete text-danger " data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-id="{{ $user->id }}" ><i class="bi bi-trash"></i>
-                          <!-- Modal Delete-->
-                          <div class="modal fade" id="deleteuserModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteuserModalLabel{{ $user->id }}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5 text-danger" id="deleteuserModalLabel{{ $user->id }}"> <i class="bi bi-trash text-danger"></i> Suppression</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <span class="text-black">Êtes-vous sûr de supprimer l'utilisateur : <span id="utilisateurNom{{ $user->id }}"></span></span>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                        <form action="{{ route('delete-utilisateur', $user->id  ) }}" method="POST">
-                                          @csrf
-                                        <button type="submit" class="btn btn-danger">Confirmer</button>
-                                      </form>
-                                    </div>
+                      <a  data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}" class="edit text-success " data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-id="{{ $user->id }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-email="{{ $user->email }}" data-utilisateur-username="{{ $user->username }}" data-utilisateur-fonction="{{ $user->Fonction }}" data-utilisateur-site="{{ $user->Site }}" data-utilisateur-region="{{ $user->Region }}" data-utilisateur-direction="{{ $user->Direction }}" ><i class="ri ri-pencil-fill"></i></a>
+
+                      <!-- edit user Modal -->
+                      <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $user->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title text-success" id="editModalLabel{{ $user->id }}"><i class="ri ri-pencil-fill"></i>  Modifier</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="{{ route('edit-utilisateur', $user->id) }}" method="POST">
+                                @csrf
+                                <div class="row mb-3">
+                                  <label for="site" class="col-sm-2 col-form-label">Profil:</label>
+                                  <div class="col-sm-4">
+                                    <div class="col-sm-6">
+                                  <select class="form-select" id="profil" name="profil" >
+                                    
+                                    <option value="Admin">Admin</option>
+                                    <option value="Utilisateur">Utilisateur</option>
+                                   
+                                  </select>
+                                  </div>
+                                 </div>
                                 </div>
+                                <nav>
+                                  <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"> Données personnelles</li>
+                                  </ol>
+                                </nav>
+                                  <div class="row mb-3">
+                                    <label for="nom" class="col-sm-2 col-form-label">Nom :</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="name{{ $user->id }}" name="nom" class="form-control">
+                                  </div>
+                                        
+                                  <label for="prenom" class="col-sm-2 col-form-label">Prenom :</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="pronoun{{ $user->id }}" name="prenom" class="form-control">
+                                  </div>
+                                    
+                                  </div>
+                                  <div class="row mb-3">
+                                    <label for="username" class="col-sm-2 col-form-label" >Username :</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="nameuser{{ $user->id }}" name="username" class="form-control" >
+                                  </div>
+                                        
+                                  <label for="email" class="col-sm-2 col-form-label">Email :</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="mail{{ $user->id }}" name="email" class="form-control" >
+                                  </div>
+                                    
+                                  </div>
+                                  <div class="row mb-3">
+                                    <label for="fonction" class="col-sm-2 col-form-label">Fonction:</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="function{{ $user->id }}" name="fonction"  class="form-control">
+                                  </div>
+                                        
+                                  <label for="site" class="col-sm-2 col-form-label">Site :</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="sit{{ $user->id }}" name="site" class="form-control">
+                                  </div>
+                                    
+                                  </div>
+                                  <div class="row mb-3">
+                                    <label for="region" class="col-sm-2 col-form-label">Region:</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="Regi{{ $user->id }}" name="region" class="form-control">
+                                  </div>
+                                        
+                                  <label for="direction" class="col-sm-2 col-form-label">Direction :</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="direct{{ $user->id }}" name="direction" class="form-control">
+                                  </div>
+                                    
+                                  </div>
+                              
+                              <script>
+                                // Edit Modal
+                              
+                                document.querySelectorAll('.edit').forEach(function (element) {
+                                  element.addEventListener('click', function () {
+                                    var userNom = this.getAttribute('data-utilisateur-nom');
+                                    var userId = this.getAttribute('data-utilisateur-id');
+                                    var userprenom = this.getAttribute('data-utilisateur-prenom');
+                                    var userEmail = this.getAttribute('data-utilisateur-email');
+                                    var userUsername = this.getAttribute('data-utilisateur-username');
+                                    var userFonction = this.getAttribute('data-utilisateur-fonction');
+                                    var userSite = this.getAttribute('data-utilisateur-site');
+                                    var userRegion = this.getAttribute('data-utilisateur-region');
+                                    var userDirection = this.getAttribute('data-utilisateur-direction');
+                              
+                                    document.getElementById('name' + userId).value = userNom;
+                                    document.getElementById('pronoun' + userId).value = userprenom;
+                                    document.getElementById('nameuser' + userId).value = userUsername;
+                                    document.getElementById('mail' + userId).value = userEmail;
+                                    document.getElementById('function' + userId).value = userFonction;
+                                    document.getElementById('sit' + userId).value = userSite;
+                                    document.getElementById('Regi' + userId).value = userRegion;
+                                    document.getElementById('direct' + userId).value = userDirection;
+                                  });
+                                });
+                              </script>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                              <button type="submit" class="btn btn-primary">Confirmer</button>
                             </div>
                           </div>
-                          <script>
-                            document.querySelectorAll('.delete').forEach(function(element) {
-                            element.addEventListener('click', function() {
-                                var UtilisateurNom = this.getAttribute('data-utilisateur-nom');
-                                var UtilisateurId = this.getAttribute('data-utilisateur-id');
-                                var UtilisateurPrenom = this.getAttribute('data-utilisateur-prenom');
-                          
-                                var utilisateurNomElement = document.querySelector('#utilisateurNom' + UtilisateurId);
-                                utilisateurNomElement.textContent = UtilisateurNom + " " +UtilisateurPrenom;
-                            });
-                          });
-                          </script>
+                        </form>
+                        </div>
+                      </div>
+                      <a data-bs-toggle="modal" data-bs-target="#deleteuserModal{{ $user->id }}" class="delete text-danger" data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-id="{{ $user->id }}"><i class="bi bi-trash"></i></a>
+
+                      <!-- Delete Modal-->
+                      <div class="modal fade" id="deleteuserModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteuserModalLabel{{ $user->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title text-danger" id="deleteuserModalLabel{{ $user->id }}"> <i class="bi bi-trash"></i>  Suppression</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <p>Êtes-vous sûr de supprimer l'utilisateur : <span id="utilisateurNom{{ $user->id }}"></span></p>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                              <form action="{{ route('delete-utilisateur', $user->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                       </a>
                     </td>
                     <td class="text-overflow">
                       <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{ $user->id }}"><i class="bi bi-gear" style="float:center"></i></a>
                   </td>
-                  
-                  <!-- Modal droits d'accès -->
-                  <div class="modal fade" id="exampleModalCenter{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                              <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLongTitle">Droits d'accès</h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                              </div>
-                              <div class="modal-body">
-                                  <div class="form-check form-switch">
-                                      <input class="form-check-input" type="checkbox" id="accessStock{{ $user->id }}" name="accessStock" value="1">
-                                      <label class="form-check-label" for="accessStock{{ $user->id }}">Accès au stock des équipements</label>
-                                  </div>
-                                  <div class="form-check form-switch">
-                                      <input class="form-check-input" type="checkbox" id="manageStock{{ $user->id }}" name="manageStock" value="1">
-                                      <label class="form-check-label" for="manageStock{{ $user->id }}">Droits de gestion du stock</label>
-                                  </div>
-                                  <div class="form-check form-switch">
-                                      <input class="form-check-input" type="checkbox" id="manageUsers{{ $user->id }}" name="manageUsers" value="1">
-                                      <label class="form-check-label" for="manageUsers{{ $user->id }}">Droit de gestion des utilisateurs</label>
-                                  </div>
-                                  <div class="form-check form-switch">
-                                      <input class="form-check-input" type="checkbox" id="manageSuppliers{{ $user->id }}" name="manageSuppliers" value="1">
-                                      <label class="form-check-label" for="manageSuppliers{{ $user->id }}">Droit de gestion des fournisseurs</label>
-                                  </div>
-                              </div>
-                              <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                  <form action="{{ route('droit-acces', $user->id) }}" method="POST">
-                                      @csrf
-                                      <button type="submit" class="btn btn-primary">Confirmer</button>
-                                  </form>
-                              </div>
+                   <!-- Modal droits d'accès -->
+                   <div class="modal fade" id="exampleModalCenter{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Droits d'accès</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form action="{{ route('droit-acces', $user->id) }}" method="POST">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="accessStock{{ $user->id }}" name="accessStock" value="1"  @if($user->accessStock == 1) checked @endif>
+                                    <label class="form-check-label" for="accessStock{{ $user->id }}">Accès au stock des équipements</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="manageStock{{ $user->id }}" name="manageStock" value="1"  @if($user->manageStock == 1) checked @endif>
+                                    <label class="form-check-label" for="manageStock{{ $user->id }}">Droits de gestion du stock</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="manageUsers{{ $user->id }}" name="manageUsers" value="1"  @if($user->manageUsers == 1) checked @endif>
+                                    <label class="form-check-label" for="manageUsers{{ $user->id }}">Droit de gestion des utilisateurs</label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="manageSuppliers{{ $user->id }}" name="manageSuppliers" value="1"  @if($user->manageSuppliers == 1) checked @endif>
+                                    <label class="form-check-label" for="manageSuppliers{{ $user->id }}">Droit de gestion des fournisseurs</label>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                                </form>
                             </div>
                           </div>
                         </div>
+                      </div>
+
+              
                   </tr>
                   @endforeach
                 </tbody>
@@ -365,26 +470,50 @@
                           </ol>
                         </nav>
                           <div class="row mb-3">
-                            <label for="fournisseur" class="col-sm-2 col-form-label">Nom :</label>
+                            <label for="nom" class="col-sm-2 col-form-label">Nom :</label>
                           <div class="col-sm-4">
                             <input type="text" id="nom" name="nom"  class="form-control">
                           </div>
                                 
-                          <label for="responsable" class="col-sm-2 col-form-label">Prenom :</label>
+                          <label for="prenom" class="col-sm-2 col-form-label">Prenom :</label>
                           <div class="col-sm-4">
                             <input type="text" id="prenom" name="prenom"  class="form-control">
                           </div>
                             
                           </div>
                           <div class="row mb-3">
-                            <label for="email" class="col-sm-2 col-form-label">Username :</label>
+                            <label for="username" class="col-sm-2 col-form-label">Username :</label>
                           <div class="col-sm-4">
                             <input type="text" id="username" name="username"  class="form-control">
                           </div>
                                 
-                          <label for="adresse" class="col-sm-2 col-form-label">Email :</label>
+                          <label for="email" class="col-sm-2 col-form-label">Email :</label>
                           <div class="col-sm-4">
                             <input type="text" id="email" name="email"  class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="fonction" class="col-sm-2 col-form-label">Fonction:</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="fonction" name="fonction"  class="form-control">
+                          </div>
+                                
+                          <label for="site" class="col-sm-2 col-form-label">Site :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="site" name="site"  class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="region" class="col-sm-2 col-form-label">Region:</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="region" name="region"  class="form-control">
+                          </div>
+                                
+                          <label for="direction" class="col-sm-2 col-form-label">Direction :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="direction" name="direction"  class="form-control">
                           </div>
                             
                           </div>
@@ -394,41 +523,18 @@
                             </ol>
                           </nav>
                           <div class="row mb-3">
-                            <label for="site" class="col-sm-2 col-form-label">Mot de passe:</label>
+                            <label for="password" class="col-sm-2 col-form-label">Mot de passe:</label>
                           <div class="col-sm-4">
                             <input type="password" id="password" name="password"  class="form-control">
                           </div>
                                 
-                          <label for="agence" class="col-sm-2 col-form-label">Confirmer le mot de passe :</label>
+                          <label for="passwordconfirm" class="col-sm-2 col-form-label">Confirmer le mot de passe :</label>
                           <div class="col-sm-4">
                             <input type="password" id="passwordconfirm" name="passwordconfirm"  class="form-control">
                           </div>
                             
                           </div>
-                          <div class="row mb-3">
-                            <label for="site" class="col-sm-2 col-form-label">Fonction:</label>
-                          <div class="col-sm-4">
-                            <input type="text" id="fonction" name="fonction"  class="form-control">
-                          </div>
-                                
-                          <label for="agence" class="col-sm-2 col-form-label">Site :</label>
-                          <div class="col-sm-4">
-                            <input type="text" id="site" name="site"  class="form-control">
-                          </div>
-                            
-                          </div>
-                          <div class="row mb-3">
-                            <label for="site" class="col-sm-2 col-form-label">Region:</label>
-                          <div class="col-sm-4">
-                            <input type="text" id="region" name="region"  class="form-control">
-                          </div>
-                                
-                          <label for="agence" class="col-sm-2 col-form-label">Direction :</label>
-                          <div class="col-sm-4">
-                            <input type="text" id="direction" name="direction"  class="form-control">
-                          </div>
-                            
-                          </div>
+                        
                           
                        </div>
 

@@ -5,6 +5,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
+use  App\Mail\TestMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Gate;
 
 class CustomAuthController extends Controller
 {
@@ -123,6 +126,8 @@ public function search(Request $request){
     if($request->ajax()){
       $data= User::where('nom','like','%'.$request->search.'%')
       ->orwhere('prenom','like','%'.$request->search.'%')
+      ->orwhere('region','like','%'.$request->search.'%')
+      ->orwhere('direction','like','%'.$request->search.'%')
       ->orwhere('username','like','%'.$request->search.'%')->get();
       $output='';
       if(count($data)>0){
@@ -210,10 +215,20 @@ public function insert(Request $request){
 
         
         $utilisateur->save();
+        $username = $request->input('username');
+        $password = $request->input('password');
+        $email = $request->input('email');
+        $nom = $request->input('nom');
+        $prenom = $request->input('prenom');
+
+        $user = ['username' => $username, 'email'=>$email, 'password' => $password, 'nom' =>$nom,  'prenom' =>$prenom];
+        Mail::to($user['email'])->send(new TestMail($user));
 
         return redirect()->route('utilisateur')->with('success', 'Utilisateur ajouté avec succès.');
 
 }
+
+
 public function delete($id){
    $data = array();
    if(Session::has('loginId')){
@@ -225,7 +240,6 @@ public function delete($id){
    return redirect()->route('utilisateur',compact('data'))->with('fail', 'utilisateur supprimer ');
 
  }
-
  public function updateDroitAcces(Request $request, $userId){
    $user = User::find($userId);
    
@@ -233,10 +247,33 @@ public function delete($id){
    $user->manageStock = $request->has('manageStock') ? 1 : 0;
    $user->manageUsers = $request->has('manageUsers') ? 1 : 0;
    $user->manageSuppliers = $request->has('manageSuppliers') ? 1 : 0;
-
+   
     $user->save();
+
     return redirect()->route('utilisateur')->with('success', 'Done');
 
+ }
+
+
+ public function edit(Request $request , $id){
+   $data = array();
+   if(Session::has('loginId')){
+     $data = User::where('id','=',Session::get('loginId'))->first();
+   }
+   
+   $utilisateur = User::find($id);
+   $utilisateur->nom = $request->input('nom');
+   $utilisateur->prenom = $request->input('prenom');
+   $utilisateur->username = $request->input('username');
+   $utilisateur->email = $request->input('email');
+   $utilisateur->fonction = $request->input('fonction');
+   $utilisateur->site = $request->input('site');
+   $utilisateur->region = $request->input('region');
+   $utilisateur->direction = $request->input('direction');
+   $utilisateur->profil = $request->input('profil');
+
+
+   return redirect()->route('utilisateur',compact('data'))->with('success', 'Utilisateur modifier avec succés ');
  }
 
 }

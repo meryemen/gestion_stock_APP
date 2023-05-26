@@ -21,10 +21,7 @@ class User extends Model
         'Region',
         'Direction',
         'profil',
-        'accessStock',
-        'manageStock',
-        'manageUsers',
-        'manageSuppliers'
+       
     ];
     protected $hidden = [
         'password',

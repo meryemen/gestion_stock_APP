@@ -1,6 +1,15 @@
+document.querySelectorAll('.delete').forEach(function(element) {
+  element.addEventListener('click', function() {
+      var UtilisateurNom = this.getAttribute('data-utilisateur-nom');
+      var UtilisateurId = this.getAttribute('data-utilisateur-id');
+      var UtilisateurPrenom = this.getAttribute('data-utilisateur-prenom');
 
+      var utilisateurNomElement = document.querySelector('#utilisateurNom' + UtilisateurId);
+      utilisateurNomElement.textContent = UtilisateurNom + " " +UtilisateurPrenom;
+  });
+});
 
-// Edit Modal
+// Edit Modal fournisseur
 
 document.querySelectorAll('.edit').forEach(function(element) {
     element.addEventListener('click', function() {
@@ -139,11 +148,11 @@ document.addEventListener('DOMContentLoaded', function() {
       isValid = false;
     }
 
-    var emailform = /^[A-Za-z0-9._%+-]+@external\.danone\.com$/;
+    /*var emailform = /^[A-Za-z0-9._%+-]+@external\.danone\.com$/;
     if (!emailform.test(email)) {
       document.getElementById('email').classList.add('is-invalid');
       isValid = false;
-    }
+    }*/
 
     if (password !== passwordConfirm) {
       document.getElementById('password').classList.add('is-invalid');

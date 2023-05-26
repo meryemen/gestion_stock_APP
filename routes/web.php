@@ -6,6 +6,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FourniController;
 use App\Http\Controllers\HistoriqueController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\TestController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -56,5 +57,8 @@ Route::get('/error',[CustomAuthController::class,'error'])->middleware('isLogged
 
 Route::post('Addutilisateur', [CustomAuthController::class,'insert'])->name('ajout-utilisateur');
 Route::post('/delete-utilisateur/{id}', [CustomAuthController::class, 'delete'])->name('delete-utilisateur');
+Route::post('/edit-utilisateur/{id}', [CustomAuthController::class, 'edit'])->name('edit-utilisateur');
 Route::post('/droit-acces/{id}', [CustomAuthController::class, 'updateDroitAcces'])->name('droit-acces');
+
+//mail
 
