@@ -59,6 +59,7 @@ Route::post('Addutilisateur', [CustomAuthController::class,'insert'])->name('ajo
 Route::post('/delete-utilisateur/{id}', [CustomAuthController::class, 'delete'])->name('delete-utilisateur');
 Route::post('/edit-utilisateur/{id}', [CustomAuthController::class, 'edit'])->name('edit-utilisateur');
 Route::post('/droit-acces/{id}', [CustomAuthController::class, 'updateDroitAcces'])->name('droit-acces');
+Route::post('/update-password', [CustomAuthController::class, 'updatePassword'])->name('update-password');
+Route::get('/check-email/{email}', [CustomAuthController::class, 'checkEmail'])->name('checkEmail');
 
-//mail
 

@@ -39,7 +39,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: none;  border-bottom: 2px solid rgb(64, 134, 232);">
+        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: none; ">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -178,7 +178,9 @@
         </a>
       </li><!-- End Contact Page Nav -->
 
-     
+      <li class="nav-item">
+        <img src="unnamed.png" alt="" style="width:90%; position: absolute; bottom: 0;">
+      </li>
 
     </ul>
 
@@ -199,6 +201,11 @@
        <div class="alert alert-success">
        {{ session('success') }}
       </div>
+      @elseif (session('error'))
+      <div class="alert alert-danger">
+      {{ session('error') }}
+      </div>
+       
      @endif
     <section class="section profile">
       <div class="row">
@@ -230,7 +237,9 @@
                 <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Editer Profile</button>
                 </li>
-                
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Changer le mot de passe</button>
+                </li>
               </ul>
               <div class="tab-content pt-2">
 
@@ -341,9 +350,37 @@
 
                 </div>
 
-         
+                <div class="tab-pane fade pt-3" id="profile-change-password">
+                 
+                  <!-- Change Password Form -->
+                  <form action="{{ route('update-password') }}" method="POST">
+                        @csrf
+                    <div class="row mb-3">
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Mot de passe actuel</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="currentPassword" type="password" class="form-control" requiredid="currentPassword">
+                      </div>
+                    </div>
 
-                
+                    <div class="row mb-3">
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">Nouveau Mot de passe</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="newPassword" type="password" class="form-control" required id="newPassword">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Confirmer le nouveau mot de passe</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="renewPassword" type="password" class="form-control" required id="renewPassword">
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                  </form><!-- End Change Password Form -->
+               
 
               </div><!-- End Bordered Tabs -->
 

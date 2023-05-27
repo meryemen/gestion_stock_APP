@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -184,6 +186,15 @@ public function search(Request $request){
       return $output;
   }
 }
+
+// verifier si l email existe deja 
+public function checkEmail( $email)
+{
+    $existingUser = User::where('email', $email)->exists();
+    return response()->json(['exists' => $existingUser]);
+}
+
+//ajouter un utilisateur
 public function insert(Request $request){
    $request->validate([
             'profil' => 'required',
@@ -201,6 +212,7 @@ public function insert(Request $request){
 
 
    ]);
+ 
         $utilisateur = new User();
         $utilisateur->nom = $request->input('nom');
         $utilisateur->prenom = $request->input('prenom');
@@ -229,15 +241,19 @@ public function insert(Request $request){
 }
 
 
-public function delete($id){
+public function delete(Request $request, $id){
    $data = array();
    if(Session::has('loginId')){
      $data = User::where('id','=',Session::get('loginId'))->first();
    }
 
    $utilisateur = User::find($id);
-   $utilisateur->delete();
-   return redirect()->route('utilisateur',compact('data'))->with('fail', 'utilisateur supprimer ');
+   if (!empty($data) && Hash::check($request->input('password'), $data->password)) {
+      $utilisateur->delete();
+      return redirect()->route('utilisateur')->with('success', 'Utilisateur supprimé avec succès.');
+  } else {
+      return redirect()->route('utilisateur')->with('fail', 'Mot de passe incorrect. L\'utilisateur n\'a pas été supprimé.');
+  }
 
  }
  public function updateDroitAcces(Request $request, $userId){
@@ -253,27 +269,62 @@ public function delete($id){
     return redirect()->route('utilisateur')->with('success', 'Done');
 
  }
-
-
- public function edit(Request $request , $id){
+ public function edit(Request $request, $id)
+ {
    $data = array();
    if(Session::has('loginId')){
      $data = User::where('id','=',Session::get('loginId'))->first();
    }
-   
-   $utilisateur = User::find($id);
-   $utilisateur->nom = $request->input('nom');
-   $utilisateur->prenom = $request->input('prenom');
-   $utilisateur->username = $request->input('username');
-   $utilisateur->email = $request->input('email');
-   $utilisateur->fonction = $request->input('fonction');
-   $utilisateur->site = $request->input('site');
-   $utilisateur->region = $request->input('region');
-   $utilisateur->direction = $request->input('direction');
-   $utilisateur->profil = $request->input('profil');
+ 
+     $user = User::find($id);
+     $user->profil = $request->input('profil');
+     $user->nom = $request->input('nom');
+     $user->prenom = $request->input('prenom');
+     $user->username = $request->input('username');
+     $user->email = $request->input('email');
+     $user->fonction = $request->input('fonction');
+     $user->site = $request->input('site');
+     $user->region = $request->input('region');
+     $user->direction = $request->input('direction');
+     $user->save();
+ 
+     return redirect()->route('utilisateur',compact('data'))->with('success', 'Utilisateur modifié avec succès');
+ }
 
 
-   return redirect()->route('utilisateur',compact('data'))->with('success', 'Utilisateur modifier avec succés ');
+// update password
+
+
+ public function updatePassword(Request $request){
+   $userID = Session::get('loginId');
+
+   $user= User::find($userID);
+   $request->validate([
+      'currentPassword' => 'required',
+      'newPassword' => 'required',
+      'renewPassword' => 'required',
+  ]);
+  
+   $currentPassword = $request->input('currentPassword');
+   $newPassword = $request->input('newPassword');
+   $renewPassword = $request->input('renewPassword');
+
+   // Vérifier si les mots de passe saisis correspondent
+   if ($newPassword !== $renewPassword) {
+      return back()->with('error', 'Les nouveaux mots de passe ne correspondent pas');
+   }
+    // Vérifier si le mot de passe actuel correspond au mot de passe hashé dans la base de données
+    if (!Hash::check($currentPassword, $user->password)) {
+      return back()->with('error', 'Le mot de passe actuel est incorrect');
+  }
+
+  $user->password =Hash::make($newPassword);
+  $user->save();
+
+  return redirect()->route('profile')->with('success', 'Mot de passe mis à jour avec succès');
+
+
+
  }
 
 }

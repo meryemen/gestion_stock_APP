@@ -181,7 +181,9 @@
         </a>
       </li><!-- End Contact Page Nav -->
 
-     
+      <li class="nav-item">
+        <img src="unnamed.png" alt="" style="width:90%; position: absolute; bottom: 0;">
+      </li>
 
     </ul>
 

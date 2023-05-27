@@ -42,7 +42,7 @@
 
     <div class="d-flex align-items-center justify-content-between ">
       <a href="dashboard" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block " style=" font-size: 20px; margin-left:30px">IT Asset Control</span>
+        <span class="d-none d-lg-block" style=" font-size: 20px; margin-left:30px">IT Asset Control</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -189,7 +189,9 @@
           <span>Se deconnecter</span>
         </a>
       </li><!-- End Contact Page Nav -->
-
+      <li class="nav-item">
+        <img src="unnamed.png" alt="" style="width:90%; position: absolute; bottom: 0;">
+      </li>
      
 
     </ul>

@@ -56,8 +56,11 @@ class FourniController extends Controller
       if(Session::has('loginId')){
         $data = User::where('id','=',Session::get('loginId'))->first();
       }
-
       $fournisseur = Fournisseur::find($id_fourni);
+      if ($fournisseur->equipements()->exists()) {
+        return redirect()->route('fournisseur', compact('data'))->with('fail', 'Impossible de supprimer le fournisseur .');
+     }
+      
       $fournisseur->delete();
       return redirect()->route('fournisseur',compact('data'))->with('fail', 'Fournisseur supprimer ');
 

@@ -9,7 +9,7 @@ class Equipement extends Model
 {
     use HasFactory;
     public $table="equipement";
-
+    
     public $fillable = [
         'type',
         'categorie',

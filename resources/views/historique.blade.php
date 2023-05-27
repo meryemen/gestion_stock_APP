@@ -39,7 +39,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: none;  border-bottom: 2px solid rgb(64, 134, 232);">
+        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: none; ">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -178,7 +178,9 @@
         </a>
       </li><!-- End Contact Page Nav -->
 
-     
+      <li class="nav-item">
+        <img src="unnamed.png" alt="" style="width:90%; position: absolute; bottom: 0;">
+      </li>
 
     </ul>
 

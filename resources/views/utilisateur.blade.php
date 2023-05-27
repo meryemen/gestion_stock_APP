@@ -183,7 +183,9 @@
         </a>
       </li><!-- End Contact Page Nav -->
 
-     
+      <li class="nav-item">
+        <img src="unnamed.png" alt="" style="width:90%; position: absolute; bottom: 0;">
+      </li>
 
     </ul>
 
@@ -379,14 +381,33 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteuserPasswordModal{{ $user->id }}">Confirmer</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="modal fade" id="deleteuserPasswordModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteuserPasswordModalLabel{{ $user->id }}" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title text-danger" id="deleteuserPasswordModalLabel{{ $user->id }}"> <i class="bi bi-lock"></i>  Confirmation du mot de passe</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
                               <form action="{{ route('delete-utilisateur', $user->id) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-danger">Confirmer</button>
+                                <div class="mb-3">
+                                  <label for="password" class="form-label">Mot de passe</label>
+                                  <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
                               </form>
                             </div>
                           </div>
                         </div>
                       </div>
+                      
                       </a>
                     </td>
                     <td class="text-overflow">
@@ -490,6 +511,8 @@
                           <label for="email" class="col-sm-2 col-form-label">Email :</label>
                           <div class="col-sm-4">
                             <input type="text" id="email" name="email"  class="form-control">
+                            <span id="emailError" class="invalid-feedback" style="display: none;"></span>
+
                           </div>
                             
                           </div>
@@ -540,8 +563,36 @@
 
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                          <button type="submit" class="btn btn-primary">Ajouter</button>
+                          <button type="submit" id="btnAjouter" class="btn btn-primary">Ajouter</button>
                         </div>
+                        <script>
+                          document.getElementById('btnAjouter').addEventListener('click', function(event) {
+                              event.preventDefault(); // Empêche le comportement par défaut du formulaire
+                      
+                              var emailInput = document.getElementById('email');
+                              var emailError = document.getElementById('emailError');
+                              var emailValue = emailInput.value;
+                      
+                              // Effectuer une requête AJAX pour vérifier l'unicité de l'e-mail
+                              var xhr = new XMLHttpRequest();
+                              xhr.open('GET', '/check-email/' + emailValue, true);
+                              xhr.onreadystatechange = function() {
+                                  if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                                      var response = JSON.parse(xhr.responseText);
+                                      if (response.exists) {
+                                          // L'e-mail existe déjà dans la base de données, afficher l'erreur
+                                          emailInput.classList.add('is-invalid');
+                                          emailError.textContent = 'Cet e-mail existe déjà.';
+                                          emailError.style.display = 'block';
+                                      } else {
+                                          // L'e-mail est unique, soumettre le formulaire
+                                          document.getElementById('ajout-utilisateur-form').submit();
+                                      }
+                                  }
+                              };
+                              xhr.send();
+                          });
+                      </script>
                       </form>
                       </div>
                     </div>

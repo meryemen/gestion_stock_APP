@@ -20,4 +20,8 @@ class Fournisseur extends Model
         'tele_agence',
         
     ];
+    public function equipements()
+    {
+        return $this->hasMany(Equipement::class, 'id_fourni', 'id_fourni');
+    }
 }
