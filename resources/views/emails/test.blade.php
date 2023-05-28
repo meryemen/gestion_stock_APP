@@ -8,7 +8,7 @@
 </head>
 <body>
     <h4>Bonjour  {{ $data['nom'] }} {{ $data['prenom'] }},</h4><br>
-    <p>Voici ci-dessous vos données d'authentification: <br> 
+    <p>Voici ci-dessous vos données d'authentification à votre plateform <strong style="color: rgb(5, 33, 172)"> It Asset Control: </strong><br> 
        <strong> Username: {{ $data['username'] }} </strong><br>
        <strong> Mot de passe : {{ $data['password'] }}</strong>  <br>
     </p>

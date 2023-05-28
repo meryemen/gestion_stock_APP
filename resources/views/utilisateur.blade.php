@@ -366,7 +366,7 @@
                         </form>
                         </div>
                       </div>
-                      <a data-bs-toggle="modal" data-bs-target="#deleteuserModal{{ $user->id }}" class="delete text-danger" data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-id="{{ $user->id }}"><i class="bi bi-trash"></i></a>
+                      <a  data-bs-toggle="modal" data-bs-target="#deleteuserModal{{ $user->id }}" class="delete text-danger" data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-id="{{ $user->id }}"><i class="bi bi-trash"></i></a>
 
                       <!-- Delete Modal-->
                       <div class="modal fade" id="deleteuserModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteuserModalLabel{{ $user->id }}" aria-hidden="true">
@@ -457,7 +457,9 @@
                 </tbody>
               </table>
             </div>
-             <button class="btn btn-outline-primary btn-sm " data-bs-toggle="modal" data-bs-target="#addModal" style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateur</button> 
+           
+            <button class="btn btn-outline-primary btn-sm " data-bs-toggle="modal" data-bs-target="#addModal" style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateur</button> 
+           
              
              
                   <!-- Modal Ajout-->

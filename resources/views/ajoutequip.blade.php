@@ -361,6 +361,22 @@
               <div class="col-sm-4">
                 <input type="text" class="form-control" name="site" id="site">
               </div>
+              <div class="card-title">
+              
+                <nav>
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item">  Bon de commande</li>
+                  </ol>
+                </nav>
+                <div class="card-title">
+              
+                  <nav>
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">  Bon de livraison</li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
 
               </div>
 
