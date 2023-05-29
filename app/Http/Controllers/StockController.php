@@ -1,23 +1,29 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Affectation;
 use App\Models\User;
 use App\Models\Equipement;
 use App\Models\Personne;
 use App\Models\Fournisseur;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Bon_commande;
+use App\Models\Bon_livraison;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 
 class StockController extends Controller
 {
-  public function stock(){
-    $data = array();
-      if(Session::has('loginId')){
-         $data = User::where('id','=',Session::get('loginId'))->first();}
-    $equipments = array();
-    $equipments = Equipement::all();
-    return view('stock', compact('equipments','data'));
+  public function stock()
+  {
+      $data = array();
+      if (Session::has('loginId')) {
+          $data = User::where('id', '=', Session::get('loginId'))->first();
+      }
+  
+      $equipments = Equipement::with('personne')->get();
+  
+      return view('stock', compact('equipments', 'data'));
   }
   
 
@@ -74,15 +80,18 @@ class StockController extends Controller
     return view ('ajoutequip',compact('data','fournisseur'));
   }
 
+
+
+
+  
   public function ajout(Request $request){ 
     $data = array();
         if(Session::has('loginId')){
           $data = User::where('id','=',Session::get('loginId'))->first();
         }
-        $equipments = array();
-        $equipments = Equipement::all();
+       
 
-
+//Récuperer les valeurs saisie
       $type = $request->input('type');
       $categorie = $request->input('categorie');
       $produit = $request->input('produit');
@@ -98,68 +107,125 @@ class StockController extends Controller
       $region = $request->input('region');
       $direction = $request->input('direction');
       $site = $request->input('site');
-
-    if($statut == '1'){
-      $personneExistante = Personne::where('username', $username)->first();
-
-          if ($personneExistante) {
-              $personneId = $personneExistante->getKey(); 
-          } else {
-              $personne = new Personne();
-              $personne->nom_prenom = $nomPrenom;
-              $personne->username = $username;
-              $personne->date_affectation = $dateAffectation;
-              $personne->region = $region;
-              $personne->direction = $direction;
-              $personne->site = $site;
-              $personne->save();
+      $numeroC = $request->input('numeroC');
+      $dateBc = $request->input('dateBc');
+      $QTC = $request->input('QTC');
+      $numeroL = $request->input('numeroL');
+      $dateBl = $request->input('dateBl');
+      $QTL = $request->input('QTL');
       
-              $personneId = $personne->getKey();
-          }
-          $fourni = Fournisseur::where('nom_four', $fournisseur)->first();
-          if ($fourni) {
-              $idfourni = $fourni->getKey();
-              
-              
-          $equipement = new Equipement();
-          $equipement->type = $type;
-          $equipement->categorie = $categorie;
-          $equipement->produit = $produit;
-          $equipement->n_serie = $numeroSerie;
-          $equipement->statut = $statut;
-          $equipement->prix = $prix;
-          $equipement->netbios = $netbios;
-          $equipement->cracteristique_tech = $cracteristique_tech;
-          $equipement->id_pers = $personneId;
-          $equipement->id_fourni = $idfourni;
-          $equipement->save();
-          }
+
+
+      if ($statut == 'In Use' || $statut == 'In Maintenace' ||$statut == 'Pending Install'|| $statut == 'Retirement'||$statut == 'Stolen' ||$statut == 'Don' ) {
+        $personneExistante = Personne::where('username', $username)->first();
+        $fourni = Fournisseur::where('nom_four', $fournisseur)->first();
+    
+        if ($personneExistante) {
+            $personneId = $personneExistante->id_pers;
+        } else {
+            $person = Personne::firstOrCreate(['username' => $username], [
+                'nom_prenom' => $nomPrenom,
+                'region' => $region,
+                'direction' => $direction,
+                'site' => $site
+            ]);
+            $personneId = $person->id_pers;
         }
-      
-  
-      
-    else{
-      $fourni = Fournisseur::where('nom_four', $fournisseur)->first();
-          if ($fourni) {
-              $idfourni = $fourni->getKey();
-      $equipement = new Equipement();
-      $equipement->type = $type;
-      $equipement->categorie = $categorie;
-      $equipement->produit = $produit;
-      $equipement->n_serie = $numeroSerie;
-      $equipement->statut = $statut;
-      $equipement->prix = $prix;
-      $equipement->netbios = $netbios;
-      $equipement->cracteristique_tech = $cracteristique_tech;
-      $equipement->id_fourni = $idfourni;
-      $equipement->save();
-    }
-  } 
-  
-      return redirect()->route('stock',compact('equipments','data'))->with('success', 'Equipement ajouté ');
     
+        $bonDeCommande = Bon_commande::firstOrCreate(
+            ['id_com' => $numeroC],
+            [
+                'date_cm' => $dateBc,
+                'qt_commande' => $QTC,
+                'id_fourni' => $fourni->id_fourni
+            ]
+        );
+   
+        $bonDeLivraison = Bon_livraison::firstOrCreate(
+          ['id_livre' => $numeroL],
+          [
+              'date_livre' => $dateBl,
+              'qt_livre' => $QTL,
+              'id_fourni' => $fourni->id_fourni,
+              'id_com' => $bonDeCommande->id_com
+          ]
+      );
     
+        $equipement = new Equipement();
+        $equipement->type = $type;
+        $equipement->categorie = $categorie;
+        $equipement->produit = $produit;
+        $equipement->n_serie = $numeroSerie;
+        $equipement->statut = $statut;
+        $equipement->prix = $prix;
+        $equipement->cracteristique_tech = $cracteristique_tech;
+        $equipement->netbios = $netbios;
+        $equipement->id_pers = $personneId;
+        $equipement->id_fourni = $fourni->id_fourni;
+        $equipement->id_com = $bonDeCommande->id_com;
+        $equipement->id_livre = $bonDeLivraison->id_livre;
+        $equipement->save();
+
+        $affectation = new Affectation();
+        $affectation->id_equ = $equipement->id_equ;
+        $affectation->id_pers = $personneId;
+        $affectation->date_affectation = $dateAffectation;
+        $affectation->save();
+
+        return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');
+      }else{
+        $fourni = Fournisseur::where('nom_four', $fournisseur)->first();
+        $bonDeCommande = Bon_commande::firstOrCreate(
+          ['id_com' => $numeroC],
+          [
+              'date_cm' => $dateBc,
+              'qt_commande' => $QTC,
+              'id_fourni' => $fourni->id_fourni
+          ]
+      );
+ 
+      $bonDeLivraison = Bon_livraison::firstOrCreate(
+        ['id_livre' => $numeroL],
+        [
+            'date_livre' => $dateBl,
+            'qt_livre' => $QTL,
+            'id_fourni' => $fourni->id_fourni,
+            'id_com' => $bonDeCommande->id_com
+        ]
+        );
+        $equipement = new Equipement();
+        $equipement->type = $type;
+        $equipement->categorie = $categorie;
+        $equipement->produit = $produit;
+        $equipement->n_serie = $numeroSerie;
+        $equipement->statut = $statut;
+        $equipement->prix = $prix;
+        $equipement->cracteristique_tech = $cracteristique_tech;
+        $equipement->netbios = $netbios;
+        
+        $equipement->id_fourni = $fourni->id_fourni;
+        $equipement->id_com = $bonDeCommande->id_com;
+        $equipement->id_livre = $bonDeLivraison->id_livre;
+        
+        $equipement->save();
+
+      
+        return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');
+      }
   }
+ public function edit(){
+  $data = array();
+  if(Session::has('loginId')){
+     $data = User::where('id','=',Session::get('loginId'))->first();
+  }
+  $fournisseur = array();
+  $fournisseur = Fournisseur::pluck('nom_four')->all();
+
+  
+
+  return view ('edit',compact('data','fournisseur'));
+ }
+
 
   public function accessoire(){
     $data = array();

@@ -228,7 +228,7 @@
               <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                 <i class="bi bi-three-dots-vertical"></i>
               </button>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
+              <ul class="dropdown-menu dropdown-menu-end" id="dropdown2" aria-labelledby="filterDropdown">
                 <li><a class="dropdown-item" selected href="#">Pc/ Laptop</a></li>
                 <li><a class="dropdown-item" href="#">Pc/ Desktop</a></li>
                 <li><a class="dropdown-item" href="#">Monitor</a></li>
@@ -252,7 +252,7 @@
     </div>
     <script>
       // script pour les dropdown items
-      const dropdownItems = document.querySelectorAll('.dropdown-item');
+      const dropdownItems = document.querySelectorAll('#dropdown2 .dropdown-item');
       const selectedOption = document.getElementById('selectedOption');
       const nombre = document.getElementById('nombre');
       const laptopCount = {{ $laptop ?? 0 }};
@@ -272,9 +272,9 @@
           }  else if (item.textContent == 'Monitor') {
             nombre.textContent = monitorCount;
           }  else if (item.textContent == 'Printer') {
-            nombre.textContent = scannerCount;
-          }  else if (item.textContent == 'Scanner') {
             nombre.textContent = printerCount;
+          }  else if (item.textContent == 'Scanner') {
+            nombre.textContent = scannerCount;
           }  else  {
             nombre.textContent = projectorCount;
           } 

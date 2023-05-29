@@ -24,4 +24,12 @@ class Fournisseur extends Model
     {
         return $this->hasMany(Equipement::class, 'id_fourni', 'id_fourni');
     }
+    public function bonLivraisons()
+    {
+        return $this->hasMany(Bon_livraison::class, 'id_fourni');
+    }
+    public function bonCommandes()
+    {
+        return $this->hasMany(Bon_commande::class, 'id_fourni');
+    }
 }

@@ -9,20 +9,24 @@ class Personne extends Model
 {
     use HasFactory;
     public $table="personne";
-
+    protected $primaryKey = 'id_pers';
     public $fillable = [
         'nom_prenom',
         'username',
-        'date_affectation',
         'region',
         'direction',
         'Site',
         'updated_at',
         'created_at',
-        'accessStock',
-        'manageStock',
-        'manageUsers',
-        'manageSuppliers',
+        
         
     ];
+    public function equipements_pers()
+    {
+        return $this->hasMany(Equipement::class, 'id_pers');
+    }
+    public function affectations()
+    {
+        return $this->hasMany(Affectation::class, 'id_pers');
+    }
 }

@@ -202,7 +202,7 @@
         <div class="card">
           <div class="card-body">
             <div class="card-title">
-              <h3>Ajout d'un equipement</h3>
+              <h3>Editer</h3>
               <nav>
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">Information</li>
@@ -258,12 +258,12 @@
                 <div class="row mb-3">
                   <label for="produit" class="col-sm-2 col-form-label">Produit</label>
                 <div class="col-sm-4">
-                  <input type="text" id="produit" name="produit" class="form-control">
+                  <input type="text" id="produit" name="produit" class="form-control" ">
                 </div>
                       
                 <label for="numero_serie" class="col-sm-2 col-form-label">Numéro de série</label>
                 <div class="col-sm-4">
-                  <input type="text" id="numero_serie" name="numero_serie" class="form-control">
+                  <input type="text" id="numero_serie" name="numero_serie" class="form-control" ">
                 </div>
                   
                 </div>
@@ -272,7 +272,7 @@
                 <label class="col-sm-2 col-form-label">Statut</label>
                     <div class="col-sm-4">
                       <div class="col-sm-6">
-                        <select class="form-select" id="statut" name="statut">
+                        <select class="form-select" id="statut" name="statut" >
                           <option disabled selected>Sélectionner un statut</option>
                           <option value="In Use" >In Use</option>
                           <option value="In Stock / Site" >In Stock / Site</option>

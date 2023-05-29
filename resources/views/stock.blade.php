@@ -219,7 +219,7 @@
              <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
               <thead>
                   <tr>
-                    <th></th>
+                    
                     <th class="text-success">Catégorie</th>
                     <th class="text-success">Produit</th>
                     <th class="text-success">Numéro de série</th>
@@ -229,30 +229,35 @@
                     <th class="text-success">Nom & Prénom</th>
                     <th class="text-success">Site</th>
                     <th class="text-success">Région</th>
+                    <th class="text-success">Direction</th>
                     <th class="text-success">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                   @foreach ($equipments as $equip)
                   <tr>
-                    <td>
-                      <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                        <label for="checkbox1"></label>
-                      </span>
-                    </td>
-                    <td  class="text-overflow">{{ $equip->categorie }}</td>
-                    <td class="text-overflow">{{ $equip->produit }}</td>
-                    <td class="text-overflow">{{ $equip->n_serie }}</td>
-                    <td class="text-overflow">{{ $equip->cracteristique_tech}}</td>
-                    <td class="text-overflow">{{ $equip->statut }}</td>
-                    <td class="text-overflow">{{ $equip->netbios }}</td>
-                    <td class="text-overflow"></td>
-                    <td class="text-overflow"></td>
-                    <td class="text-overflow"></td>
+                   
+                      <td class="text-overflow">{{ $equip->categorie }}</td>
+                      <td class="text-overflow">{{ $equip->produit }}</td>
+                      <td class="text-overflow">{{ $equip->n_serie }}</td>
+                      <td class="text-overflow">{{ $equip->cracteristique_tech }}</td>
+                      <td class="text-overflow">{{ $equip->statut }}</td>
+                      <td class="text-overflow">{{ $equip->netbios }}</td>
+                      @if($equip->personne)
+                      <td class="text-overflow">{{ $equip->personne->nom_prenom}}</td>
+                      <td class="text-overflow">{{ $equip->personne->site }}</td>
+                      <td class="text-overflow">{{ $equip->personne->region }}</td>
+                      <td class="text-overflow">{{ $equip->personne->direction }}</td>
+                      @else
+                      <td class="text-overflow"></td>
+                      
+                      <td class="text-overflow"></td>
+                      <td class="text-overflow"></td>
+                      <td class="text-overflow"></td>
+                      @endif
                     <td class="text-overflow">
-                      <a href="#editEmployeeModal" class="edit" ><i class="ri ri-pencil-fill"></i></a>
-                      <a href="#deleteEmployeeModal" class="delete" ><i class="bi bi-trash"></i>
+                      <a href="edit" class="edit text-warning"><i class="ri ri-pencil-fill"></i></a>
+                      <a href="#deleteEmployeeModal" class="delete text-success" ><i class="bi bi-arrow-90deg-right"></i>
                       </a>
                     </td>
                   </tr>
