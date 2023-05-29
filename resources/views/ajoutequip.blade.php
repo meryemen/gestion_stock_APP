@@ -223,8 +223,8 @@
                      <div class="col-sm-6">
                    <select class="form-select" id="type" name="type">
                      
-                     <option value="1">materiel</option>
-                     <option value="2">accessoire</option>
+                     <option value="materiel">materiel</option>
+                     <option value="accessoire">accessoire</option>
                     
                    </select>
                    </div>

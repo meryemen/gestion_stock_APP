@@ -411,7 +411,13 @@
                       </a>
                     </td>
                     <td class="text-overflow">
+                      @if ($user->profil == 'Admin')
+
+                      @elseif($user->profil == 'Utilisateur')
+                        
+                      
                       <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{ $user->id }}"><i class="bi bi-gear" style="float:center"></i></a>
+                      @endif
                   </td>
                    <!-- Modal droits d'accès -->
                    <div class="modal fade" id="exampleModalCenter{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

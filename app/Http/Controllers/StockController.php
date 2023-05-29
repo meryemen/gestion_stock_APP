@@ -59,7 +59,7 @@ class StockController extends Controller
 
           $user = User::where('profil', 'Utilisateur')->count();
 
-
+        
 
         return view('dashboard', compact('retirement','stolen','don','inuse',
         'munisys','louisrey','site','maintenance','pending','data',
