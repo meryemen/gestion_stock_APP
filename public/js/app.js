@@ -66,6 +66,24 @@ document.querySelectorAll('.edit').forEach(function(element) {
       });
   });
 
+
+  $(document).ready(function(){
+    $('#materiel_search').on('keyup',function(){
+        var query= $(this).val(); 
+        $.ajax({
+          url:"search-materiel" ,
+          type:"GET",
+          data:{'search' : query},
+          success:function(data){
+            $('#search_list').html(data);
+            $('#search_results table').addClass('table table-hover table-sm');
+            $('#search_results td').addClass('text-overflow');
+          }
+        });
+        //end of ajax call 
+    });
+});
+
 //creation d'un utilisateur
   function generateUsername() {
 

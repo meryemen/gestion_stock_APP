@@ -258,12 +258,12 @@
                 <div class="row mb-3">
                   <label for="produit" class="col-sm-2 col-form-label">Produit</label>
                 <div class="col-sm-4">
-                  <input type="text" id="produit" name="produit" class="form-control" ">
+                  <input type="text" id="produit" name="produit" class="form-control" >
                 </div>
                       
                 <label for="numero_serie" class="col-sm-2 col-form-label">Numéro de série</label>
                 <div class="col-sm-4">
-                  <input type="text" id="numero_serie" name="numero_serie" class="form-control" ">
+                  <input type="text" id="numero_serie" name="numero_serie" class="form-control" value="{{ $equipement->n_serie }}">
                 </div>
                   
                 </div>

@@ -39,7 +39,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
+        <input type="text" name="query" id="materiel_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -215,7 +215,7 @@
              
 
              </div>
-             
+             <div id="search_list">
              <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
               <thead>
                   <tr>
@@ -250,15 +250,73 @@
                       <td class="text-overflow">{{ $equip->personne->direction }}</td>
                       @else
                       <td class="text-overflow"></td>
-                      
                       <td class="text-overflow"></td>
                       <td class="text-overflow"></td>
                       <td class="text-overflow"></td>
                       @endif
                     <td class="text-overflow">
-                      <a href="edit" class="edit text-warning"><i class="ri ri-pencil-fill"></i></a>
+                      <a data-bs-toggle="modal" data-bs-target="#editModal{{ $equip->id_equ }}" class="edit text-warning " ><i class="ri ri-pencil-fill"></i></a>               
                       <a href="#deleteEmployeeModal" class="delete text-success" ><i class="bi bi-arrow-90deg-right"></i>
                       </a>
+                               <!-- Modal edit-->
+                   <div class="modal fade" id="editModal{{ $equip->id_equ }}" tabindex="-1" aria-labelledby="editModalLabel{{ $equip->id_equ }}" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5 text-success" id="editModalLabel{{  $equip->id_equ }}"><i class="bi bi-pencil"></i>  Modifier</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                         <form action="{{ route('edit-utilisateur' ,$equip->id_equ) }}" method="POST">
+                          @csrf
+                          
+                          <div class="row mb-3">
+                            <label for="fournisseur" class="col-sm-2 col-form-label">Fournisseur :</label>
+                          <div class="col-sm-4">
+                            <input type="text" name="fournisseur" required class="form-control" value="{{ isset($equipement) ? $equipement->type : '' }}">
+                          </div>
+                                
+                          <label for="responsable" class="col-sm-2 col-form-label">Responsable :</label>
+                          <div class="col-sm-4">
+                            <input type="text" name="responsable" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="email" class="col-sm-2 col-form-label">Email :</label>
+                          <div class="col-sm-4">
+                            <input type="text"  name="email" required class="form-control">
+                          </div>
+                                
+                          <label for="adresse" class="col-sm-2 col-form-label">Adresse :</label>
+                          <div class="col-sm-4">
+                            <input type="text"  name="adresse" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="site" class="col-sm-2 col-form-label">Télephone-Site :</label>
+                          <div class="col-sm-4">
+                            <input type="text" name="site" required class="form-control">
+                          </div>
+                                
+                          <label for="agence" class="col-sm-2 col-form-label">Télephone-Agence :</label>
+                          <div class="col-sm-4">
+                            <input type="text"  name="agence" required class="form-control">
+                          </div>
+                            
+                          </div>
+                       </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                          <button type="submit" class="btn btn-success">Confirmer</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
                     </td>
                   </tr>
                   
@@ -267,6 +325,7 @@
                  
                 </tbody>
               </table>
+            </div>
              <a href="formulaire"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
              
              
@@ -300,6 +359,7 @@
   
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="js/app.js"></script>
 
 </body>
 

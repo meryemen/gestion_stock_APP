@@ -41,7 +41,7 @@ Route::get('/dashboard', [StockController::class, 'dashboard'])->name('dashboard
 //formulaire d'ajout d'un equipement
 Route::get('/formulaire', [StockController::class, 'formulaire'])->middleware('isLoggedIn','manageStock');
 Route::post('ajout-equipement',[StockController::class,'ajout'])->name('ajout-equipement');
-Route::get('/edit',[StockController::class,'edit'])->name('edit');
+Route::post('/edit-utilisateur/{id_equ}', [StockController::class, 'edit'])->name('edit-utilisateur');
 
 Route::get('/fournisseur', [FourniController::class, 'fournisseur'])->middleware('isLoggedIn')->name('fournisseur');
 Route::post('ajout-fournisseur', [FourniController::class, 'ajouter'])->name('ajout-fournisseur');
@@ -53,6 +53,7 @@ Route::get('historique', [HistoriqueController::class, 'show'])->middleware('isL
 
 Route::get('/search-utilisateur', [CustomAuthController::class,'search']);
 Route::get('/search-fournisseur', [FourniController::class,'search']);
+Route::get('/search-materiel', [StockController::class,'search']);
 
 Route::get('/error',[CustomAuthController::class,'error'])->middleware('isLoggedIn')->name('error');
 

@@ -394,7 +394,7 @@
                     },
                     {
                       value: maintenance,
-                      name: 'In Maintenace'
+                      name: 'In Maintenance'
                     },
                     {
                       value: pending,

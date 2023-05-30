@@ -219,20 +219,21 @@
              <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
               <thead>
                   <tr>
-                    <th></th>
-                    <th class="text-success"></th>
-                    
+                    <th class="text-success">Catégorie</th>
+                    <th class="text-success">Produit</th>
+                    <th class="text-success">Numéro de série</th>
+                    <th class="text-success">Statut</th>
+                    <th class="text-success">Nom & Prénom</th>
+                    <th class="text-success">Site</th>
+                    <th class="text-success">Région</th>
+                    <th class="text-success">Direction</th>
+                    <th class="text-success">Action</th>
                   </tr>
                 </thead>
                 <tbody>
                  
                   <tr>
-                    <td>
-                      <span class="custom-checkbox">
-                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                        <label for="checkbox1"></label>
-                      </span>
-                    </td>
+                    
                     <td  class="text-overflow"></td>
                     
                     <td class="text-overflow">
