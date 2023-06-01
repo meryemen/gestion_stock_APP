@@ -56,7 +56,7 @@
         </li><!-- End Search Icon-->
 
 
-        <li class="nav-item dropdown pe-3">
+        <li  class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="css/profil.png" alt="Profile" class="rounded-circle" style="margin-right: 5px">
@@ -71,7 +71,7 @@
               <span>{{ $data->profil }}</span>
              </li>
             <li>
-              <hr class="dropdown-divider">
+              <hr class="dropdown-divider" >
             </li>
 
             <li>
@@ -232,9 +232,15 @@
                     <th class="text-success">Region</th>
                     <th class="text-success">Direction</th>
                     <th class="text-success">Profil</th>
+                    @if ($data->manageUsers != 0)
                     <th class="text-success">Action</th>
-                    <th class="text-success">droit d'accès</th>
-
+                    @endif
+                   @if ( $data->profil == 'Admin')
+                   <th class="text-success">droit d'accès</th>
+                   @elseif ($data->profil != 'Admin')
+                   
+                   @endif
+                  
                   </tr>
                 </thead>
                 <tbody>
@@ -250,15 +256,37 @@
                     <td class="text-overflow">{{ $user->Region }}</td>
                     <td class="text-overflow">{{ $user->Direction }}</td>
                     <td class="text-overflow">{{ $user->profil }}</td>
-                    <td class="text-overflow">
-                      <a  data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}" class="edit text-success " data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-id="{{ $user->id }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-email="{{ $user->email }}" data-utilisateur-username="{{ $user->username }}" data-utilisateur-fonction="{{ $user->Fonction }}" data-utilisateur-site="{{ $user->Site }}" data-utilisateur-region="{{ $user->Region }}" data-utilisateur-direction="{{ $user->Direction }}" ><i class="ri ri-pencil-fill"></i></a>
+                   
+                      @if ($user->nom == 'Ihda')
+                            @if ($data->manageUsers != 0)
+                            <td class="text-overflow"> </td>
+                            @elseif ($data->manageUsers == 0)
 
+                            @endif
+                           
+                      @elseif($user->nom != 'Ihda' && $data->manageUsers != 0)
+                      <td class="text-overflow"> 
+                          <a  data-bs-toggle="modal" data-bs-target="#editModalUser{{ $user->id }}" class="edit text-success " data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-id="{{ $user->id }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-email="{{ $user->email }}" data-utilisateur-username="{{ $user->username }}" data-utilisateur-fonction="{{ $user->Fonction }}" data-utilisateur-site="{{ $user->Site }}" data-utilisateur-region="{{ $user->Region }}" data-utilisateur-direction="{{ $user->Direction }}" ><i class="ri ri-pencil-fill"></i></a>
+                          <a  data-bs-toggle="modal" data-bs-target="#deleteuserModal{{ $user->id }}" class="delete text-danger" data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-id="{{ $user->id }}"><i class="bi bi-trash"></i></a>
+                        </td> 
+                      @endif
+                   
+                      @if ($user->nom == 'Ihda' && $data->profil == 'Admin')
+                      <td class="text-overflow"></td> 
+                      @elseif($user->nom != 'Ihda' && $data->profil == 'Admin')
+                      <td class="text-overflow"> 
+                      <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{ $user->id }}"><i class="bi bi-gear" style="float:center"></i></a>
+                      </td>
+                      @elseif($data->profil != 'Admin')
+
+                      @endif
+                 
                       <!-- edit user Modal -->
-                      <div class="modal fade" id="editModal{{ $user->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $user->id }}" aria-hidden="true">
+                      <div class="modal fade" id="editModalUser{{ $user->id }}" tabindex="-1" aria-labelledby="editModalUserLabel{{ $user->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg">
                           <div class="modal-content">
                             <div class="modal-header">
-                              <h5 class="modal-title text-success" id="editModalLabel{{ $user->id }}"><i class="ri ri-pencil-fill"></i>  Modifier</h5>
+                              <h5 class="modal-title text-success" id="editModalUserLabel{{ $user->id }}"><i class="ri ri-pencil-fill"></i>  Modifier</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -270,8 +298,8 @@
                                     <div class="col-sm-6">
                                   <select class="form-select" id="profil" name="profil" >
                                     
-                                    <option value="Admin">Admin</option>
-                                    <option value="Utilisateur">Utilisateur</option>
+                                    <option value="Admin" @if($user->profil == 'Admin') selected @endif>Admin</option>
+                                    <option value="Utilisateur" @if($user->profil == 'Utilisateur') selected @endif>Utilisateur</option>
                                    
                                   </select>
                                   </div>
@@ -366,7 +394,6 @@
                         </form>
                         </div>
                       </div>
-                      <a  data-bs-toggle="modal" data-bs-target="#deleteuserModal{{ $user->id }}" class="delete text-danger" data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-id="{{ $user->id }}"><i class="bi bi-trash"></i></a>
 
                       <!-- Delete Modal-->
                       <div class="modal fade" id="deleteuserModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteuserModalLabel{{ $user->id }}" aria-hidden="true">
@@ -409,16 +436,7 @@
                       </div>
                       
                       </a>
-                    </td>
-                    <td class="text-overflow">
-                      @if ($user->profil == 'Admin')
-
-                      @elseif($user->profil == 'Utilisateur')
-                        
-                      
-                      <a data-bs-toggle="modal" data-bs-target="#exampleModalCenter{{ $user->id }}"><i class="bi bi-gear" style="float:center"></i></a>
-                      @endif
-                  </td>
+                    
                    <!-- Modal droits d'accès -->
                    <div class="modal fade" id="exampleModalCenter{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -428,6 +446,8 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div class="modal-body">
+
+                              
                               <form action="{{ route('droit-acces', $user->id) }}" method="POST">
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="accessStock{{ $user->id }}" name="accessStock" value="1"  @if($user->accessStock == 1) checked @endif>
@@ -456,15 +476,14 @@
                           </div>
                         </div>
                       </div>
-
-              
                   </tr>
                   @endforeach
                 </tbody>
               </table>
             </div>
-           
-            <button class="btn btn-outline-primary btn-sm " data-bs-toggle="modal" data-bs-target="#addModal" style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateur</button> 
+           @if ($data->manageUsers != 0)
+           <button class="btn btn-outline-primary btn-sm " data-bs-toggle="modal" data-bs-target="#addModal" style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i>Créer un utilisateur</button> 
+           @endif
            
              
              
@@ -632,6 +651,7 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->

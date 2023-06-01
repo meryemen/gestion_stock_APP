@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Historique;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,34 +14,19 @@ use Illuminate\Support\Facades\Gate;
 
 class CustomAuthController extends Controller
 {
+   // interface d'erreur 
    public function error(){
       return view('error');
    }
+   //interface de login
    public function login(){
 
     return view('login');
    }
 
-   public function createNewUser()
-   {
-      $user = new User;
-      $user->nom = 'En-najibi';
-      $user->prenom = 'Meryem';
-      $user->username = 'ennajime';
-      $user->email = 'Meryem.ENNAJIBI@external.danone.com';
-      $user->password = Hash::make('ihdadi2022');
-      $user->profil= 'user';
-      $user->has_access_to_user_management="1";
-      $user->has_access_to_inventory_management="1";
-      $user->has_access_to_view_inventory="1";
-      $user->has_access_to_view_history="1";
-      $user->save();
-      
-      return "Utilisateur créé avec succès !";
-   }
 
 
-
+// fonction pour controller login
    public function loginUser(Request $request){
       $request->validate([
          'username' => ['required', 'string'],
@@ -60,7 +46,7 @@ class CustomAuthController extends Controller
    }}
 
   
-  
+  // pour controller logout 
   public function logout(){
    if(Session::has('loginId')){
       Session::pull('loginId');
@@ -68,6 +54,7 @@ class CustomAuthController extends Controller
    }
   }
 
+  //pour afficher le profil
   public function profile(){
    $data = array();
       if(Session::has('loginId')){
@@ -76,6 +63,7 @@ class CustomAuthController extends Controller
       return view('profile', compact('data'));
   }
    
+  //pour faire l update du profil
   public function updateProfil(Request $request){
    $userID = Session::get('loginId');
 
@@ -97,14 +85,10 @@ class CustomAuthController extends Controller
 
     return redirect()->route('profile')->with('success', 'profile updated successfuly');
 }
-public function stock(Request $request){
-   $data = array();
-   if(Session::has('loginId')){
-      $data = User::where('id','=',Session::get('loginId'))->first();
-   }
-   return view('stock', compact('data'));
-}
 
+
+
+//pour afficher l interface des utilisateurs
 public function table(){
    $data = array();
    if(Session::has('loginId')){
@@ -116,14 +100,8 @@ public function table(){
    return view('utilisateur', compact('data','utilisateur'));
 }
 
-public function createUser(){
-   $data = array();
-   if(Session::has('loginId')){
-      $data = User::where('id','=',Session::get('loginId'))->first();
-   }
-   return view('userCreate', compact('data'));
-}
 
+// fonction de recherche dans interface des utilisateurs
 public function search(Request $request){
     if($request->ajax()){
       $data= User::where('nom','like','%'.$request->search.'%')
@@ -166,7 +144,8 @@ public function search(Request $request){
                       <td>'.$row->Direction.'</td>
                       <td>'.$row->profil.'</td>
                       <td class="text-overflow">
-                      <a href="#editEmployeeModal" class="text-warning" ><i class="ri ri-pencil-fill"></i></a>
+                      <a  data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}" class="edit text-success " data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-id="{{ $user->id }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-email="{{ $user->email }}" data-utilisateur-username="{{ $user->username }}" data-utilisateur-fonction="{{ $user->Fonction }}" data-utilisateur-site="{{ $user->Site }}" data-utilisateur-region="{{ $user->Region }}" data-utilisateur-direction="{{ $user->Direction }}" ><i class="ri ri-pencil-fill"></i></a>
+                      
                       <a href="#deleteEmployeeModal" class="text-danger" ><i class="bi bi-trash"></i>
                       </a>
                     </td>
@@ -236,26 +215,62 @@ public function insert(Request $request){
         $user = ['username' => $username, 'email'=>$email, 'password' => $password, 'nom' =>$nom,  'prenom' =>$prenom];
         Mail::to($user['email'])->send(new TestMail($user));
 
+        $data = array();
+         if(Session::has('loginId')){
+            $data = User::where('id','=',Session::get('loginId'))->first();
+          }
+         $historique = new Historique();
+         $historique->modified_at = now();
+         $historique->modified_by = $data->nom . ' ' . $data->prenom; 
+         $historique->type_modif = 'Create';
+         $historique->aqui = 'utilisateur';
+         $historique->comment = 'Ajout d\'un nouveau utilisateur : '. $utilisateur->nom. ' ' . $utilisateur->prenom;
+         $historique->save();
+
         return redirect()->route('utilisateur')->with('success', 'Utilisateur ajouté avec succès.');
 
 }
 
-
+// fonction pour supprimer un utilisateur
 public function delete(Request $request, $id){
    $data = array();
    if(Session::has('loginId')){
-     $data = User::where('id','=',Session::get('loginId'))->first();
+       $data = User::where('id','=',Session::get('loginId'))->first();
    }
 
    $utilisateur = User::find($id);
    if (!empty($data) && Hash::check($request->input('password'), $data->password)) {
-      $utilisateur->delete();
-      return redirect()->route('utilisateur')->with('success', 'Utilisateur supprimé avec succès.');
-  } else {
-      return redirect()->route('utilisateur')->with('fail', 'Mot de passe incorrect. L\'utilisateur n\'a pas été supprimé.');
-  }
+       // Enregistrer les données dans l'historique
+       $historique = new Historique();
+       $historique->modified_at = now();
+       $historique->modified_by = $data->nom . ' ' .  $data->prenom;
+       $historique->type_modif = 'Delete';
+       $historique->aqui = 'utilisateur';
+       $historique->comment = 'A supprimé un utilisateur ';
+       
+       $historique->save();
 
- }
+       
+
+       // Supprimer l'utilisateur
+       $utilisateur->delete();
+
+       return redirect()->route('utilisateur')->with('success', 'Utilisateur supprimé avec succès.');
+   } else {
+      $historique = new Historique();
+      $historique->modified_at = now();
+      $historique->modified_by = $data->nom . ' ' .  $data->prenom;
+      $historique->type_modif = 'Delete';
+      $historique->aqui = 'utilisateur';
+      $historique->comment = 'A essayé de supprimmer l\'utilisateur : '. $utilisateur->nom .' '.  $utilisateur->prenom ;
+      
+      $historique->save();
+       return redirect()->route('utilisateur')->with('fail', 'Mot de passe incorrect. L\'utilisateur n\'a pas été supprimé.');
+   }
+}
+
+
+// fonction pour appliquer les droits d'accés
  public function updateDroitAcces(Request $request, $userId){
    $user = User::find($userId);
    
@@ -269,13 +284,16 @@ public function delete(Request $request, $id){
     return redirect()->route('utilisateur')->with('success', 'Done');
 
  }
+
+ // fonction pour update des données d'un utilisateur
  public function edit(Request $request, $id)
  {
    $data = array();
    if(Session::has('loginId')){
      $data = User::where('id','=',Session::get('loginId'))->first();
    }
- 
+     $ancienUser = User::find($id);
+    
      $user = User::find($id);
      $user->profil = $request->input('profil');
      $user->nom = $request->input('nom');
@@ -287,13 +305,59 @@ public function delete(Request $request, $id){
      $user->region = $request->input('region');
      $user->direction = $request->input('direction');
      $user->save();
+     $modifications = array();
+     $ancienUser->refresh(); 
+     $comment = '';
+     if ($ancienUser->profil != $user->profil) {
+         $comment .= 'Profil a été modifié de "'.$ancienUser->profil.'" à "'.$user->profil.'". ';
+     }
+     
+     
+     if ($ancienUser->nom != $user->nom) {
+         $comment .= 'Nom a été modifié de "'.$ancienUser->nom.'" à "'.$user->nom.'". ';
+     }
+     
+     if ($ancienUser->prenom != $user->prenom) {
+         $comment .= 'Prenom a été modifié de "'.$ancienUser->prenom.'" à "'.$user->prenom.'". ';
+     }
+     
+     if ($ancienUser->Region != $user->Region) {
+         $comment .= 'Region a été modifié de "'.$ancienUser->Region.'" à "'.$user->Region.'". ';
+     }
+     if ($ancienUser->Site != $user->Site) {
+      $comment .= 'Site a été modifié de "'.$ancienUser->Site.'" à "'.$user->Site.'". ';
+     }
+     if ($ancienUser->Fonction != $user->Fonction) {
+         $comment .= 'Fonction a été modifié de "'.$ancienUser->Fonction.'" à "'.$user->Fonction.'". ';
+     }
+   
+     if ($ancienUser->Direction != $user->Direction) {
+         $comment .= 'Direction a été modifié de "'.$ancienUser->Direction.'" à "'.$user->Direction.'". ';
+     }
+     
+     if (!empty($comment)) {
+         $comment = trim($comment); // Remove leading/trailing spaces
+         $comment = ucfirst($comment); // Capitalize the first letter
+         $comment .= ' pour ' . $user->nom . ' '.$user->prenom.".";
+     } else {
+         $comment = 'Aucune modification effectuée pour ' . $user->nom . ' '.$user->prenom.".";
+     }
+
+     // Enregistrer les données dans l'historique
+     $historique = new Historique();
+     $historique->modified_at = now();
+     $historique->modified_by = $data->nom . ' ' .  $data->prenom;
+     $historique->type_modif = 'Update';
+     $historique->aqui = 'utilisateur';
+     $historique->comment = $comment;
+     
+     $historique->save();
  
      return redirect()->route('utilisateur',compact('data'))->with('success', 'Utilisateur modifié avec succès');
  }
 
 
 // update password
-
 
  public function updatePassword(Request $request){
    $userID = Session::get('loginId');

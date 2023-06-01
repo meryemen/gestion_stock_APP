@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Affectation;
+use App\Models\Historique;
 use App\Models\User;
 use App\Models\Equipement;
 use App\Models\Personne;
@@ -164,7 +165,7 @@ class StockController extends Controller
         $equipement->id_fourni = $fourni->id_fourni;
         $equipement->id_com = $bonDeCommande->id_com;
         $equipement->id_livre = $bonDeLivraison->id_livre;
-        dd($equipement);
+     
         $equipement->save();
 
         $affectation = new Affectation();
@@ -209,6 +210,12 @@ class StockController extends Controller
         $equipement->id_livre = $bonDeLivraison->id_livre;
         
         $equipement->save();
+        $historique = new Historique();
+        $historique->modified_at = now();
+        $historique->modified_by = $data->nom . ' ' . $data->prenom; 
+        $historique->type_modif = 'Create';
+        $historique->comment = 'Ajout d\'un nouveau equipement : '.$equipement->type .''. $equipement->n_serie ;
+        $historique->save();
 
       
         return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');

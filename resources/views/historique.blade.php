@@ -97,7 +97,7 @@
             <li>
               <a class="dropdown-item d-flex align-items-center" href="logout">
                 <i class="bi bi-box-arrow-left"></i>
-                <span>Se deconnecter</span>
+                <span>Se déconnecter</span>
               </a>
             </li>
 
@@ -187,8 +187,57 @@
   </aside><!-- End Sidebar-->
   
   <main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Historique</h1>
+     
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
 
+          <div class="card ">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <h5 class="card-title mb-0 mr-3">Historique</h5>
+                
+              </div>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col" class="text-secondary text-center">Table</th>
+          <th scope="col" class="text-secondary text-center">User</th>
+          <th scope="col" class="text-secondary text-center">Type</th>
+          <th scope="col" class="text-secondary text-center">Commentaire</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($history as $hist )
+        <tr>
+          <th scope="row" class="text-secondary">{{ $hist->modified_at }}</th>
+          <td class="text-center">{{ $hist->aqui }}</td>
+          <td class="text-center">{{ $hist->modified_by }}</td>
 
+          <td class="text-center">
+            @if ($hist->type_modif == 'Create')
+              <span class="badge bg-success">{{ $hist->type_modif }}</span>
+            @elseif ($hist->type_modif == 'Update')
+              <span class="badge bg-info">{{ $hist->type_modif }}</span>
+            @elseif ($hist->type_modif == 'Delete')
+              <span class="badge bg-danger">{{ $hist->type_modif }}</span>
+            @endif
+          </td>
+
+          <td>{{ $hist->comment }}</td>
+        </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+</div>
+</section>
   </main><!-- End #main -->
 
   

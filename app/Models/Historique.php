@@ -13,12 +13,11 @@ class Historique extends Model
     public $fillable = [
         'id_hist',
         'modified_at',
+        'aqui',
         'modified_by',
         'type_modif',
         'comment',
-        'id_equ ',
-        'id ',
-        'id_fourni '
+        
         
     ];
    

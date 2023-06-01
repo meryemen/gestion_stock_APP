@@ -29,4 +29,5 @@ class Personne extends Model
     {
         return $this->hasMany(Affectation::class, 'id_pers');
     }
+   
 }

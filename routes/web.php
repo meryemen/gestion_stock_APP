@@ -41,7 +41,7 @@ Route::get('/dashboard', [StockController::class, 'dashboard'])->name('dashboard
 //formulaire d'ajout d'un equipement
 Route::get('/formulaire', [StockController::class, 'formulaire'])->middleware('isLoggedIn','manageStock');
 Route::post('ajout-equipement',[StockController::class,'ajout'])->name('ajout-equipement');
-Route::post('/edit-utilisateur/{id_equ}', [StockController::class, 'edit'])->name('edit-utilisateur');
+Route::post('/edit-equipement/{id_equ}', [StockController::class, 'edit'])->name('edit-equipement');
 
 Route::get('/fournisseur', [FourniController::class, 'fournisseur'])->middleware('isLoggedIn')->name('fournisseur');
 Route::post('ajout-fournisseur', [FourniController::class, 'ajouter'])->name('ajout-fournisseur');
