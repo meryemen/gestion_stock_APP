@@ -131,7 +131,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="accessoire">
           <i class="bi bi-usb-drive"></i>
           <span>Accessoires</span>
         </a>
@@ -200,7 +200,13 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-
+    @if (Session::has('success'))
+    <div class="alert alert-success">{{ Session::get('success') }}</div>
+      @endif
+      
+      @if (Session::has('fail'))
+      <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+     @endif
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -219,28 +225,49 @@
              <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
               <thead>
                   <tr>
-                    <th class="text-success">Catégorie</th>
-                    <th class="text-success">Produit</th>
-                    <th class="text-success">Numéro de série</th>
-                    <th class="text-success">Statut</th>
-                    <th class="text-success">Nom & Prénom</th>
-                    <th class="text-success">Site</th>
-                    <th class="text-success">Région</th>
-                    <th class="text-success">Direction</th>
-                    <th class="text-success">Action</th>
+                    <th class="text-success text-center ">Catégorie</th>
+                    <th class="text-success text-center">Produit</th>
+                    <th class="text-success text-center">Numéro de série</th>
+                    <th class="text-success text-center">Statut</th>
+                    <th class="text-success text-center">Nom & Prénom</th>
+                    <th class="text-success text-center">Site</th>
+                    <th class="text-success text-center">Région</th>
+                    <th class="text-success text-center">Direction</th>
+                    <th class="text-success text-center">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                 
+                  @foreach ($equipments as $equip)
                   <tr>
                     
-                    <td  class="text-overflow"></td>
+                    @if ($equip->type == 'accessoire')
+                    <td  class="text-overflow text-center">{{ $equip->categorie }}</td>
+                    <td  class="text-overflow text-center">{{ $equip->produit }}</td>
+                    <td  class="text-overflow text-center">{{ $equip->n_serie }}</td>
+                    <td  class="text-overflow text-center">{{ $equip->statut }}</td>
+                    @if($equip->personne)
+                    <td class="text-overflow text-center">{{ $equip->personne->nom_prenom}}</td>
+                    <td class="text-overflow text-center">{{ $equip->personne->site }}</td>
+                    <td class="text-overflow text-center">{{ $equip->personne->region }}</td>
+                    <td class="text-overflow text-center">{{ $equip->personne->direction }}</td>
+                    @else
+                    <td class="text-overflow text-center"></td>
+                    <td class="text-overflow text-center"></td>
+                    <td class="text-overflow text-center"></td>
+                    <td class="text-overflow text-center"></td>
+                    @endif
                     
                     <td class="text-overflow">
-                      <a href="#editEmployeeModal" class="edit" ><i class="ri ri-pencil-fill"></i></a>
-                      <a href="#deleteEmployeeModal" class="delete" ><i class="bi bi-trash"></i>
+                      <div class="text-center">
+                        
+                        <a href="info_equipement" class="delete text-success">
+                          <i class="bi bi-arrow-90deg-right"></i>
+                        </a>
+                      </div>
                       </a>
                     </td>
+                    @endif
+                    @endforeach
                   </tr>
                   
                   	
@@ -277,7 +304,9 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
-  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fournisseur;
+use App\Models\Historique;
 use App\Models\User;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -46,6 +47,14 @@ class FourniController extends Controller
       $fournisseur->tele_agence = $tele_agence;
       $fournisseur->save();
 
+         $historique = new Historique();
+         $historique->modified_at = now();
+         $historique->modified_by = $data->nom . ' ' . $data->prenom; 
+         $historique->type_modif = 'Create';
+         $historique->aqui = 'fournisseur';
+         $historique->comment = 'Ajout d\'un nouveau fournisseur : '. $fournisseur->nom_four;
+         $historique->save();
+
       return redirect()->route('fournisseur',compact('data'))->with('success', 'Fournisseur ajouté ');
 
 
@@ -62,6 +71,7 @@ class FourniController extends Controller
      }
       
       $fournisseur->delete();
+    
       return redirect()->route('fournisseur',compact('data'))->with('fail', 'Fournisseur supprimer ');
 
     }
@@ -77,6 +87,7 @@ class FourniController extends Controller
       $tele_siege = $request->input('site');
       $tele_agence = $request->input('agence');
 
+      $ancienfournisseur=Fournisseur::find($id_fourni);
       $fournisseur = Fournisseur::find($id_fourni);
       $fournisseur->nom_four = $nom_four;
       $fournisseur->responsable = $responsable;
@@ -86,64 +97,60 @@ class FourniController extends Controller
       $fournisseur->tele_agence = $tele_agence;
       $fournisseur->save();
 
+
+      $comment = '';
+      
+      if ($ancienfournisseur->responsable != $fournisseur->responsable) {
+          $comment .= 'Responsable a été modifié de "'.$ancienfournisseur->responsable.'" à "'.$fournisseur->responsable.'". ';
+      }
+      
+      if ($ancienfournisseur->adresse != $fournisseur->adresse) {
+          $comment .= 'Adresse a été modifié de "'.$ancienfournisseur->adresse.'" à "'.$fournisseur->adresse.'". ';
+      }
+      
+      if ($ancienfournisseur->tele_agence != $fournisseur->tele_agence) {
+          $comment .= 'Tele_agence a été modifié de "'.$ancienfournisseur->tele_agence.'" à "'.$fournisseur->tele_agence.'". ';
+      }
+      if ($ancienfournisseur->tele_siege != $fournisseur->tele_siege) {
+       $comment .= 'Tele_siege a été modifié de "'.$ancienfournisseur->tele_siege.'" à "'.$fournisseur->tele_siege.'". ';
+      }
+     
+      
+      if (!empty($comment)) {
+          $comment = trim($comment); // Remove leading/trailing spaces
+          $comment = ucfirst($comment); // Capitalize the first letter
+          $comment .= ' pour ' . $fournisseur->nom_four ;
+        
+      } else {
+          $comment = 'Aucune modification effectuée pour ' . $fournisseur->nom_four ;
+      }
+ 
+      // Enregistrer les données dans l'historique
+      $historique = new Historique();
+      $historique->modified_at = now();
+      $historique->modified_by = $data->nom . ' ' .  $data->prenom;
+      $historique->type_modif = 'Update';
+      $historique->aqui = 'fournisseur';
+      $historique->comment = $comment;
+      
+      $historique->save();
       return redirect()->route('fournisseur',compact('data'))->with('success', 'Fournisseur modifier avec succés ');
 
 
     }
 
     public function search(Request $request){
-      if($request->ajax()){
-        $data= Fournisseur::where('nom_four','like','%'.$request->search.'%')
-        ->orwhere('responsable','like','%'.$request->search.'%')->get();
-        $output='';
-        if(count($data)>0){
-            $output ='
-            
-                <table class="table" style="table-layout: fixed; width: 100%;">
-                <thead>
-                <tr>
-                
-                <th class="text-success">Fournisseur</th>
-                <th class="text-success">Responsable</th>
-                <th class="text-success">Email</th>
-                <th class="text-success">Adresse</th>
-                <th class="text-success">Téléphone-Site</th>
-                <th class="text-success">Téléphone-Agence</th>
-                <th class="text-success">Action</th>
-                
-                </tr>
-                </thead>
-                <tbody>';
-                    foreach($data as $row){
-                        $output .='
-                        <tr>
-                        <td>'.$row->nom_four.'</td>
-                        <td>'.$row->responsable.'</td>
-                        <td>'.$row->email.'</td>
-                        <td>'.$row->adresse.'</td>
-                        <td>'.$row->tele_siege.'</td>
-                        <td>'.$row->tele_agence.'</td>
-                       
-                        <td class="text-overflow">
-                        <a href="#editEmployeeModal" class="text-warning" ><i class="ri ri-pencil-fill"></i></a>
-                        <a href="#deleteEmployeeModal" class="text-danger" ><i class="bi bi-trash"></i>
-                        </a>
-                      </td>
-                     
-                        </tr>
-                        
-                        ';
-                    }
-            $output .= '
-                </tbody>
-                </table>';
-        }
-        else{
-            $output .='Aucun résultat trouvé';
-        }
-        return $output;
-    }
-  }
+      $data = array();
+      if(Session::has('loginId')){
+      $data = User::where('id','=',Session::get('loginId'))->first();
+      }
+       $get_name=$request->fourni_search;
+      $fournisseur = Fournisseur::where('nom_four','like','%'. $get_name.'%')
+      ->orwhere('responsable','like','%'. $get_name.'%')
+      ->get();
   
+  
+   return view('search_fourni', compact('data','fournisseur'));
+    }
     
 }

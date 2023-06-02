@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>It Asset Control-Stock-materiel</title>
+  <title>It Asset Control-Fournisseur</title>
   <link href="assets/img/TYPOTYPE.png" rel="icon">
 
   <!-- Google Fonts -->
@@ -38,8 +38,8 @@
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" id="materiel_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
+      <form class="search-form d-flex align-items-center " method="GET" action="{{ url('/search-fournisseur') }}">
+        <input type="text" name="fourni_search" id="fourni_search" placeholder="Enter un mot clé"  title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -180,10 +180,10 @@
           <span>Se deconnecter</span>
         </a>
       </li><!-- End Contact Page Nav -->
-
       <li class="nav-item">
         <img src="unnamed.png" alt="" style="width:90%; position: absolute; bottom: 0;">
       </li>
+     
 
     </ul>
 
@@ -192,21 +192,23 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Stock des materiels</h1>
+      <h1>Table des Fournisseurs</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Materiels</a></li>
-          <li class="breadcrumb-item">Stock</li>
+          <li class="breadcrumb-item"><a href="index.html">Fournisseur</a></li>
+          
         </ol>
       </nav>
     </div><!-- End Page Title -->
-    @if (Session::has('success'))
-    <div class="alert alert-success">{{ Session::get('success') }}</div>
-      @endif
-      
-      @if (Session::has('fail'))
-      <div class="alert alert-danger">{{ Session::get('fail') }}</div>
-     @endif
+    @if (session('success'))
+      <div class="alert alert-success">
+      {{ session('success') }}
+      </div>
+    @elseif (session('fail'))
+    <div class="alert alert-danger">
+      {{ session('fail') }}
+      </div>
+    @endif
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -214,109 +216,89 @@
           <div class="card ">
             <div class="card-body">
              <div >
-              <h5 class="card-title" style="display: inline-block">Materiels</h5>
+              <h5 class="card-title" style="display: inline-block">Fournisseur</h5>
               
-                <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
-                <a href="{{ route('exporter') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
+               
              
 
              </div>
              <div id="search_list">
-             <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
-              <thead>
+             <table class="table table-hover table-sm"  style="table-layout: fixed; width: 100%;">
+                <thead>
                   <tr>
                     
-                    <th class="text-success text-center">Catégorie</th>
-                    <th class="text-success text-center">Produit</th>
-                    <th class="text-success text-center">Numéro de série</th>
-                    <th class="text-success text-center">Caracteristique Tech</th>
-                    <th class="text-success text-center">Statut</th>
-                    <th class="text-success text-center">NetBios</th>
-                    <th class="text-success text-center">Nom & Prénom</th>
-                    <th class="text-success text-center">Site</th>
-                    <th class="text-success text-center">Région</th>
-                    <th class="text-success text-center">Direction</th>
-                    <th class="text-success text-center">Action</th>
+                    <th class="text-success">Fournisseur</th>
+                    <th class="text-success">Responsable</th>
+                    <th class="text-success">Email</th>
+                    <th class="text-success">Adresse</th>
+                    <th class="text-success">Téléphone-Site</th>
+                    <th class="text-success">Téléphone-Agence</th>
+                    <th class="text-success">Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach ($equipments as $equip)
+                  @foreach ($fournisseur as $fourni)
                   <tr>
-                   @if ($equip->type == 'materiel')
                      
-               
-                      <td class="text-overflow text-center">{{ $equip->categorie }}</td>
-                      <td class="text-overflow text-center">{{ $equip->produit }}</td>
-                      <td class="text-overflow text-center">{{ $equip->n_serie }}</td>
-                      <td class="text-overflow text-center">{{ $equip->cracteristique_tech }}</td>
-                      <td class="text-overflow text-center">{{ $equip->statut }}</td>
-                      <td class="text-overflow text-center">{{ $equip->netbios }}</td>
-                      @if($equip->personne)
-                      <td class="text-overflow text-center">{{ $equip->personne->nom_prenom}}</td>
-                      <td class="text-overflow text-center">{{ $equip->personne->site }}</td>
-                      <td class="text-overflow text-center">{{ $equip->personne->region }}</td>
-                      <td class="text-overflow text-center">{{ $equip->personne->direction }}</td>
-                      @else
-                      <td class="text-overflow text-center"></td>
-                      <td class="text-overflow text-center"></td>
-                      <td class="text-overflow text-center"></td>
-                      <td class="text-overflow text-center"></td>
-                      @endif
+                      <td>{{ $fourni->nom_four }}</td>
+                      <td>{{ $fourni->responsable }}</td>
+                      <td>{{ $fourni->email }}</td>
+                      <td>{{ $fourni->adresse }}</td>
+                      <td>{{ $fourni->tele_siege }}</td>
+                      <td>{{ $fourni->tele_agence }}</td>
                       
-                    <td class="text-overflow">
-                      <div class="text-center">
-                        
-                        <a href="info_equipement" class="delete text-success">
-                          <i class="bi bi-arrow-90deg-right"></i>
-                        </a>
-                      </div>
-                      </a>
-                               <!-- Modal edit-->
-                   <div class="modal fade" id="editModal{{ $equip->id_equ }}" tabindex="-1" aria-labelledby="editModalLabel{{ $equip->id_equ }}" aria-hidden="true">
+                      <td>
+                          <a data-bs-toggle="modal" data-bs-target="#editModal{{ $fourni->id_fourni }}" class="edit text-success " data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id_fourni }}" data-fournisseur-responsable="{{ $fourni->responsable }}" data-fournisseur-email="{{ $fourni->email }}" data-fournisseur-adresse="{{ $fourni->adresse }}" data-fournisseur-tele_siege="{{ $fourni->tele_siege }}" data-fournisseur-tele_agence="{{ $fourni->tele_agence }}"><i class="ri ri-pencil-fill"></i></a>
+                          <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $fourni->id_fourni }}" class="delete text-danger " data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id_fourni }}"><i class="bi bi-trash"></i></a>
+                      </td>
+                  </tr>
+                  
+                   <!-- Modal edit-->
+                   <div class="modal fade" id="editModal{{ $fourni->id_fourni }}" tabindex="-1" aria-labelledby="editModalLabel{{ $fourni->id_fourni }}" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                       <div class="modal-content">
                         <div class="modal-header">
-                          <h1 class="modal-title fs-5 text-success" id="editModalLabel{{  $equip->id_equ }}"><i class="bi bi-pencil"></i>  Modifier</h1>
+                          <h1 class="modal-title fs-5 text-success" id="editModalLabel{{ $fourni->id_fourni }}"><i class="bi bi-pencil"></i>  Modifier</h1>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
 
-                         <form action="{{ route('edit-utilisateur' ,$equip->id_equ) }}" method="POST">
+                         <form action="{{ route('edit-fournisseur' , $fourni->id_fourni) }}" method="POST">
                           @csrf
                           
                           <div class="row mb-3">
                             <label for="fournisseur" class="col-sm-2 col-form-label">Fournisseur :</label>
                           <div class="col-sm-4">
-                            <input type="text" name="fournisseur" required class="form-control" value="{{ isset($equipement) ? $equipement->type : '' }}">
+                            <input type="text" id="fournisseur{{ $fourni->id_fourni }}" name="fournisseur" required class="form-control">
                           </div>
                                 
                           <label for="responsable" class="col-sm-2 col-form-label">Responsable :</label>
                           <div class="col-sm-4">
-                            <input type="text" name="responsable" required class="form-control">
+                            <input type="text" id="responsable{{ $fourni->id_fourni }}" name="responsable" required class="form-control">
                           </div>
                             
                           </div>
                           <div class="row mb-3">
                             <label for="email" class="col-sm-2 col-form-label">Email :</label>
                           <div class="col-sm-4">
-                            <input type="text"  name="email" required class="form-control">
+                            <input type="text" id="email{{ $fourni->id_fourni }}" name="email" required class="form-control">
                           </div>
                                 
                           <label for="adresse" class="col-sm-2 col-form-label">Adresse :</label>
                           <div class="col-sm-4">
-                            <input type="text"  name="adresse" required class="form-control">
+                            <input type="text" id="adresse{{ $fourni->id_fourni }}" name="adresse" required class="form-control">
                           </div>
                             
                           </div>
                           <div class="row mb-3">
                             <label for="site" class="col-sm-2 col-form-label">Télephone-Site :</label>
                           <div class="col-sm-4">
-                            <input type="text" name="site" required class="form-control">
+                            <input type="text" id="site{{ $fourni->id_fourni }}" name="site" required class="form-control">
                           </div>
                                 
                           <label for="agence" class="col-sm-2 col-form-label">Télephone-Agence :</label>
                           <div class="col-sm-4">
-                            <input type="text"  name="agence" required class="form-control">
+                            <input type="text" id="agence{{ $fourni->id_fourni }}" name="agence" required class="form-control">
                           </div>
                             
                           </div>
@@ -330,20 +312,102 @@
                       </div>
                     </div>
                   </div>
-                    </td>
-                  </tr>
-                  @endif
-                  @endforeach
-                  	
-                 
-                </tbody>
-              </table>
-            </div>
-             <a href="formulaire"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
-             
-             
-            
+                  <!-- Modal Delete-->
+                      <div class="modal fade" id="deleteModal{{ $fourni->id_fourni }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $fourni->id_fourni }}" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h1 class="modal-title fs-5 text-danger" id="deleteModalLabel{{ $fourni->id_fourni }}"> <i class="bi bi-trash text-danger"></i> Suppression</h1>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                      <span>Êtes vous sûr de supprimer le fournisseur : <span id="fournisseurNom{{ $fourni->id_fourni }}"></span></p>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                      <form action="{{ route('delete-fournisseur', $fourni->id_fourni ) }}" method="POST">
+                                        @csrf
+                                      <button type="submit" class="btn btn-danger">Confirmer</button>
+                                    </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      @endforeach
+                      @if ($fournisseur->isEmpty())
+                      <tr>
+                        <span colspan="7" class="text-center">Aucun résultat trouvé.</span>
+                      </tr>
+                     @endif
+                        </tbody>
 
+                      </table>
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: right"><i class="bi bi-plus"></i>
+                    Ajouter un fournisseur
+                  </button>
+
+                  <!-- Modal Ajout-->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5 text-primary" id="exampleModalLabel"><i class="bi bi-plus"></i>Ajout d'un fournisseur</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                         <form action="{{ route('ajout-fournisseur') }}" method="POST">
+                          @csrf
+                          
+                          <div class="row mb-3">
+                            <label for="fournisseur" class="col-sm-2 col-form-label">Fournisseur :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="fournisseur" name="fournisseur" required class="form-control">
+                          </div>
+                                
+                          <label for="responsable" class="col-sm-2 col-form-label">Responsable :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="responsable" name="responsable" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="email" class="col-sm-2 col-form-label">Email :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="email" name="email" required class="form-control">
+                          </div>
+                                
+                          <label for="adresse" class="col-sm-2 col-form-label">Adresse :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="adresse" name="adresse" required class="form-control">
+                          </div>
+                            
+                          </div>
+                          <div class="row mb-3">
+                            <label for="site" class="col-sm-2 col-form-label">Télephone-Site :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="site" name="site" required class="form-control">
+                          </div>
+                                
+                          <label for="agence" class="col-sm-2 col-form-label">Télephone-Agence :</label>
+                          <div class="col-sm-4">
+                            <input type="text" id="agence" name="agence" required class="form-control">
+                          </div>
+                            
+                          </div>
+                       </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                          <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                      </form>
+                      </div>
+                    </div>
+                  </div>
+               </table>
+          </div>
             </div>
           </div>
 
@@ -353,6 +417,7 @@
     </section>
 
   </main><!-- End #main -->
+
 
   
 
@@ -371,10 +436,23 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="js/app.js"></script>
+  <script>
+    //fournisseur
+// Delete Modal fournisseur 
+document.querySelectorAll('.delete').forEach(function(element) {
+    element.addEventListener('click', function() {
+        var fournisseurNom = this.getAttribute('data-fournisseur-nom');
+        var fournisseurId = this.getAttribute('data-fournisseur-id');
+
+        document.getElementById('fournisseurNom' + fournisseurId).textContent = fournisseurNom;
+    });
+});
+
+  </script>
 
 </body>
 

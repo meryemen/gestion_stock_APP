@@ -43,7 +43,7 @@ class StockController extends Controller
           $retirement = Equipement::where('statut', 'Retirement')->where('type','materiel')->count();
           $stolen = Equipement::where('statut', 'Stolen')->where('type','materiel')->count();
           $don = Equipement::where('statut', 'Don')->where('type','materiel')->count();
-
+          
          // materiel et accessoires en general
           $materiel = Equipement::where('type', 'materiel')->count();
           $accessoire = Equipement::where('type', 'accessoire')->count();
@@ -55,6 +55,14 @@ class StockController extends Controller
           $scanner=Equipement::where('categorie','Scanner')->count();
           $printer=Equipement::where('categorie','Printer')->count();
           $projector=Equipement::where('categorie','Video projector')->count();
+          
+          $USB=Equipement::where('categorie','USB')->count();
+          $Sacàdos=Equipement::where('categorie','Sac à dos')->count();
+          $sourissfil=Equipement::where('categorie','Souris sans fil')->count();
+          $sourisafil=Equipement::where('categorie','Souris avec fil')->count();
+          $ch45=Equipement::where('categorie','Chargeur 45W')->count();
+          $ch65=Equipement::where('categorie','Chargeur 65W')->count();
+
 
 
 
@@ -65,7 +73,7 @@ class StockController extends Controller
         return view('dashboard', compact('retirement','stolen','don','inuse',
         'munisys','louisrey','site','maintenance','pending','data',
         'materiel','user','accessoire','laptop','desktop','monitor',
-        'scanner','printer','projector'));
+        'scanner','printer','projector','USB','Sacàdos','sourissfil','sourisafil','ch45','ch65'));
 
 }
 
@@ -173,8 +181,12 @@ class StockController extends Controller
         $affectation->id_pers = $personneId;
         $affectation->date_affectation = $dateAffectation;
         $affectation->save();
-
-        return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');
+        if($equipement->type == 'materiel'){
+            return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');
+        }else{
+            return redirect()->route('accessoire',compact('data'))->with('success', 'Equipement ajouté ');
+        }
+        
       }else{
         $fourni = Fournisseur::where('nom_four', $fournisseur)->first();
         $bonDeCommande = Bon_commande::firstOrCreate(
@@ -196,6 +208,7 @@ class StockController extends Controller
         ]
         );
         $equipement = new Equipement();
+        $equipement->id_livre = $bonDeLivraison->id_livre;
         $equipement->type = $type;
         $equipement->categorie = $categorie;
         $equipement->produit = $produit;
@@ -204,22 +217,25 @@ class StockController extends Controller
         $equipement->prix = $prix;
         $equipement->cracteristique_tech = $cracteristique_tech;
         $equipement->netbios = $netbios;
-        
         $equipement->id_fourni = $fourni->id_fourni;
         $equipement->id_com = $bonDeCommande->id_com;
-        $equipement->id_livre = $bonDeLivraison->id_livre;
+        
         
         $equipement->save();
         $historique = new Historique();
         $historique->modified_at = now();
         $historique->modified_by = $data->nom . ' ' . $data->prenom; 
         $historique->type_modif = 'Create';
-        $historique->comment = 'Ajout d\'un nouveau equipement : '.$equipement->type .''. $equipement->n_serie ;
+        $historique->aqui = 'equipements';
+        $historique->comment = 'Ajout d\'un nouveau equipement : '.$equipement->type .' / '. $equipement->n_serie ;
         $historique->save();
 
       
-        return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');
-      }
+        if($equipement->type == 'materiel'){
+            return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');
+        }else{
+            return redirect()->route('accessoire',compact('data'))->with('success', 'Equipement ajouté ');
+        }      }
   }
  public function edit($id_equ){
   $data = array();
@@ -357,7 +373,16 @@ class StockController extends Controller
   }
 }
 
-  
+  public function info(){
+    $data = array();
+    if (Session::has('loginId')) {
+        $data = User::where('id', '=', Session::get('loginId'))->first();
+    }
+    $fournisseur = array();
+    $fournisseur = Fournisseur::pluck('nom_four')->all();
+
+    return view('info', compact('data','fournisseur'));
+  }
 
  
 }

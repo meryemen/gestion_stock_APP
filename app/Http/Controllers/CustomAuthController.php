@@ -99,71 +99,23 @@ public function table(){
    $utilisateur = User::all();
    return view('utilisateur', compact('data','utilisateur'));
 }
-
-
 // fonction de recherche dans interface des utilisateurs
+
+
+
 public function search(Request $request){
-    if($request->ajax()){
-      $data= User::where('nom','like','%'.$request->search.'%')
-      ->orwhere('prenom','like','%'.$request->search.'%')
-      ->orwhere('region','like','%'.$request->search.'%')
-      ->orwhere('direction','like','%'.$request->search.'%')
-      ->orwhere('username','like','%'.$request->search.'%')->get();
-      $output='';
-      if(count($data)>0){
-          $output ='
-          
-              <table class="table" style="table-layout: fixed; width: 100%;">
-              <thead>
-              <tr>
-              
-              <th class="text-success">Nom</th>
-              <th class="text-success">Prénom</th>
-              <th class="text-success">Username</th>
-              <th class="text-success">Email</th>
-              <th class="text-success">Fonction</th>
-              <th class="text-success">Site</th>
-              <th class="text-success">Region</th>
-              <th class="text-success">Direction</th>
-              <th class="text-success">Profil</th>
-              <th class="text-success">Action</th>
-              <th class="text-success">droit d accès</th>
-              </tr>
-              </thead>
-              <tbody>';
-                  foreach($data as $row){
-                      $output .='
-                      <tr>
-                      <td>'.$row->nom.'</td>
-                      <td>'.$row->prenom.'</td>
-                      <td>'.$row->username.'</td>
-                      <td>'.$row->email.'</td>
-                      <td>'.$row->Fonction.'</td>
-                      <td>'.$row->Site.'</td>
-                      <td>'.$row->Region.'</td>
-                      <td>'.$row->Direction.'</td>
-                      <td>'.$row->profil.'</td>
-                      <td class="text-overflow">
-                      <a  data-bs-toggle="modal" data-bs-target="#editModal{{ $user->id }}" class="edit text-success " data-utilisateur-nom="{{ $user->nom }}" data-utilisateur-id="{{ $user->id }}" data-utilisateur-prenom="{{ $user->prenom }}" data-utilisateur-email="{{ $user->email }}" data-utilisateur-username="{{ $user->username }}" data-utilisateur-fonction="{{ $user->Fonction }}" data-utilisateur-site="{{ $user->Site }}" data-utilisateur-region="{{ $user->Region }}" data-utilisateur-direction="{{ $user->Direction }}" ><i class="ri ri-pencil-fill"></i></a>
-                      
-                      <a href="#deleteEmployeeModal" class="text-danger" ><i class="bi bi-trash"></i>
-                      </a>
-                    </td>
-                    <td class="text-overflow">
-                        <a href="#editEmployeeModal" class="text-secondary" ><i class="bi bi-gear" style="float:center"></i></a>
-                      </td>
-                      </tr>
-                      ';
-                  }
-          $output .= '
-              </tbody>
-              </table>';
-      }
-      else{
-          $output .='Aucun résultat trouvé';
-      }
-      return $output;
-  }
+    $data = array();
+    if(Session::has('loginId')){
+    $data = User::where('id','=',Session::get('loginId'))->first();
+    }
+     $get_name=$request->user_search;
+    $utilisateur = User::where('nom','like','%'. $get_name.'%')
+    ->orwhere('profil','like','%'. $get_name.'%')
+    ->get();
+
+
+ return view('search_user', compact('data','utilisateur'));
+
 }
 
 // verifier si l email existe deja 
@@ -272,6 +224,11 @@ public function delete(Request $request, $id){
 
 // fonction pour appliquer les droits d'accés
  public function updateDroitAcces(Request $request, $userId){
+   $data = array();
+   if(Session::has('loginId')){
+       $data = User::where('id','=',Session::get('loginId'))->first();
+   }
+
    $user = User::find($userId);
    
    $user->accessStock = $request->has('accessStock') ? 1 : 0;
@@ -280,7 +237,12 @@ public function delete(Request $request, $id){
    $user->manageSuppliers = $request->has('manageSuppliers') ? 1 : 0;
    
     $user->save();
-
+    $historique = new Historique();
+    $historique->modified_at = now();
+    $historique->modified_by = $data->nom . ' ' .  $data->prenom;
+    $historique->type_modif = 'Update';
+    $historique->aqui = 'utilisateur';
+    $historique->comment = 'A essayé de supprimmer l\'utilisateur : '. $user->nom .' '.  $user->prenom ;
     return redirect()->route('utilisateur')->with('success', 'Done');
 
  }
@@ -339,6 +301,7 @@ public function delete(Request $request, $id){
          $comment = trim($comment); // Remove leading/trailing spaces
          $comment = ucfirst($comment); // Capitalize the first letter
          $comment .= ' pour ' . $user->nom . ' '.$user->prenom.".";
+       
      } else {
          $comment = 'Aucune modification effectuée pour ' . $user->nom . ' '.$user->prenom.".";
      }

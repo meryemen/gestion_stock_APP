@@ -32,11 +32,13 @@
 
 
   <!-- Template Main CSS File -->
+  <link rel="stylesheet" href="{{ asset('assets/css/dark-mode.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/light-mode.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 
 </head>
 
-<body>
+<body class="{{ session('darkMode') ? 'dark-mode' : 'light-mode' }}">
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center" >
 
@@ -62,7 +64,6 @@
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
-
 
         <li class="nav-item dropdown pe-3">
 
@@ -283,35 +284,71 @@
     </script>
     <!-- End materiel Card -->
   
-    <!-- Revenue Card -->
-    <div class="col-xxl-4 col-md-6">
-      <div class="card info-card sales-card" style="border-radius: 15px;">
-        <div class="card-body">
-          <div class="d-flex align-items-center justify-content-between">
-            <h5 class="card-title">Accessoires</h5>
-            <div class="dropdown">
-              <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="bi bi-three-dots-vertical"></i>
-              </button>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterDropdown">
-                <li><a class="dropdown-item" href="#">Option 1</a></li>
-                <li><a class="dropdown-item" href="#">Option 2</a></li>
-                <li><a class="dropdown-item" href="#">Option 3</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="d-flex align-items-center">
-            <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-              <i class="bi bi-headset display-6 text-success"></i>
-            </div>
-            <div class="ps-3">
-              <h6>{{ $accessoire }}</h6>
-              <span class="text-secondary">| Option</span>
-            </div>
-          </div>
+<!-- Revenue Card -->
+<div class="col-xxl-4 col-md-6">
+  <div class="card info-card sales-card" style="border-radius: 15px;">
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between">
+        <h5 class="card-title">Accessoires</h5>
+        <div class="dropdown">
+          <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots-vertical"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" id="dropdown33" aria-labelledby="filterDropdown">
+            <li><a class="dropdown-item" href="#">USB</a></li>
+            <li><a class="dropdown-item" href="#">Sac à dos</a></li>
+            <li><a class="dropdown-item" href="#">Souris sans fil</a></li>
+            <li><a class="dropdown-item" href="#">Souris avec fil</a></li>
+            <li><a class="dropdown-item" href="#">Chargeur 45W</a></li>
+            <li><a class="dropdown-item" href="#">Chargeur 65W</a></li>
+          </ul>
         </div>
       </div>
-    </div><!-- End Revenue Card -->
+      <div class="d-flex align-items-center">
+        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+          <i class="bi bi-headset display-6 text-success"></i>
+        </div>
+        <div class="ps-3">
+          <h6 id="number">{{ $USB ?? 0 }}</h6>
+          <span class="text-secondary" id="option">| USB</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // script pour les dropdown items
+    const dropdownItems2 = document.querySelectorAll('#dropdown33 .dropdown-item');
+    const option = document.getElementById('option');
+    const number = document.getElementById('number');
+    const usbb = {{ $USB ?? 0 }};
+    const Sacàdos = {{ $Sacàdos ?? 0 }};
+    const sourissfil = {{ $sourissfil ?? 0 }};
+    const sourisafil = {{ $sourisafil ?? 0 }};
+    const ch45 = {{ $ch45 ?? 0 }};
+    const ch65 = {{ $ch65 ?? 0 }};
+   
+    dropdownItems2.forEach(item => {
+      item.addEventListener('click', () => {
+        option.textContent = '| ' + item.textContent;
+        if (item.textContent === 'USB') {
+          number.textContent = usbb;
+        } else if (item.textContent === 'Sac à dos') {
+          number.textContent = Sacàdos;
+        } else if (item.textContent === 'Souris sans fil') {
+          number.textContent = sourissfil;
+        } else if (item.textContent === 'Souris avec fil') {
+          number.textContent = sourisafil;
+        } else if (item.textContent === 'Chargeur 45W') {
+          number.textContent = ch45;
+        } else {
+          number.textContent = ch65;
+        }
+      });
+    });
+  </script>
+</div>
+<!-- End Revenue Card -->
+
 
     <!-- Customers Card -->
     <div class="col-xxl-4 col-xl-12">
@@ -439,7 +476,7 @@
           <script>
             document.addEventListener("DOMContentLoaded", () => {
               var materiel = {{ $materiel ?? 0 }};
-              var access = {{ $access ?? 0 }};
+              var access = {{ $accessoire ?? 0 }};
               new Chart(document.querySelector('#polarAreaChart'), {
                 type: 'polarArea',
                 data: {

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\ExportController;
@@ -20,8 +21,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 |
 */
 
-
-
 Route::get('/login', [CustomAuthController::class, 'login'])->middleware('alreadyLoggedIn');
 Route::get('/create', [CustomAuthController::class, 'createNewUser']);
 Route::post('login-user',[CustomAuthController::class,'loginUser'])->name('login-user');
@@ -34,7 +33,7 @@ Route::get('/createUser', [CustomAuthController::class, 'createUser'])->middlewa
 
 Route::post('update-profil',[CustomAuthController::class,'updateProfil'])->name('update-profil');
 Route::get('/stock', [StockController::class, 'stock'])->name('stock')->middleware('isLoggedIn','accessStock');
-Route::get('/accessoire', [StockController::class, 'accessoire'])->middleware('isLoggedIn');
+Route::get('/accessoire', [StockController::class, 'accessoire'])->middleware('isLoggedIn')->name('accessoire');
 
 
 Route::get('/dashboard', [StockController::class, 'dashboard'])->name('dashboard')->middleware('isLoggedIn');
@@ -51,7 +50,7 @@ Route::post('/delete-fournisseur/{id_fourni}', [FourniController::class, 'delete
 Route::get('exporter', [ExportController::class, 'export'])->name('exporter')->middleware('isLoggedIn');
 Route::get('historique', [HistoriqueController::class, 'show'])->middleware('isLoggedIn','is_admin');
 
-Route::get('/search-utilisateur', [CustomAuthController::class,'search']);
+Route::get('/search-utilisateur', [CustomAuthController::class,'search'])->middleware('isLoggedIn');
 Route::get('/search-fournisseur', [FourniController::class,'search']);
 Route::get('/search-materiel', [StockController::class,'search']);
 
@@ -65,3 +64,6 @@ Route::post('/update-password', [CustomAuthController::class, 'updatePassword'])
 Route::get('/check-email/{email}', [CustomAuthController::class, 'checkEmail'])->name('checkEmail');
 
 
+
+
+Route::get('/info_equipement',[StockController::class,'info'])->name('info_equipement')->middleware('manageUser');

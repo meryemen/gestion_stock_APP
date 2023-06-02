@@ -202,7 +202,6 @@
         <div class="card">
           <div class="card-body">
             <div class="card-title">
-              <h3>Ajout d'un equipement</h3>
               <nav>
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item">Information</li>

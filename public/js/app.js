@@ -31,40 +31,8 @@ document.querySelectorAll('.edit').forEach(function(element) {
     });
   });
   
-//search function utilisateur
-    $(document).ready(function(){
-        $('#user_search').on('keyup',function(){
-            var query= $(this).val(); 
-            $.ajax({
-              url:"search-utilisateur" ,
-              type:"GET",
-              data:{'search' : query},
-              success:function(data){
-                $('#search_list').html(data);
-                $('#search_results table').addClass('table table-hover table-sm');
-                $('#search_results td').addClass('text-overflow');
-              }
-            });
-            //end of ajax call 
-        });
-    });
-//search function fournisseur
-    $(document).ready(function(){
-      $('#fournisseur_search').on('keyup',function(){
-          var query= $(this).val(); 
-          $.ajax({
-            url:"search-fournisseur" ,
-            type:"GET",
-            data:{'search' : query},
-            success:function(data){
-              $('#search_list').html(data);
-              $('#search_results table').addClass('table table-hover table-sm');
-              $('#search_results td').addClass('text-overflow');
-            }
-          });
-          //end of ajax call 
-      });
-  });
+
+
 
 
   $(document).ready(function(){

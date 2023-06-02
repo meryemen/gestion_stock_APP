@@ -38,8 +38,8 @@
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" id="fournisseur_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
+      <form class="search-form d-flex align-items-center " method="GET" action="{{ url('/search-fournisseur') }}">
+        <input type="text" name="fourni_search" id="fourni_search" placeholder="Enter un mot clé"  title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -233,7 +233,11 @@
                     <th class="text-success">Adresse</th>
                     <th class="text-success">Téléphone-Site</th>
                     <th class="text-success">Téléphone-Agence</th>
+                    @if ($data->manageSuppliers != 0)
                     <th class="text-success">Action</th>
+                    @elseif ($data->manageSuppliers == 0)
+
+                    @endif
                   </tr>
                 </thead>
                 <tbody>
@@ -246,11 +250,14 @@
                       <td>{{ $fourni->adresse }}</td>
                       <td>{{ $fourni->tele_siege }}</td>
                       <td>{{ $fourni->tele_agence }}</td>
-                      
+                      @if ($data->manageSuppliers != 0)
                       <td>
                           <a data-bs-toggle="modal" data-bs-target="#editModal{{ $fourni->id_fourni }}" class="edit text-success " data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id_fourni }}" data-fournisseur-responsable="{{ $fourni->responsable }}" data-fournisseur-email="{{ $fourni->email }}" data-fournisseur-adresse="{{ $fourni->adresse }}" data-fournisseur-tele_siege="{{ $fourni->tele_siege }}" data-fournisseur-tele_agence="{{ $fourni->tele_agence }}"><i class="ri ri-pencil-fill"></i></a>
                           <a data-bs-toggle="modal" data-bs-target="#deleteModal{{ $fourni->id_fourni }}" class="delete text-danger " data-fournisseur-nom="{{ $fourni->nom_four }}" data-fournisseur-id="{{ $fourni->id_fourni }}"><i class="bi bi-trash"></i></a>
                       </td>
+                      @elseif ($data->manageSuppliers == 0)
+
+                      @endif
                   </tr>
                    <!-- Modal edit-->
                    <div class="modal fade" id="editModal{{ $fourni->id_fourni }}" tabindex="-1" aria-labelledby="editModalLabel{{ $fourni->id_fourni }}" aria-hidden="true">
@@ -337,9 +344,13 @@
 
                       </table>
                   <!-- Button trigger modal -->
+                  @if ($data->manageSuppliers != 0)
                   <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: right"><i class="bi bi-plus"></i>
                     Ajouter un fournisseur
                   </button>
+                  @elseif ($data->manageSuppliers == 0)
+
+                  @endif
 
                   <!-- Modal Ajout-->
                   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -428,6 +439,7 @@
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->

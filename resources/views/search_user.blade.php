@@ -478,7 +478,11 @@
                       </div>
                   </tr>
                   @endforeach
-                 
+                  @if ($utilisateur->isEmpty())
+                  <tr>
+                      <span colspan="7" class="text-center">Aucun résultat trouvé.</span>
+                  </tr>
+                 @endif
                 </tbody>
               </table>
             </div>
