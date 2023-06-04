@@ -117,29 +117,34 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="stock">
-          <i class="bi bi-laptop"></i>
-          <span>Materiels</span>
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-laptop"></i><span>Equipements</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="accessoire">
-          <i class="bi bi-usb-drive"></i>
-          <span>Accessoires</span>
-        </a>
-      </li>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="stock">
+              <i class="bi bi-circle"></i><span>Materiels</span>
+            </a>
+          </li>
+          <li>
+            <a href="accessoire">
+              <i class="bi bi-circle"></i><span>Accessoires</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End equipements Nav -->
 
       
       <li class="nav-item">
-        <a class="nav-link collapsed" href="fournisseur">
+        <a class="nav-link " href="fournisseur">
           <i class="bi bi-person-lines-fill"></i>
           <span>Fournisseurs</span>
         </a>

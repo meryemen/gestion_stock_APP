@@ -119,25 +119,30 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="stock">
-          <i class="bi bi-laptop"></i>
-          <span>Materiels</span>
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-laptop"></i><span>Equipements</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="accessoire">
-          <i class="bi bi-usb-drive"></i>
-          <span>Accessoires</span>
-        </a>
-      </li>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="stock">
+              <i class="bi bi-circle"></i><span>Materiels</span>
+            </a>
+          </li>
+          <li>
+            <a href="accessoire">
+              <i class="bi bi-circle"></i><span>Accessoires</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End equipements Nav -->
 
       
       <li class="nav-item">
@@ -155,7 +160,7 @@
 
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="utilisateurs">
+        <a class="nav-link " href="utilisateurs">
           <i class="bi bi-people"></i>
           <span>Utilisateurs</span>
         </a>
@@ -359,32 +364,7 @@
                                     
                                   </div>
                               
-                              <script>
-                                // Edit Modal
-                              
-                                document.querySelectorAll('.edit').forEach(function (element) {
-                                  element.addEventListener('click', function () {
-                                    var userNom = this.getAttribute('data-utilisateur-nom');
-                                    var userId = this.getAttribute('data-utilisateur-id');
-                                    var userprenom = this.getAttribute('data-utilisateur-prenom');
-                                    var userEmail = this.getAttribute('data-utilisateur-email');
-                                    var userUsername = this.getAttribute('data-utilisateur-username');
-                                    var userFonction = this.getAttribute('data-utilisateur-fonction');
-                                    var userSite = this.getAttribute('data-utilisateur-site');
-                                    var userRegion = this.getAttribute('data-utilisateur-region');
-                                    var userDirection = this.getAttribute('data-utilisateur-direction');
-                              
-                                    document.getElementById('name' + userId).value = userNom;
-                                    document.getElementById('pronoun' + userId).value = userprenom;
-                                    document.getElementById('nameuser' + userId).value = userUsername;
-                                    document.getElementById('mail' + userId).value = userEmail;
-                                    document.getElementById('function' + userId).value = userFonction;
-                                    document.getElementById('sit' + userId).value = userSite;
-                                    document.getElementById('Regi' + userId).value = userRegion;
-                                    document.getElementById('direct' + userId).value = userDirection;
-                                  });
-                                });
-                              </script>
+                            
                             </div>
                             <div class="modal-footer">
                               <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
@@ -392,6 +372,33 @@
                             </div>
                           </div>
                         </form>
+                        <script>
+                          // Edit Modal
+                          document.addEventListener('DOMContentLoaded', function() {
+                          document.querySelectorAll('.edit').forEach(function (element) {
+                            element.addEventListener('click', function () {
+                              var userNom = this.getAttribute('data-utilisateur-nom');
+                              var userId = this.getAttribute('data-utilisateur-id');
+                              var userprenom = this.getAttribute('data-utilisateur-prenom');
+                              var userEmail = this.getAttribute('data-utilisateur-email');
+                              var userUsername = this.getAttribute('data-utilisateur-username');
+                              var userFonction = this.getAttribute('data-utilisateur-fonction');
+                              var userSite = this.getAttribute('data-utilisateur-site');
+                              var userRegion = this.getAttribute('data-utilisateur-region');
+                              var userDirection = this.getAttribute('data-utilisateur-direction');
+                        
+                              document.getElementById('name' + userId).value = userNom;
+                              document.getElementById('pronoun' + userId).value = userprenom;
+                              document.getElementById('nameuser' + userId).value = userUsername;
+                              document.getElementById('mail' + userId).value = userEmail;
+                              document.getElementById('function' + userId).value = userFonction;
+                              document.getElementById('sit' + userId).value = userSite;
+                              document.getElementById('Regi' + userId).value = userRegion;
+                              document.getElementById('direct' + userId).value = userDirection;
+                            });
+                          });
+                          });
+                        </script>
                         </div>
                       </div>
 

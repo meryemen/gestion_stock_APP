@@ -132,20 +132,25 @@
           <span>Dashboard</span>
         </a>
       </li>
-
       <li class="nav-item">
-        <a class="nav-link collapsed" href="stock">
-          <i class="bi bi-laptop"></i>
-          <span>Materiels</span>
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-laptop"></i><span>Equipements</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="accessoire">
-          <i class="bi bi-usb-drive"></i>
-          <span>Accessoires</span>
-        </a>
-      </li>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="stock">
+              <i class="bi bi-circle"></i><span>Materiels</span>
+            </a>
+          </li>
+          <li>
+            <a href="accessoire">
+              <i class="bi bi-circle"></i><span>Accessoires</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End equipements Nav -->
+      
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="fournisseur">
@@ -200,7 +205,7 @@
   </aside><!-- End Sidebar-->
   <main id="main" class="main">
     <div class="pagetitle">
-      <h1>Dashboard</h1>
+      <h1>Dashboard / {{ $data->profil }}</h1> 
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="dashboard">Home</a></li>

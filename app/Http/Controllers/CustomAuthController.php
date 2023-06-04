@@ -11,9 +11,13 @@ use Illuminate\Support\Facades\Hash;
 use  App\Mail\TestMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
+use  App\Mail\ResetMail;
 
 class CustomAuthController extends Controller
 {
+    public function pass(){
+        return view('newpass');
+    }
    // interface d'erreur 
    public function error(){
       return view('error');
@@ -22,6 +26,27 @@ class CustomAuthController extends Controller
    public function login(){
 
     return view('login');
+   }
+//interface de reset
+   public function resetPage(){
+        return view('resetpass');
+   }
+
+//mail de reset de password
+   public function sendMail(Request $request){
+    $request->validate([
+        'email' => ['required', 'string'],
+     ]);
+     $user = User::where('email','=',$request->email)->first();
+
+    if($user){
+        $user = [ 'email'=> $user->email,  'nom' =>$user->nom,  'prenom' =>$user->prenom];
+        Mail::to($user['email'])->send(new ResetMail($user));
+        return view('verifier');
+    } else{
+        return back()->with('fail','Email n\'existe pas');
+    }
+    
    }
 
 

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Slab:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <title>Login page</title>
+    <title>Reset password</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
   </head>
 <body>
@@ -22,12 +22,10 @@
                 <div class="card-body p-5 text-center">
       
                   <div class="mb-md-5 mt-md-4 pb-5">
-                    <img src="logo.jpg" alt="">
-
-                    <form action="{{ route('login-user') }}" method="post">
-                      @if (Session::has('success'))
-                      <div class="alert alert-success">{{ Session::get('success') }}</div>
-                        @endif
+                    <a href="login"><img src="logo.jpg" alt=""></a>
+                    
+                    <form action="{{ route('sendreset') }}" method="POST">
+                      
                         
                         @if (Session::has('fail'))
                         <div class="alert alert-danger">{{ Session::get('fail') }}</div>
@@ -37,19 +35,12 @@
                       @csrf
                     <p class="text-black-50 mb-5"></p>
                     <div class="form-outline form-black mb-4">
-                        <label class="form-label" for="typeEmailX" style="float: left;" for="username" >Pseudo :</label>
-                      <input type="text" id="username" name="username" class="form-control border-0 border-bottom" value="{{ old('username') }}" placeholder="Votre pseudo"  />
-                      <span class="text-danger"  style="float: left;" >@error('username') {{ $message }} @enderror</span>
+                        <label class="form-label" for="typeEmailX" style="float: left;" for="email" >Réinitialiser le mot de passe :</label>
+                      <input type="text" id="email" name="email" class="form-control border-0 border-bottom" value="{{ old('email') }}" placeholder="Entrez votre E-mail"  />
+                      <span class="text-danger"  style="float: left;" >@error('email') {{ $message }} @enderror</span>
                     </div>
       
-                    <div class="form-outline form-white mb-4">
-                        <label class="form-label" for="typePasswordX" style="float: left;" for="password">Mot de passe :</label>
-                      <input type="password" id="typePasswordX" placeholder="Saisissez votre mot de passe"  value="{{ old('password') }}" name="password" id="password" class="form-control border-0 border-bottom"  />
-                      <span class="text-danger"  style="float: left;">@error('password') {{ $message }} @enderror</span>
-                    </div>
-      
-                    <p class="small mb-5 pb-lg-8"><a class="text-black-50" href="reset-password" >Mot de passe oublié?</a></p>      
-                    <button class="btn btn-outline-primary btn-xs px-3" id="submit" type="submit">Se connecter</button>
+                    <button class="btn btn-outline-primary btn-xs px-3" id="submit" type="submit">Envoyer</button>
                   </form>
 
                     <img src="unnamed.png" id="open"alt="">

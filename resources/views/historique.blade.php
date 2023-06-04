@@ -115,23 +115,30 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="stock">
-          <i class="bi bi-laptop"></i>
-          <span>Materiels</span>
-        </a><!-- End materiels Nav -->
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="accessoire">
-          <i class="bi bi-usb-drive"></i>
-          <span>Accessoires</span>
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-laptop"></i><span>Equipements</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="stock">
+              <i class="bi bi-circle"></i><span>Materiels</span>
+            </a>
+          </li>
+          <li>
+            <a href="accessoire">
+              <i class="bi bi-circle"></i><span>Accessoires</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End equipements Nav -->
 
         
       </li><!-- End Accessories Nav -->
@@ -164,7 +171,7 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="historique">
+        <a class="nav-link " href="historique">
           <i class="bi bi-clock-history"></i>
           <span>Historique</span>
         </a>

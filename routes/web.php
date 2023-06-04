@@ -47,7 +47,6 @@ Route::post('ajout-fournisseur', [FourniController::class, 'ajouter'])->name('aj
 Route::post('/edit-fournisseur/{id_fourni}', [FourniController::class, 'edit'])->name('edit-fournisseur');
 Route::post('/delete-fournisseur/{id_fourni}', [FourniController::class, 'delete'])->name('delete-fournisseur');
     
-Route::get('exporter', [ExportController::class, 'export'])->name('exporter')->middleware('isLoggedIn');
 Route::get('historique', [HistoriqueController::class, 'show'])->middleware('isLoggedIn','is_admin');
 
 Route::get('/search-utilisateur', [CustomAuthController::class,'search'])->middleware('isLoggedIn');
@@ -67,3 +66,11 @@ Route::get('/check-email/{email}', [CustomAuthController::class, 'checkEmail'])-
 
 
 Route::get('/info_equipement',[StockController::class,'info'])->name('info_equipement')->middleware('manageUser');
+
+Route::get('/exportmateriel', [ExportController::class, 'exportmateriel'])->name('exportmateriel')->middleware('isLoggedIn');
+Route::get('/exportaccessoire', [ExportController::class, 'exportaccessoire'])->name('exportaccessoire')->middleware('isLoggedIn');
+
+
+Route::get('/reset-password',[CustomAuthController::class, 'resetPage'])->name('reset-password');
+Route::post('/sendreset',[CustomAuthController::class, 'sendMail'])->name('sendreset');
+Route::get('/pass',[CustomAuthController::class, 'pass'])->name('pass');

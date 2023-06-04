@@ -117,25 +117,30 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="dashboard">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="stock">
-          <i class="bi bi-laptop"></i>
-          <span>Materiels</span>
+        <a class="nav-link " data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-laptop"></i><span>Equipements</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="accessoire">
-          <i class="bi bi-usb-drive"></i>
-          <span>Accessoires</span>
-        </a>
-      </li>
+        <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="stock">
+              <i class="bi bi-circle"></i><span>Materiels</span>
+            </a>
+          </li>
+          <li>
+            <a href="accessoire"  class="active">
+              <i class="bi bi-circle" ></i><span>Accessoires</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End equipements Nav -->
 
       
       <li class="nav-item">
@@ -217,7 +222,7 @@
               <h5 class="card-title" style="display: inline-block">Accessoires</h5>
               
                 <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
-                <a href="{{ route('exporter') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
+                <a href="{{ route('exportaccessoire') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
              
 
              </div>

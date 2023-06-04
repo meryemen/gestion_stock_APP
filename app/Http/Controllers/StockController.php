@@ -120,6 +120,7 @@ class StockController extends Controller
       $dateBc = $request->input('dateBc');
       $QTC = $request->input('QTC');
       $numeroL = $request->input('numeroL');
+     
       $dateBl = $request->input('dateBl');
       $QTL = $request->input('QTL');
       
@@ -150,15 +151,13 @@ class StockController extends Controller
             ]
         );
    
-        $bonDeLivraison = Bon_livraison::firstOrCreate(
-          ['id_livre' => $numeroL],
-          [
-              'date_livre' => $dateBl,
-              'qt_livre' => $QTL,
-              'id_fourni' => $fourni->id_fourni,
-              'id_com' => $bonDeCommande->id_com
-          ]
-      );
+        $bonDeLivraison = new Bon_livraison([
+            'id_livre' => $numeroL,
+            'date_livre' => $dateBl,
+            'qt_livre' => $QTL,
+            'id_fourni' => $fourni->id_fourni,
+            'id_com' => $bonDeCommande->id_com
+        ]);
     
         $equipement = new Equipement();
         $equipement->type = $type;
