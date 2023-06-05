@@ -25,7 +25,8 @@
                               <a href="login"> <img src="logo.jpg" alt=""><br></a> 
                                
                                 <div class="mb-4">
-                                    <h5 style="margin-top: 30px" class="text-success"><i class="bi bi-check-circle-fill" style="size: 50%"></i>Vérification envoyée avec succès</h4>
+                                    <h5 style="margin-top: 30px" class="text-success"><i class="bi bi-check-circle-fill" style="size: 50%"></i>  Lien de réinitialisation envoyé avec succès</h4>
+                                       <h6 class="text-primary"> </i>Vérifiez votre boîte mail</h6>
                                 </div>
                                 <img src="unnamed.png" id="open" alt="">
                             </div>

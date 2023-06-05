@@ -24,23 +24,28 @@
                   <div class="mb-md-5 mt-md-4 pb-5">
                     <a href="login"><img src="logo.jpg" alt=""></a>
                     
-                    <form action="{{ route('sendreset') }}" method="POST">
-                      
-                        
-                        @if (Session::has('fail'))
-                        <div class="alert alert-danger">{{ Session::get('fail') }}</div>
-                       @endif
-
-                       
+                    <form action="{{ route('newpass') }}" method="POST">
+                      @if (Session::has('fail'))
+                      <div class="alert alert-danger">{{ Session::get('fail') }}</div>
+                     @endif
                       @csrf
                     <p class="text-black-50 mb-5"></p>
                     <div class="form-outline form-black mb-4">
-                        <label class="form-label" for="typeEmailX" style="float: left;" for="email" >Réinitialiser le mot de passe :</label>
+                        <label class="form-label" for="typepasswordNewX" style="float: left;" for="email" >Email :</label>
                       <input type="text" id="email" name="email" class="form-control border-0 border-bottom" value="{{ old('email') }}" placeholder="Entrez votre E-mail"  />
                       <span class="text-danger"  style="float: left;" >@error('email') {{ $message }} @enderror</span>
                     </div>
-      
-                    <button class="btn btn-outline-primary btn-xs px-3" id="submit" type="submit">Envoyer</button>
+                    <div class="form-outline form-black mb-4">
+                      <label class="form-label" for="typeEmailX" style="float: left;" for="password" >Mot de passe :</label>
+                    <input type="password" id="password" name="password" class="form-control border-0 border-bottom" value="{{ old('password') }}" placeholder="Entrez votre nouveau mot de passe"  />
+                    <span class="text-danger"  style="float: left;" >@error('password') {{ $message }} @enderror</span>
+                  </div>
+                  <div class="form-outline form-black mb-4">
+                    <label class="form-label" for="typeEmailX" style="float: left;" for="passwordNew" >Confirmer le mot de passe :</label>
+                  <input type="password" id="passwordNew" name="passwordNew" class="form-control border-0 border-bottom" value="{{ old('passwordNew') }}" placeholder="Confirmer votre nouveau mot de passe "  />
+                  <span class="text-danger"  style="float: left;" >@error('passwordNew') {{ $message }} @enderror</span>
+                </div>
+                    <button class="btn btn-outline-primary btn-xs px-3" id="submit" type="submit">Confirmer</button>
                   </form>
 
                     <img src="unnamed.png" id="open"alt="">

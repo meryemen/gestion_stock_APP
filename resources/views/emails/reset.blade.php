@@ -11,6 +11,6 @@
    <a href="{{ route('pass') }}">Password rest link</a>
    
    
-    <img src="unnamed.png" >
+    
 </body>
 </html>

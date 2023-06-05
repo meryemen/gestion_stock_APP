@@ -74,3 +74,4 @@ Route::get('/exportaccessoire', [ExportController::class, 'exportaccessoire'])->
 Route::get('/reset-password',[CustomAuthController::class, 'resetPage'])->name('reset-password');
 Route::post('/sendreset',[CustomAuthController::class, 'sendMail'])->name('sendreset');
 Route::get('/pass',[CustomAuthController::class, 'pass'])->name('pass');
+Route::post('/newpass',[CustomAuthController::class, 'newpass'])->name('newpass');

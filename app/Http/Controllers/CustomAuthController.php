@@ -31,6 +31,28 @@ class CustomAuthController extends Controller
    public function resetPage(){
         return view('resetpass');
    }
+   public function newpass(Request $request)
+   {
+       $request->validate([
+           'email' => ['required', 'string'],
+           'password' => ['required'],
+           'passwordNew' => ['required'],
+       ]);
+   
+       $user = User::where('email', $request->email)->first();
+   
+       if ($user) {
+           if ($request->password !== $request->passwordNew) {
+               return redirect()->back()->with('fail', 'Les deux mots de passe ne correspondent pas');
+           } else {
+               $request->session()->put('loginId', $user->id);
+               return redirect('dashboard');
+           }
+       } else {
+           return redirect()->back()->with('fail', 'Email n\'existe pas')->withInput();
+       }
+   }
+   
 
 //mail de reset de password
    public function sendMail(Request $request){
