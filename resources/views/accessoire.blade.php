@@ -219,11 +219,22 @@
           <div class="card ">
             <div class="card-body">
              <div >
-              <h5 class="card-title" style="display: inline-block">Accessoires</h5>
-              
-                <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
-                <a href="{{ route('exportaccessoire') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
-             
+              <div style="display: flex; align-items: center;">
+                <h5 class="card-title" style="margin-right: auto;">Accessoires</h5>
+            
+                <form id="importForm" action="" method="POST" enctype="multipart/form-data" style="margin-bottom: 0;">
+                    @csrf
+                    <input type="file" name="file" id="fileInput" style="display: none;">
+                    <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
+                        <i class="ri-file-excel-2-fill"></i> <span>Importer</span>
+                    </label>
+                    <button type="submit" style="display: none;">Importer</button>
+                </form>
+            
+                <a href="{{ route('exportaccessoire') }}" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
+                    <i class="ri-file-excel-2-fill"></i> <span>Exporter</span>
+                </a>
+            </div>
 
              </div>
              

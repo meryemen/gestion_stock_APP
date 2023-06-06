@@ -65,10 +65,11 @@ Route::get('/check-email/{email}', [CustomAuthController::class, 'checkEmail'])-
 
 
 
-Route::get('/info_equipement',[StockController::class,'info'])->name('info_equipement')->middleware('manageUser');
 
 Route::get('/exportmateriel', [ExportController::class, 'exportmateriel'])->name('exportmateriel')->middleware('isLoggedIn');
 Route::get('/exportaccessoire', [ExportController::class, 'exportaccessoire'])->name('exportaccessoire')->middleware('isLoggedIn');
+
+Route::post('/importmateriel', [ExportController::class, 'importmateriel'])->name('importmateriel')->middleware('isLoggedIn');
 
 
 Route::get('/reset-password',[CustomAuthController::class, 'resetPage'])->name('reset-password');

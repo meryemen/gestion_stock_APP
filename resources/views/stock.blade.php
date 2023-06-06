@@ -219,10 +219,25 @@
           <div class="card ">
             <div class="card-body">
              <div >
-              <h5 class="card-title" style="display: inline-block">Materiels</h5>
+              <div style="display: flex; align-items: center;">
+                <h5 class="card-title" style="margin-right: auto;">Materiels</h5>
+            
+                <form id="importForm" action="{{ route('importmateriel') }}" method="POST" enctype="multipart/form-data" style="margin-bottom: 0;">
+                    @csrf
+                    <input type="file" name="file" id="fileInput" style="display: none;">
+                    <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
+                        <i class="ri-file-excel-2-fill"></i> <span>Importer</span>
+                    </label>
+                    <button type="submit" style="display: none;">Importer</button>
+                </form>
+            
+                <a href="{{ route('exportmateriel') }}" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
+                    <i class="ri-file-excel-2-fill"></i> <span>Exporter</span>
+                </a>
+            </div>
+            
               
-                <a href="#addEmployeeModal" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px"><i class="ri-file-excel-2-fill"></i> <span>Importer </span></a>
-                <a href="{{ route('exportmateriel') }}" class="btn btn-outline-success btn-sm " style="float:right;margin-top: 15px; margin-right: 10px"><i class="ri-file-excel-2-fill"></i> <span>Exporter</span></a>						
+					
              
 
              </div>
@@ -270,71 +285,33 @@
                       
                     <td class="text-overflow">
                       <div class="text-center">
-                        
-                        <a href="info_equipement" class="delete text-success">
-                          <i class="bi bi-arrow-90deg-right"></i>
+                        <a href="#" class="delete text-success" data-toggle="modal" data-target="#myModal{{ $equip->id_equ}}">
+                            <i class="bi bi-arrow-90deg-right"></i>
                         </a>
-                      </div>
-                      </a>
-                               <!-- Modal edit-->
-                   <div class="modal fade" id="editModal{{ $equip->id_equ }}" tabindex="-1" aria-labelledby="editModalLabel{{ $equip->id_equ }}" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h1 class="modal-title fs-5 text-success" id="editModalLabel{{  $equip->id_equ }}"><i class="bi bi-pencil"></i>  Modifier</h1>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-
-                         <form action="{{ route('edit-utilisateur' ,$equip->id_equ) }}" method="POST">
-                          @csrf
-                          
-                          <div class="row mb-3">
-                            <label for="fournisseur" class="col-sm-2 col-form-label">Fournisseur :</label>
-                          <div class="col-sm-4">
-                            <input type="text" name="fournisseur" required class="form-control" value="{{ isset($equipement) ? $equipement->type : '' }}">
-                          </div>
-                                
-                          <label for="responsable" class="col-sm-2 col-form-label">Responsable :</label>
-                          <div class="col-sm-4">
-                            <input type="text" name="responsable" required class="form-control">
-                          </div>
-                            
-                          </div>
-                          <div class="row mb-3">
-                            <label for="email" class="col-sm-2 col-form-label">Email :</label>
-                          <div class="col-sm-4">
-                            <input type="text"  name="email" required class="form-control">
-                          </div>
-                                
-                          <label for="adresse" class="col-sm-2 col-form-label">Adresse :</label>
-                          <div class="col-sm-4">
-                            <input type="text"  name="adresse" required class="form-control">
-                          </div>
-                            
-                          </div>
-                          <div class="row mb-3">
-                            <label for="site" class="col-sm-2 col-form-label">Télephone-Site :</label>
-                          <div class="col-sm-4">
-                            <input type="text" name="site" required class="form-control">
-                          </div>
-                                
-                          <label for="agence" class="col-sm-2 col-form-label">Télephone-Agence :</label>
-                          <div class="col-sm-4">
-                            <input type="text"  name="agence" required class="form-control">
-                          </div>
-                            
-                          </div>
-                       </div>
-
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                          <button type="submit" class="btn btn-success">Confirmer</button>
-                        </div>
-                      </form>
-                      </div>
                     </div>
-                  </div>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal{{ $equip->id_equ}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h4 class="text-success"><i class="bi bi-card-text"></i> Informations sur le stock</h4>
+                            </div>
+                            <form action="" method="POST">
+                              @csrf
+                            <div class="modal-body">
+                                <!-- Contenu du modal -->
+                            </div>
+                            <div class="modal-footer">
+                              <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                              <button type="submit" class="btn btn-success">Confirmer</button>
+                            </div>
+                          </form>
+                            </div>
+                        </div>
+                    </div>
+                     
+               
                     </td>
                   </tr>
                   @endif
@@ -377,6 +354,10 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="js/app.js"></script>

@@ -158,28 +158,40 @@ class StockController extends Controller
             'id_fourni' => $fourni->id_fourni,
             'id_com' => $bonDeCommande->id_com
         ]);
+        $bonDeLivraison->save();
     
-        $equipement = new Equipement();
-        $equipement->type = $type;
-        $equipement->categorie = $categorie;
-        $equipement->produit = $produit;
-        $equipement->n_serie = $numeroSerie;
-        $equipement->statut = $statut;
-        $equipement->prix = $prix;
-        $equipement->cracteristique_tech = $cracteristique_tech;
-        $equipement->netbios = $netbios;
-        $equipement->id_pers = $personneId;
-        $equipement->id_fourni = $fourni->id_fourni;
-        $equipement->id_com = $bonDeCommande->id_com;
-        $equipement->id_livre = $bonDeLivraison->id_livre;
-     
-        $equipement->save();
+        $livraisonExistante = Bon_livraison::where('id_livre', $numeroL)->first();
+
+       
+            $equipement = new Equipement();
+            $equipement->type = $type;
+            $equipement->categorie = $categorie;
+            $equipement->produit = $produit;
+            $equipement->n_serie = $numeroSerie;
+            $equipement->statut = $statut;
+            $equipement->prix = $prix;
+            $equipement->cracteristique_tech = $cracteristique_tech;
+            $equipement->netbios = $netbios;
+            $equipement->id_pers = $personneId;
+            $equipement->id_fourni = $fourni->id_fourni;
+            $equipement->id_com = $bonDeCommande->id_com;
+            $equipement->id_livre = $livraisonExistante->id_livre;
+        
+            $equipement->save();
 
         $affectation = new Affectation();
         $affectation->id_equ = $equipement->id_equ;
         $affectation->id_pers = $personneId;
         $affectation->date_affectation = $dateAffectation;
         $affectation->save();
+
+        $historique = new Historique();
+        $historique->modified_at = now();
+        $historique->modified_by = $data->nom . ' ' . $data->prenom; 
+        $historique->type_modif = 'Create';
+        $historique->aqui = 'equipements';
+        $historique->comment = 'Ajout d\'un nouveau equipement : '.$equipement->type .' / '. $equipement->n_serie ;
+        $historique->save();
         if($equipement->type == 'materiel'){
             return redirect()->route('stock',compact('data'))->with('success', 'Equipement ajouté ');
         }else{
@@ -197,27 +209,27 @@ class StockController extends Controller
           ]
       );
  
-      $bonDeLivraison = Bon_livraison::firstOrCreate(
-        ['id_livre' => $numeroL],
-        [
-            'date_livre' => $dateBl,
-            'qt_livre' => $QTL,
-            'id_fourni' => $fourni->id_fourni,
-            'id_com' => $bonDeCommande->id_com
-        ]
-        );
-        $equipement = new Equipement();
-        $equipement->id_livre = $bonDeLivraison->id_livre;
-        $equipement->type = $type;
-        $equipement->categorie = $categorie;
-        $equipement->produit = $produit;
-        $equipement->n_serie = $numeroSerie;
-        $equipement->statut = $statut;
-        $equipement->prix = $prix;
-        $equipement->cracteristique_tech = $cracteristique_tech;
-        $equipement->netbios = $netbios;
-        $equipement->id_fourni = $fourni->id_fourni;
-        $equipement->id_com = $bonDeCommande->id_com;
+      $bonDeLivraison = new Bon_livraison([
+        'id_livre' => $numeroL,
+        'date_livre' => $dateBl,
+        'qt_livre' => $QTL,
+        'id_fourni' => $fourni->id_fourni,
+        'id_com' => $bonDeCommande->id_com
+    ]);
+    $bonDeLivraison->save();
+    $livraisonExistante = Bon_livraison::where('id_livre', $numeroL)->first();
+    $equipement = new Equipement();
+    $equipement->type = $type;
+    $equipement->categorie = $categorie;
+    $equipement->produit = $produit;
+    $equipement->n_serie = $numeroSerie;
+    $equipement->statut = $statut;
+    $equipement->prix = $prix;
+    $equipement->cracteristique_tech = $cracteristique_tech;
+    $equipement->netbios = $netbios;
+    $equipement->id_fourni = $fourni->id_fourni;
+    $equipement->id_com = $bonDeCommande->id_com;
+    $equipement->id_livre = $livraisonExistante->id_livre;
         
         
         $equipement->save();

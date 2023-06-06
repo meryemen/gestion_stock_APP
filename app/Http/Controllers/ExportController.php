@@ -20,6 +20,8 @@ class ExportController extends Controller
         return Excel::download($export, 'Accessoires.xlsx');   
 
     }
-
+    public function importmateriel(){
+        
+    }
     
 }
