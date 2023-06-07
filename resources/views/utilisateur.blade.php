@@ -462,7 +462,7 @@
                                 </div>
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="manageStock{{ $user->id }}" name="manageStock" value="1"  @if($user->manageStock == 1) checked @endif>
-                                    <label class="form-check-label" for="manageStock{{ $user->id }}">Droits de gestion du stock</label>
+                                    <label class="form-check-label" for="manageStock{{ $user->id }}">Droit de gestion du stock</label>
                                 </div>
                                 <div class="form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="manageUsers{{ $user->id }}" name="manageUsers" value="1"  @if($user->manageUsers == 1) checked @endif>

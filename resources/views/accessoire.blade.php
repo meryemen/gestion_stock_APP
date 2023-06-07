@@ -221,10 +221,11 @@
              <div >
               <div style="display: flex; align-items: center;">
                 <h5 class="card-title" style="margin-right: auto;">Accessoires</h5>
+                @if ($data->manageStock)
             
                 <form id="importForm" action="" method="POST" enctype="multipart/form-data" style="margin-bottom: 0;">
                     @csrf
-                    <input type="file" name="file" id="fileInput" style="display: none;">
+                    <input type="file" name="file" id="fileInput" style="display: none;" accept=".xlsx, .xls, .csv">
                     <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
                         <i class="ri-file-excel-2-fill"></i> <span>Importer</span>
                     </label>
@@ -234,6 +235,7 @@
                 <a href="{{ route('exportaccessoire') }}" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
                     <i class="ri-file-excel-2-fill"></i> <span>Exporter</span>
                 </a>
+                @endif
             </div>
 
              </div>
@@ -249,7 +251,9 @@
                     <th class="text-success text-center">Site</th>
                     <th class="text-success text-center">Région</th>
                     <th class="text-success text-center">Direction</th>
+                    @if ($data->manageStock)
                     <th class="text-success text-center">Action</th>
+                    @endif
                   </tr>
                 </thead>
                 <tbody>
@@ -272,7 +276,7 @@
                     <td class="text-overflow text-center"></td>
                     <td class="text-overflow text-center"></td>
                     @endif
-                    
+                    @if ($data->manageStock)
                     <td class="text-overflow">
                       <div class="text-center">
                         <a href="#" class="delete text-success" data-toggle="modal" data-target="#myModal{{ $equip->id_equ}}">
@@ -532,6 +536,7 @@
                   </div>
                     </td>
                     @endif
+                    @endif
                     @endforeach
                   </tr>
                   
@@ -539,8 +544,9 @@
                  
                 </tbody>
               </table>
+              @if ($data->manageStock)
              <a href="formulaire"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
-             
+             @endif
              
             
 

@@ -61,118 +61,83 @@ class EquipementExport implements FromArray
                 'Date d\'affectation',
             ];
         }
-  foreach ($equipements as $equipement) {
-    if ($this->interface === 'materiel' && $equipement->type === 'materiel') {
-        $personne = $equipement->personne;
-        $bonLivraison = $equipement->bonLivraison;
-        $bonCommande = $equipement->bonCommande;
-        $fournisseur = $equipement->fournisseur;
-        $affectations = $equipement->affectations;
+       
+        foreach ($equipements as $equipement) {
+            $personne = $equipement->personne;
+            $bonLivraison = $equipement->bonLivraison;
+            $bonCommande = $equipement->bonCommande;
+            $fournisseur = $equipement->fournisseur;
+            $affectations = $equipement->affectations;
+            $affectationExists = count($affectations) > 0;
+        
+            if (($this->interface === 'materiel' && $equipement->type === 'materiel') ||
+                ($this->interface === 'accessoire' && $equipement->type === 'accessoire')
+            ) {
+                // Vérifier si des affectations existent
+                if ($affectationExists) {
+                    $processedAffectation = false; // Variable pour suivre si une affectation a déjà été traitée
 
-        $affectations = []; 
-        foreach ($affectations as $affectation) {
-            $dateAffectation = $affectation->date_affectation ? date('Y-m-d', strtotime($affectation->date_affectation)) : '';
-            $list[] = [
-                $equipement->categorie,
-                $equipement->produit,
-                $equipement->n_serie,
-                $equipement->cracteristique_tech,
-                $equipement->prix,
-                $equipement->statut,
-                $equipement->netbios,
-                $personne ? $personne->nom_prenom : '',
-                $personne ? $personne->site : '',
-                $personne ? $personne->region : '',
-                $personne ? $personne->direction : '',
-                $bonCommande ? $bonCommande->id_com : '',
-                $bonCommande ? $bonCommande->date_cm : '',
-                $bonCommande ? $bonCommande->qt_commande : '',
-                $bonLivraison ? $bonLivraison->id_livre : '',
-                $bonLivraison ? $bonLivraison->date_livre : '',
-                $bonLivraison ? $bonLivraison->qt_livre : '',
-                $fournisseur ? $fournisseur->nom_four : '',
-                $dateAffectation, // Ajout de la date d'affectation
-            ];
+                    foreach ($affectations as $affectation) {
+                        if (!$processedAffectation) {
+                            $dateAffectation = $affectation->date_affectation ? date('Y-m-d', strtotime($affectation->date_affectation)) : '';
+                    
+                            $tempData = [
+                                $equipement->categorie,
+                                $equipement->produit,
+                                $equipement->n_serie,
+                                $equipement->cracteristique_tech,
+                                $equipement->prix,
+                                $equipement->statut,
+                                $equipement->netbios,
+                                $personne ? $personne->nom_prenom : '',
+                                $personne ? $personne->site : '',
+                                $personne ? $personne->region : '',
+                                $personne ? $personne->direction : '',
+                                $bonCommande ? $bonCommande->id_com : '',
+                                $bonCommande ? $bonCommande->date_cm : '',
+                                $bonCommande ? $bonCommande->qt_commande : '',
+                                $bonLivraison ? $bonLivraison->id_livre : '',
+                                $bonLivraison ? $bonLivraison->date_livre : '',
+                                $bonLivraison ? $bonLivraison->qt_livre : '',
+                                $fournisseur ? $fournisseur->nom_four : '',
+                                $dateAffectation,
+                            ];
+                    
+                            $list[] = $tempData;
+                            $processedAffectation = true; // Marquer l'affectation comme traitée
+                        }
+                    }
+                    
+                } else {
+                    $tempData = [
+                        $equipement->categorie,
+                        $equipement->produit,
+                        $equipement->n_serie,
+                        $equipement->cracteristique_tech,
+                        $equipement->prix,
+                        $equipement->statut,
+                        $equipement->netbios,
+                        $personne ? $personne->nom_prenom : '',
+                        $personne ? $personne->site : '',
+                        $personne ? $personne->region : '',
+                        $personne ? $personne->direction : '',
+                        $bonCommande ? $bonCommande->id_com : '',
+                        $bonCommande ? $bonCommande->date_cm : '',
+                        $bonCommande ? $bonCommande->qt_commande : '',
+                        $bonLivraison ? $bonLivraison->id_livre : '',
+                        $bonLivraison ? $bonLivraison->date_livre : '',
+                        $bonLivraison ? $bonLivraison->qt_livre : '',
+                        $fournisseur ? $fournisseur->nom_four : '',
+                        '',
+                    ];
+        
+                    $list[] = $tempData;
+                }
+            }
         }
-
-        if (count($affectations) === 0) {
-            $list[] = [
-                $equipement->categorie,
-                $equipement->produit,
-                $equipement->n_serie,
-                $equipement->cracteristique_tech,
-                $equipement->prix,
-                $equipement->statut,
-                $equipement->netbios,
-                $personne ? $personne->nom_prenom : '',
-                $personne ? $personne->site : '',
-                $personne ? $personne->region : '',
-                $personne ? $personne->direction : '',
-                $bonCommande ? $bonCommande->id_com : '',
-                $bonCommande ? $bonCommande->date_cm : '',
-                $bonCommande ? $bonCommande->qt_commande : '',
-                $bonLivraison ? $bonLivraison->id_livre : '',
-                $bonLivraison ? $bonLivraison->date_livre : '',
-                $bonLivraison ? $bonLivraison->qt_livre : '',
-                $fournisseur ? $fournisseur->nom_four : '',
-                '', // Date d'affectation vide
-            ];
-        }
-    } elseif ($this->interface === 'accessoire' && $equipement->type === 'accessoire') {
-        $personne = $equipement->personne;
-        $bonLivraison = $equipement->bonLivraison;
-        $bonCommande = $equipement->bonCommande;
-        $fournisseur = $equipement->fournisseur;
-        $affectations = $equipement->affectations;
-        $affectations = []; 
-        foreach ($affectations as $affectation) {
-            $dateAffectation = $affectation->date_affectation ? date('Y-m-d', strtotime($affectation->date_affectation)) : '';
-            $list[] = [
-                $equipement->categorie,
-                $equipement->produit,
-                $equipement->n_serie,
-                $equipement->prix,
-                $equipement->statut,
-                $personne ? $personne->nom_prenom : '',
-                $personne ? $personne->site : '',
-                $personne ? $personne->region : '',
-                $personne ? $personne->direction : '',
-                $bonCommande ? $bonCommande->id_com : '',
-                $bonCommande ? $bonCommande->date_cm : '',
-                $bonCommande ? $bonCommande->qt_commande : '',
-                $bonLivraison ? $bonLivraison->id_livre : '',
-                $bonLivraison ? $bonLivraison->date_livre : '',
-                $bonLivraison ? $bonLivraison->qt_livre : '',
-                $fournisseur ? $fournisseur->nom_four : '',
-                $dateAffectation, // Ajout de la date d'affectation
-            ];
-        }
-
-        if (count($affectations) === 0) {
-            $list[] = [
-                $equipement->categorie,
-                $equipement->produit,
-                $equipement->n_serie,
-                $equipement->prix,
-                $equipement->statut,
-                $personne ? $personne->nom_prenom : '',
-                $personne ? $personne->site : '',
-                $personne ? $personne->region : '',
-                $personne ? $personne->direction : '',
-                $bonCommande ? $bonCommande->id_com : '',
-                $bonCommande ? $bonCommande->date_cm : '',
-                $bonCommande ? $bonCommande->qt_commande : '',
-                $bonLivraison ? $bonLivraison->id_livre : '',
-                $bonLivraison ? $bonLivraison->date_livre : '',
-                $bonLivraison ? $bonLivraison->qt_livre : '',
-                $fournisseur ? $fournisseur->nom_four : '',
-                '', // Date d'affectation vide
-            ];
-        }
-    }
-}
-
-return $list;
+        
+        return $list;
+        
 
     }
     
