@@ -50,8 +50,9 @@ Route::post('/delete-fournisseur/{id_fourni}', [FourniController::class, 'delete
 Route::get('historique', [HistoriqueController::class, 'show'])->middleware('isLoggedIn','is_admin');
 
 Route::get('/search-utilisateur', [CustomAuthController::class,'search'])->middleware('isLoggedIn');
-Route::get('/search-fournisseur', [FourniController::class,'search']);
-Route::get('/search-materiel', [StockController::class,'search']);
+Route::get('/search-fournisseur', [FourniController::class,'search'])->middleware('isLoggedIn');
+Route::get('/search-materiel', [StockController::class,'search_materiel'])->middleware('isLoggedIn');
+Route::get('/search-access', [StockController::class,'search_access'])->middleware('isLoggedIn');
 
 Route::get('/error',[CustomAuthController::class,'error'])->middleware('isLoggedIn')->name('error');
 
@@ -62,6 +63,7 @@ Route::post('/droit-acces/{id}', [CustomAuthController::class, 'updateDroitAcces
 Route::post('/update-password', [CustomAuthController::class, 'updatePassword'])->name('update-password');
 Route::get('/check-email/{email}', [CustomAuthController::class, 'checkEmail'])->name('checkEmail');
 
+Route::post('/edit_materiel/{id_equ}', [StockController::class,'edit_materiel'])->name('edit_materiel');
 
 
 

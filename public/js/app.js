@@ -67,96 +67,7 @@ document.querySelectorAll('.edit').forEach(function(element) {
   document.getElementById('prenom').addEventListener('input', generateUsername);
 
 
-//ajout d'un utilisateur
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('ajout-utilisateur-form').addEventListener('submit', function(event) {
-    event.preventDefault();
 
-    var formControls = document.getElementsByClassName('form-control');
-    for (var i = 0; i < formControls.length; i++) {
-      formControls[i].classList.remove('is-invalid');
-    }
-
-    var password = document.getElementById('password').value;
-    var passwordConfirm = document.getElementById('passwordconfirm').value;
-    var nom = document.getElementById('nom').value;
-    var prenom = document.getElementById('prenom').value;
-    var username = document.getElementById('username').value;
-    var email = document.getElementById('email').value;
-    var fonction = document.getElementById('fonction').value;
-    var site = document.getElementById('site').value;
-    var region = document.getElementById('region').value;
-    var direction = document.getElementById('direction').value;
-
-    var isValid = true;
-
-    if (password === '') {
-      document.getElementById('password').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (passwordConfirm === '') {
-      document.getElementById('passwordconfirm').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (nom === '') {
-      document.getElementById('nom').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (prenom === '') {
-      document.getElementById('prenom').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (username === '') {
-      document.getElementById('username').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (site === '') {
-      document.getElementById('site').classList.add('is-invalid');
-      isValid = false;
-    }
-    if (fonction === '') {
-      document.getElementById('fonction').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (region === '') {
-      document.getElementById('region').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (direction === '') {
-      document.getElementById('direction').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    /*var emailform = /^[A-Za-z0-9._%+-]+@external\.danone\.com$/;
-    if (!emailform.test(email)) {
-      document.getElementById('email').classList.add('is-invalid');
-      isValid = false;
-    }*/
-
-    if (password !== passwordConfirm) {
-      document.getElementById('password').classList.add('is-invalid');
-      document.getElementById('passwordconfirm').classList.add('is-invalid');
-      isValid = false;
-    }
-
-    if (isValid) {
-      this.submit();
-    }
-  });
-  var formInputs = document.getElementsByClassName('form-control');
-  for (var i = 0; i < formInputs.length; i++) {
-    formInputs[i].addEventListener('input', function() {
-      this.classList.remove('is-invalid');
-    });
-  }
-});
 
 
   
@@ -167,4 +78,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   
-

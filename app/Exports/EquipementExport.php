@@ -61,18 +61,18 @@ class EquipementExport implements FromArray
                 'Date d\'affectation',
             ];
         }
-        foreach ($equipements as $equipement) {
-            if ($this->interface === 'materiel' && $equipement->type === 'materiel') {
-                $personne = $equipement->personne;
-                $bonLivraison = $equipement->bonLivraison;
-                $bonCommande = $equipement->bonCommande;
-                $fournisseur = $equipement->fournisseur;
-                $affectations = $equipement->affectations;
-                $dateAffectation = '';
+  foreach ($equipements as $equipement) {
+    if ($this->interface === 'materiel' && $equipement->type === 'materiel') {
+        $personne = $equipement->personne;
+        $bonLivraison = $equipement->bonLivraison;
+        $bonCommande = $equipement->bonCommande;
+        $fournisseur = $equipement->fournisseur;
+        $affectations = $equipement->affectations;
 
-            foreach ($affectations as $affectation) {
-                $dateAffectation = $affectation->date_affectation ? date('Y-m-d', strtotime($affectation->date_affectation)) : '';
-                $list[] = [
+        $affectations = []; 
+        foreach ($affectations as $affectation) {
+            $dateAffectation = $affectation->date_affectation ? date('Y-m-d', strtotime($affectation->date_affectation)) : '';
+            $list[] = [
                 $equipement->categorie,
                 $equipement->produit,
                 $equipement->n_serie,
@@ -94,6 +94,7 @@ class EquipementExport implements FromArray
                 $dateAffectation, // Ajout de la date d'affectation
             ];
         }
+
         if (count($affectations) === 0) {
             $list[] = [
                 $equipement->categorie,
@@ -117,17 +118,16 @@ class EquipementExport implements FromArray
                 '', // Date d'affectation vide
             ];
         }
-            } elseif ($this->interface === 'accessoire' && $equipement->type === 'accessoire') {
-                $personne = $equipement->personne;
-                $bonLivraison = $equipement->bonLivraison;
-                $bonCommande = $equipement->bonCommande;
-                $fournisseur = $equipement->fournisseur;
-                $affectations = $equipement->affectations;
-                $dateAffectation = '';
-
-            foreach ($affectations as $affectation) {
-                $dateAffectation = $affectation->date_affectation ? date('Y-m-d', strtotime($affectation->date_affectation)) : '';
-                $list[] = [
+    } elseif ($this->interface === 'accessoire' && $equipement->type === 'accessoire') {
+        $personne = $equipement->personne;
+        $bonLivraison = $equipement->bonLivraison;
+        $bonCommande = $equipement->bonCommande;
+        $fournisseur = $equipement->fournisseur;
+        $affectations = $equipement->affectations;
+        $affectations = []; 
+        foreach ($affectations as $affectation) {
+            $dateAffectation = $affectation->date_affectation ? date('Y-m-d', strtotime($affectation->date_affectation)) : '';
+            $list[] = [
                 $equipement->categorie,
                 $equipement->produit,
                 $equipement->n_serie,
@@ -147,6 +147,7 @@ class EquipementExport implements FromArray
                 $dateAffectation, // Ajout de la date d'affectation
             ];
         }
+
         if (count($affectations) === 0) {
             $list[] = [
                 $equipement->categorie,
@@ -168,10 +169,11 @@ class EquipementExport implements FromArray
                 '', // Date d'affectation vide
             ];
         }
-            }
-        }
+    }
+}
 
-        return $list;
+return $list;
+
     }
     
 }

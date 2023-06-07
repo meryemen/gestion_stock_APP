@@ -618,7 +618,7 @@
                                           // L'e-mail existe déjà dans la base de données, afficher l'erreur
                                           emailInput.classList.add('is-invalid');
                                           emailError.textContent = 'Cet e-mail existe déjà.';
-                                          emailError.style.display = 'block';
+                                          emailError.style.display ='block';
                                       } else {
                                           // L'e-mail est unique, soumettre le formulaire
                                           document.getElementById('ajout-utilisateur-form').submit();

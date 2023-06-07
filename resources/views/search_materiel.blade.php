@@ -39,7 +39,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="GET" action="{{ url('/search-materiel') }}">
-        <input type="text" id="materiel_search" name="materiel_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
+        <input type="text" id="materiel_search" name="materiel_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);" value="{{  $get_id }}">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->

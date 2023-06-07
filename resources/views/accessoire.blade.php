@@ -38,8 +38,8 @@
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center " method="POST" action="#">
-        <input type="text" name="query" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
+      <form class="search-form d-flex align-items-center " method="GET" action="{{ url('/search-access') }}">
+        <input type="text" id="access_search"  name="access_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
         <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -275,12 +275,261 @@
                     
                     <td class="text-overflow">
                       <div class="text-center">
-                        
-                        <a href="info_equipement" class="delete text-success">
-                          <i class="bi bi-arrow-90deg-right"></i>
+                        <a href="#" class="delete text-success" data-toggle="modal" data-target="#myModal{{ $equip->id_equ}}">
+                            <i class="bi bi-arrow-90deg-right"></i>
                         </a>
+                    </div>
+                    
+                    <!-- Modal Ajout-->
+                  <div class="modal fade" id="myModal{{ $equip->id_equ}}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5 text-success" id="exampleModalLabel"><i class="bi bi-card-heading"></i>  Informations sur le stock / {{ $equip->type}}</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                          <form method="POST" action="{{ route('edit_materiel', $equip->id_equ) }}">
+             
+                            @csrf
+                            @method('POST')
+                           
+                              <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label">Type</label>
+                                <div class="col-sm-4">
+                                   <div class="col-sm-6">
+                                 <select class="form-select" id="type" name="type" style="width: 240px">
+                                   
+                                  <option value="materiel" {{ $equip->type == 'materiel' ? 'selected' : '' }}>materiel</option>
+                                   <option value="accessoire" {{ $equip->type == 'accessoire' ? 'selected' : '' }}>accessoire</option>
+                                  
+                                 </select>
+                                 </div>
+                                </div>
+                                    
+                                
+                                
+                                  <label class="col-sm-2 col-form-label">Catégorie</label>
+                                  <div class="col-sm-4">
+                                    <div class="col-sm-6">
+                                      <select class="form-select" id="categorie" name="categorie" style="width: 240px">
+                                        <option disabled>Sélectionner une catégorie</option>
+                                        <option disabled>Materiel</option>
+                                        <option value="PC" {{ $equip->categorie == 'PC' ? 'selected' : '' }}>PC</option>
+                                        <option value="Monitor" {{ $equip->categorie == 'Monitor' ? 'selected' : '' }}>Monitor</option>
+                                        <option value="Printer" {{ $equip->categorie == 'Printer' ? 'selected' : '' }}>Printer</option>
+                                        <option value="Scanner" {{ $equip->categorie == 'Scanner' ? 'selected' : '' }}>Scanner</option>
+                                        <option value="Video projecteur" {{ $equip->categorie == 'Video projecteur' ? 'selected' : '' }}>Video projector</option>
+                                        <option disabled>Accessoire</option>
+                                        <option value="USB" {{ $equip->categorie == 'USB' ? 'selected' : '' }}>USB</option>
+                                        <option value="Sac à dos" {{ $equip->categorie == 'Sac à dos' ? 'selected' : '' }}>Sac à dos</option>
+                                        <option value="Souris sans fil" {{ $equip->categorie == 'Souris sans fil' ? 'selected' : '' }}>Souris sans fil</option>
+                                        <option value="Souris avec fil" {{ $equip->categorie == 'Souris avec fil' ? 'selected' : '' }}>Souris avec fil</option>
+                                        <option value="Chargeur 45W" {{ $equip->categorie == 'Chargeur 45W' ? 'selected' : '' }}>Chargeur 45W</option>
+                                        <option value="Chargeur 65W" {{ $equip->categorie == 'Chargeur 65W' ? 'selected' : '' }}>Chargeur 65W</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                
+                              </div>
+                              <div class="row mb-3">
+                                <label for="produit" class="col-sm-2 col-form-label">Produit</label>
+                              <div class="col-sm-4">
+                                <input type="text" id="produit" name="produit" class="form-control" value="{{ $equip->produit }}">
+                              </div>
+                                    
+                              <label for="numero_serie" class="col-sm-2 col-form-label">Numéro de série</label>
+                              <div class="col-sm-4">
+                                <input type="text" id="numero_serie" name="numero_serie" class="form-control" value="{{ $equip->n_serie }}">
+                              </div>
+                                
+                              </div>
+                                
+                            <div class="row mb-3">
+                              <label class="col-sm-2 col-form-label">Statut</label>
+                                  <div class="col-sm-4">
+                                    <div class="col-sm-6">
+                                      <select class="form-select" id="statut" name="statut" style="width: 240px">
+                                        <option value="In Use" {{ $equip->statut == 'In Use' ? 'selected' : '' }}>In Use</option>
+                                        <option value="In Stock / Site" {{ $equip->statut == 'In Stock / Site' ? 'selected' : '' }}>In Stock / Site</option>
+                                        <option value="In Stock / Munisys" {{ $equip->statut == 'In Stock / Munisys' ? 'selected' : '' }}>In Stock / Munisys</option>
+                                        <option value="In Stock / Louis Rey" {{ $equip->statut == 'In Stock / Louis Rey' ? 'selected' : '' }}>In Stock / Louis Rey</option>
+                                        <option value="In Maintenace" {{ $equip->statut == 'In Maintenace' ? 'selected' : '' }}>In Maintenace</option>
+                                        <option value="Pending Install" {{ $equip->statut == 'Pending Install' ? 'selected' : '' }}>Pending Install</option>
+                                        <option value="Retirement" {{ $equip->statut == 'Retirement' ? 'selected' : '' }}>Retirement</option>
+                                        <option value="Stolen" {{ $equip->statut == 'Stolen' ? 'selected' : '' }}>Stolen</option>
+                                        <option value="Don" {{ $equip->statut == 'Don' ? 'selected' : '' }}>Don</option>
+
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <label for="prix" class="col-sm-2 col-form-label">Prix</label>
+                                  <div class="col-sm-4">
+                                    <input type="text" id="prix" name="prix" class="form-control" value="{{ $equip->prix }}">
+                                  </div>
+              
+                            </div>
+              
+                           
+                            <div class="row mb-3">
+                             
+                              <label class="col-sm-2 col-form-label">Fournisseur</label>
+                              <div class="col-sm-4">
+                                <input type="text" class="form-control" id="fournisseur" name="fournisseur" value="{{ $equip->fournisseur->nom_four ?? '' }}">
+                              </div>
+                              
+                            </div>
+              
+                            <div class="card-title">
+                            
+                            <nav>
+                              <ol class="breadcrumb">
+                                <li class="breadcrumb-item">Affectation</li>
+                              </ol>
+                            </nav>
+                          </div>
+                          
+                          <div class="row mb-3">
+                            <label for="nom_prenom" class="col-sm-2 col-form-label">Nom & Prenom</label>
+                            <div class="col-sm-4">
+                              <input type="text" class="form-control input-disabled" id="nom_prenom" name="nom_prenom" value="{{ $equip->personne->nom_prenom ?? '' }}">
+                            </div>
+                            <label for="nom_prenom" class="col-sm-2 col-form-label">Username</label>
+                            <div class="col-sm-4">
+                              <input type="text" class="form-control" id="username" name="username" value="{{ $equip->personne->username ?? '' }}">
+                            </div>
+                            
+                          </div>
+                          
+                          <div class="row mb-3">
+                            <label for="date_affectation" class="col-sm-2 col-form-label">Date d'affectation</label>
+                            <div class="col-sm-4">
+                              @if ($equip->affectations->isNotEmpty())
+                              <input type="date" class="form-control" name="date_affectation" id="date_affectation" value="{{ $equip->affectations->first()->date_affectation }}">
+                          @else
+                              <input type="date" class="form-control" name="date_affectation" id="date_affectation" value="">
+                          @endif
+                           </div>
+                            <label for="region" class="col-sm-2 col-form-label">Région</label>
+                            <div class="col-sm-4">
+                              <input type="text" class="form-control" name="region" id="region" value="{{ $equip->personne->region ?? '' }}">
+                            </div>
+                           
+                          </div>
+                          
+                          <div class="row mb-3">
+                            <label for="direction" class="col-sm-2 col-form-label">Direction</label>
+                            <div class="col-sm-4">
+                              <input type="text" class="form-control" name="direction" id="direction" value="{{ $equip->personne->direction ?? '' }}">
+                            </div>
+                            <label for="site" class="col-sm-2 col-form-label">Site</label>
+                            <div class="col-sm-4">
+                              <input type="text" class="form-control" name="site" id="site" value="{{ $equip->personne->site ?? '' }}">
+                            </div>
+                            </div>
+                            <div class="card-title">
+                            
+                              <nav>
+                                <ol class="breadcrumb">
+                                  <li class="breadcrumb-item">  Bon de commande</li>
+                                </ol>
+                              </nav>
+                            </div>
+                            <div class="row mb-3">
+                              <label for="numeroC" class="col-sm-2 col-form-label">Numéro de BC </label>
+                              <div class="col-sm-2">
+                                <input type="text" class="form-control" name="numeroC" id="numeroC" value="{{ $equip->bonCommande->id_com ?? '' }}">
+                              </div>
+                              <label for="dateBc" class="col-sm-2 col-form-label">Date BC</label>
+                              <div class="col-sm-2">
+                                <input type="date" class="form-control" name="dateBc" id="dateBc" value="{{ $equip->bonCommande->date_cm ?? '' }}">
+                              </div>
+                              <label for="QTC" class="col-sm-2 col-form-label">Quantité Commandé </label>
+                              <div class="col-sm-2">
+                                <input type="text" class="form-control" name="QTC" id="QTC" value="{{ $equip->bonCommande->qt_commande ?? '' }}">
+                              </div>
+                              
+                              </div>
+                              <div class="card-title">
+                            
+                                <nav>
+                                  <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">  Bon de livraison</li>
+                                  </ol>
+                                </nav>
+                              </div>
+                              <div class="row mb-3">
+                                <label for="numeroL" class="col-sm-2 col-form-label">Numéro de BL </label>
+                                <div class="col-sm-2">
+                                  <input type="text" class="form-control" name="numeroL" id="numeroL" value="{{ $equip->bonLivraison->id_livre ?? '' }}">
+                                </div>
+                                <label for="dateBl" class="col-sm-2 col-form-label">Date BL</label>
+                                <div class="col-sm-2">
+                                  <input type="date" class="form-control" name="dateBl" id="dateBl" value="{{ $equip->bonLivraison->date_livre ?? '' }}">
+                                </div>
+                                <label for="QTL" class="col-sm-2 col-form-label">Quantité Livré </label>
+                                <div class="col-sm-2">
+                                  <input type="text" class="form-control" name="QTL" id="QTL" value="{{ $equip->bonLivraison->qt_livre ?? '' }}">
+                                </div>
+                                
+                                </div>
+                                <div class="modal-footer">
+                            
+
+                            <button class="btn btn-outline-primary btn-xs px-3" id="submit" type="submit">Modifier</button>
+                            
+                          </div>
+                          <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                              var statut = document.getElementById('statut');
+                              var username = document.getElementById('username');
+                              var nom_prenom = document.getElementById('nom_prenom');
+                              var date_affectation = document.getElementById('date_affectation');
+                              var region = document.getElementById('region');
+                              var direction = document.getElementById('direction');
+                              var site = document.getElementById('site');
+                              var cracteristique_tech = document.getElementById('cracteristique_tech');
+                              var netbios = document.getElementById('netbios');
+                          
+                              statut.addEventListener('change', function() {
+                                if (statut.value === 'In Use' || statut.value === 'In Maintenace' || statut.value === 'Pending Install' || statut.value === 'Retirement' || statut.value === 'Stolen' || statut.value === 'Don') {
+                                  username.disabled = false;
+                                  username.required = true;
+                                  nom_prenom.disabled = false;
+                                  nom_prenom.required = true;
+                                  date_affectation.disabled = false;
+                                  date_affectation.required = true;
+                                  region.disabled = false;
+                                  region.required = true;
+                                  direction.disabled = false;
+                                  direction.required = true;
+                                  site.disabled = false;
+                                  site.required = true;
+                                } else {
+                                  username.disabled = true;
+                                  username.required = false;
+                                  nom_prenom.disabled = true;
+                                  nom_prenom.required = false;
+                                  date_affectation.disabled = true;
+                                  date_affectation.required = false;
+                                  region.disabled = true;
+                                  region.required = false;
+                                  direction.disabled = true;
+                                  direction.required = false;
+                                  site.disabled = true;
+                                  site.required = false;
+                                }
+                              });
+                          
+                             
+                            });
+                         </script>
+                          </form><!-- End General Form Elements -->
+                         
                       </div>
-                      </a>
+                    </div>
+                  </div>
                     </td>
                     @endif
                     @endforeach
@@ -322,10 +571,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
 
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 
 </html>

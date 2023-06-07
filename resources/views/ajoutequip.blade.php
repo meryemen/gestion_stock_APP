@@ -226,7 +226,7 @@
                   <label class="col-sm-2 col-form-label">Type</label>
                   <div class="col-sm-4">
                      <div class="col-sm-6">
-                   <select class="form-select" id="type" name="type">
+                   <select class="form-select" id="type" name="type" style="width: 240px">
                      
                      <option value="materiel">materiel</option>
                      <option value="accessoire">accessoire</option>
@@ -240,7 +240,7 @@
                     <label class="col-sm-2 col-form-label">Catégorie</label>
                     <div class="col-sm-4">
                       <div class="col-sm-6">
-                        <select class="form-select" id="categorie" name="categorie">
+                        <select class="form-select" id="categorie" name="categorie" style="width: 240px">
                           <option disabled selected>Sélectionner une catégorie</option>
                           <option disabled >Materiel</option>
                           <option value="PC">PC</option>
@@ -277,7 +277,7 @@
                 <label class="col-sm-2 col-form-label">Statut</label>
                     <div class="col-sm-4">
                       <div class="col-sm-6">
-                        <select class="form-select" id="statut" name="statut">
+                        <select class="form-select" id="statut" name="statut" style="width: 240px">
                           <option disabled selected>Sélectionner un statut</option>
                           <option value="In Use" >In Use</option>
                           <option value="In Stock / Site" >In Stock / Site</option>
@@ -303,7 +303,7 @@
               <div class="col-sm-4">
                 <input type="text" id="cracteristique_tech" name="cracteristique_tech" class="form-control">
               </div>
-              <label for="netbios" class="col-sm-2 col-form-label">Nebios</label>
+              <label for="netbios" class="col-sm-2 col-form-label">Netbios</label>
               <div class="col-sm-4">
                 <input type="text" id="netbios" name="netbios" class="form-control">
               </div>

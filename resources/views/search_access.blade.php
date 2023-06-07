@@ -38,9 +38,9 @@
     </div><!-- End Logo -->
 
     <div class="search-bar">
-      <form class="search-form d-flex align-items-center" method="GET" action="{{ url('/search-materiel') }}">
-        <input type="text" id="materiel_search" name="materiel_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);">
-        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      <form class="search-form d-flex align-items-center " method="GET" action="{{ url('/search-access') }}">
+        <input type="text" id="access_search"  name="access_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);" value="{{ $get_id }}">
+        <button type="submit" title="Search"><i class="bi bi-search "></i></button>
       </form>
     </div><!-- End Search Bar -->
 
@@ -117,7 +117,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link  collapsed" href="dashboard">
+        <a class="nav-link collapsed" href="dashboard">
           <i class="bi bi-grid"></i>
           <span>Dashboard</span>
         </a>
@@ -129,12 +129,12 @@
         </a>
         <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="stock"  class="active">
+            <a href="stock">
               <i class="bi bi-circle"></i><span>Materiels</span>
             </a>
           </li>
           <li>
-            <a href="accessoire" >
+            <a href="accessoire"  class="active">
               <i class="bi bi-circle" ></i><span>Accessoires</span>
             </a>
           </li>
@@ -185,10 +185,10 @@
           <span>Se deconnecter</span>
         </a>
       </li><!-- End Contact Page Nav -->
-
       <li class="nav-item">
         <img src="unnamed.png" alt="" style="width:90%; position: absolute; bottom: 0;">
       </li>
+     
 
     </ul>
 
@@ -197,10 +197,10 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Stock des materiels</h1>
+      <h1>Stock des accessoires</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Materiels</a></li>
+          <li class="breadcrumb-item"><a href="index.html">Accessoires</a></li>
           <li class="breadcrumb-item">Stock</li>
         </ol>
       </nav>
@@ -220,9 +220,9 @@
             <div class="card-body">
              <div >
               <div style="display: flex; align-items: center;">
-                <h5 class="card-title" style="margin-right: auto;">Materiels</h5>
+                <h5 class="card-title" style="margin-right: auto;">Accessoires</h5>
             
-                <form id="importForm" action="{{ route('importmateriel') }}" method="POST" enctype="multipart/form-data" style="margin-bottom: 0;">
+                <form id="importForm" action="" method="POST" enctype="multipart/form-data" style="margin-bottom: 0;">
                     @csrf
                     <input type="file" name="file" id="fileInput" style="display: none;">
                     <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
@@ -231,27 +231,20 @@
                     <button type="submit" style="display: none;">Importer</button>
                 </form>
             
-                <a href="{{ route('exportmateriel') }}" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
+                <a href="{{ route('exportaccessoire') }}" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
                     <i class="ri-file-excel-2-fill"></i> <span>Exporter</span>
                 </a>
             </div>
-            
-              
-					
-             
 
              </div>
-             <div id="search_list">
+             
              <table class="table table-hover table-sm" style="table-layout: fixed; width: 100%;">
               <thead>
                   <tr>
-                    
-                    <th class="text-success text-center">Catégorie</th>
+                    <th class="text-success text-center ">Catégorie</th>
                     <th class="text-success text-center">Produit</th>
                     <th class="text-success text-center">Numéro de série</th>
-                    <th class="text-success text-center">Caracteristique Tech</th>
                     <th class="text-success text-center">Statut</th>
-                    <th class="text-success text-center">NetBios</th>
                     <th class="text-success text-center">Nom & Prénom</th>
                     <th class="text-success text-center">Site</th>
                     <th class="text-success text-center">Région</th>
@@ -262,36 +255,33 @@
                 <tbody>
                   @foreach ($equipments as $equip)
                   <tr>
-                   @if ($equip->type == 'materiel')
-                     
-               
-                      <td class="text-overflow text-center">{{ $equip->categorie }}</td>
-                      <td class="text-overflow text-center">{{ $equip->produit }}</td>
-                      <td class="text-overflow text-center">{{ $equip->n_serie }}</td>
-                      <td class="text-overflow text-center">{{ $equip->cracteristique_tech }}</td>
-                      <td class="text-overflow text-center">{{ $equip->statut }}</td>
-                      <td class="text-overflow text-center">{{ $equip->netbios }}</td>
-                      @if($equip->personne)
-                      <td class="text-overflow text-center">{{ $equip->personne->nom_prenom}}</td>
-                      <td class="text-overflow text-center">{{ $equip->personne->site }}</td>
-                      <td class="text-overflow text-center">{{ $equip->personne->region }}</td>
-                      <td class="text-overflow text-center">{{ $equip->personne->direction }}</td>
-                      @else
-                      <td class="text-overflow text-center"></td>
-                      <td class="text-overflow text-center"></td>
-                      <td class="text-overflow text-center"></td>
-                      <td class="text-overflow text-center"></td>
-                      @endif
-                      
+                    
+                    @if ($equip->type == 'accessoire')
+                    <td  class="text-overflow text-center">{{ $equip->categorie }}</td>
+                    <td  class="text-overflow text-center">{{ $equip->produit }}</td>
+                    <td  class="text-overflow text-center">{{ $equip->n_serie }}</td>
+                    <td  class="text-overflow text-center">{{ $equip->statut }}</td>
+                    @if($equip->personne)
+                    <td class="text-overflow text-center">{{ $equip->personne->nom_prenom}}</td>
+                    <td class="text-overflow text-center">{{ $equip->personne->site }}</td>
+                    <td class="text-overflow text-center">{{ $equip->personne->region }}</td>
+                    <td class="text-overflow text-center">{{ $equip->personne->direction }}</td>
+                    @else
+                    <td class="text-overflow text-center"></td>
+                    <td class="text-overflow text-center"></td>
+                    <td class="text-overflow text-center"></td>
+                    <td class="text-overflow text-center"></td>
+                    @endif
+                    
                     <td class="text-overflow">
                       <div class="text-center">
-                        <a href="#" class="delete text-success" data-toggle="modal" data-target="#consulter{{ $equip->id_equ}}">
+                        <a href="#" class="delete text-success" data-toggle="modal" data-target="#myModal{{ $equip->id_equ}}">
                             <i class="bi bi-arrow-90deg-right"></i>
                         </a>
                     </div>
                     
                     <!-- Modal Ajout-->
-                  <div class="modal fade" id="consulter{{ $equip->id_equ}}" tabindex="-1" aria-labelledby="consulterLabel" aria-hidden="true">
+                  <div class="modal fade" id="myModal{{ $equip->id_equ}}" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -381,17 +371,7 @@
               
                             </div>
               
-                            <div class="row mb-3">
-                              <label for="cracteristique_tech" class="col-sm-2 col-form-label">Caractéristique Tech</label>
-                            <div class="col-sm-4">
-                              <input type="text" id="cracteristique_tech" name="cracteristique_tech" class="form-control" value="{{ $equip->cracteristique_tech }}">
-                            </div>
-                            <label for="netbios" class="col-sm-2 col-form-label">Netbios</label>
-                            <div class="col-sm-4">
-                              <input type="text" id="netbios" name="netbios" class="form-control"  value="{{ $equip->netbios }}">
-                            </div>
-                              
-                            </div>
+                           
                             <div class="row mb-3">
                              
                               <label class="col-sm-2 col-form-label">Fournisseur</label>
@@ -551,14 +531,14 @@
                     </div>
                   </div>
                     </td>
+                    @endif
+                    @endforeach
                   </tr>
-                  @endif
-                  @endforeach
+                  
                   	
                  
                 </tbody>
               </table>
-            </div>
              <a href="formulaire"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
              
              
@@ -591,10 +571,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <!-- Template Main JS File -->
+  <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-  <script src="js/app.js"></script>
+
+
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
