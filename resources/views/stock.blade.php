@@ -438,11 +438,13 @@
                             <label for="date_affectation" class="col-sm-2 col-form-label">Date d'affectation</label>
                             <div class="col-sm-4">
                               @if ($equip->affectations->isNotEmpty())
-                              <input type="date" class="form-control" name="date_affectation" id="date_affectation" value="{{ $equip->affectations->first()->date_affectation }}">
-                          @else
-                              <input type="date" class="form-control" name="date_affectation" id="date_affectation" value="">
-                          @endif
-                           </div>
+                                  @foreach ($equip->affectations->where('id_equ', $equip->id_equ) as $affectation)
+                                      <input type="date" class="form-control" name="date_affectation" id="date_affectation" value="{{ $affectation->date_affectation }}">
+                                  @endforeach
+                              @else
+                                  <input type="date" class="form-control" name="date_affectation" id="date_affectation" value="">
+                              @endif
+                          </div>
                             <label for="region" class="col-sm-2 col-form-label">Région</label>
                             <div class="col-sm-4">
                               <input type="text" class="form-control" name="region" id="region" value="{{ $equip->personne->region ?? '' }}">

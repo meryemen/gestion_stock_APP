@@ -353,11 +353,18 @@ class StockController extends Controller
                 // Sauvegardez la personne
                 $personne->save();
                 
-                $affectation= new Affectation();
-                $affectation->date_affectation = $request->input('date_affectation');
-                $affectation->id_equ = $equip->id_equ;
-                $affectation->id_pers = $personne->id_pers;
-                $affectation->save();
+                $affectation = Affectation::where('id_equ', $equip->id_equ)->first();
+
+                if ($affectation) {
+                    $affectation->date_affectation = $request->input('date_affectation');
+                    $affectation->save();
+                } else {
+                    $newAffectation = new Affectation();
+                    $newAffectation->date_affectation = $request->input('date_affectation');
+                    $newAffectation->id_equ = $equip->id_equ;
+                    $newAffectation->id_pers = $personne->id_pers;
+                    $newAffectation->save();
+                }
 
                 $historique = new Historique();
                 $historique->modified_at = now();
@@ -382,11 +389,18 @@ class StockController extends Controller
                 
                 $equip->id_pers = $equip->personne->id_pers;
 
-                $affectation= new Affectation();
-                $affectation->date_affectation = $request->input('date_affectation');
-                $affectation->id_equ = $equip->id_equ;
-                $affectation->id_pers = $equip->personne->id_pers;
-                $affectation->save();
+                $affectation = Affectation::where('id_equ', $equip->id_equ)->first();
+
+                if ($affectation) {
+                    $affectation->date_affectation = $request->input('date_affectation');
+                    $affectation->save();
+                } else {
+                    $newAffectation = new Affectation();
+                    $newAffectation->date_affectation = $request->input('date_affectation');
+                    $newAffectation->id_equ = $equip->id_equ;
+                    $newAffectation->id_pers = $equip->personne->id_pers;
+                    $newAffectation->save();
+                }
 
 
                 $historique = new Historique();

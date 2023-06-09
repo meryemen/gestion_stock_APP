@@ -255,7 +255,7 @@
                   <h5 class="card-title">Profile </h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label ">Nom Complet :</div>
+                    <div class="col-lg-3 col-md-4 label "> Nom Complet :</div>
                     <div class="col-lg-9 col-md-8">{{ $data->nom }} {{ $data->prenom }}</div>
                   </div>
 
@@ -321,28 +321,28 @@
                     <div class="row mb-3">
                       <label for="fonction" class="col-md-4 col-lg-3 col-form-label">Fonction :</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fonction" type="text" class="form-control" required id="fonction" value="{{ $data->fonction }}">
+                        <input name="fonction" type="text" class="form-control" required id="fonction" value="{{ $data->Fonction }}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="site" class="col-md-4 col-lg-3 col-form-label">Site</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="site" type="text" class="form-control" required id="site" value="{{ $data->site }}">
+                        <input name="site" type="text" class="form-control" required id="site" value="{{ $data->Site }}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="region" class="col-md-4 col-lg-3 col-form-label">Region :</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="region" type="text" class="form-control" required id="region" value="{{ $data->region }}">
+                        <input name="region" type="text" class="form-control" required id="region" value="{{ $data->Region }}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="direction" class="col-md-4 col-lg-3 col-form-label">Direction</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="direction" type="text" class="form-control" required id="direction" value="{{ $data->direction }}">
+                        <input name="direction" type="text" class="form-control" required id="direction" value="{{ $data->Direction }}">
                       </div>
                     </div>
 
@@ -383,7 +383,7 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" class="btn btn-primary">Confirmer</button>
                     </div>
                   </form><!-- End Change Password Form -->
                
