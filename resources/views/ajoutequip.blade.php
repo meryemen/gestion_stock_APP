@@ -444,7 +444,8 @@
                   direction.required = true;
                   site.disabled = false;
                   site.required = true;
-                } else {
+                } 
+                else {
                   username.disabled = true;
                   username.required = false;
                   nom_prenom.disabled = true;

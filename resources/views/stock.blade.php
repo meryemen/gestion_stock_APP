@@ -226,13 +226,19 @@
                 <h5 class="card-title" style="margin-right: auto;">Materiels</h5>
                 @if ($data->manageStock)
                 <form id="importForm" action="{{ route('importmateriel') }}" method="POST" enctype="multipart/form-data" style="margin-bottom: 0;">
-                    @csrf
-                    <input type="file" name="file" id="fileInput" style="display: none;">
-                    <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
-                        <i class="ri-file-excel-2-fill"></i> <span>Importer</span>
-                    </label>
-                    <button type="submit" style="display: none;">Importer</button>
-                </form>
+                  @csrf
+                  <input type="file" name="file" id="fileInput" style="display: none;">
+                  <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
+                      <i class="ri-file-excel-2-fill"></i> <span>Importer</span>
+                  </label>
+                  <button type="submit" style="display: none;">Importer</button>
+              </form>
+              
+              <script>
+                  document.getElementById('fileInput').addEventListener('change', function() {
+                      document.getElementById('importForm').submit();
+                  });
+              </script>
             
                 <a href="{{ route('exportmateriel') }}" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
                     <i class="ri-file-excel-2-fill"></i> <span>Exporter</span>

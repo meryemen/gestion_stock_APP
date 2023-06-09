@@ -72,6 +72,7 @@ Route::get('/exportmateriel', [ExportController::class, 'exportmateriel'])->name
 Route::get('/exportaccessoire', [ExportController::class, 'exportaccessoire'])->name('exportaccessoire')->middleware('isLoggedIn');
 
 Route::post('/importmateriel', [ExportController::class, 'importmateriel'])->name('importmateriel')->middleware('isLoggedIn');
+Route::post('/importaccessoire', [ExportController::class, 'importaccessoire'])->name('importaccessoire')->middleware('isLoggedIn');
 
 
 Route::get('/reset-password',[CustomAuthController::class, 'resetPage'])->name('reset-password');

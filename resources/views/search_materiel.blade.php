@@ -39,7 +39,7 @@
 
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="GET" action="{{ url('/search-materiel') }}">
-        <input type="text" id="materiel_search" name="materiel_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);" value="{{  $get_id }}">
+        <input type="text" id="materiel_search" name="materiel_search" placeholder="Enter un mot clé" title="Enter search keyword" style="border: 2px solid rgb(255, 255, 255);" value="{{ $get_id }}">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div><!-- End Search Bar -->
@@ -219,24 +219,33 @@
           <div class="card ">
             <div class="card-body">
              <div >
+              
+                
+              
               <div style="display: flex; align-items: center;">
                 <h5 class="card-title" style="margin-right: auto;">Materiels</h5>
-            
+                @if ($data->manageStock)
                 <form id="importForm" action="{{ route('importmateriel') }}" method="POST" enctype="multipart/form-data" style="margin-bottom: 0;">
-                    @csrf
-                    <input type="file" name="file" id="fileInput" style="display: none;">
-                    <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
-                        <i class="ri-file-excel-2-fill"></i> <span>Importer</span>
-                    </label>
-                    <button type="submit" style="display: none;">Importer</button>
-                </form>
+                  @csrf
+                  <input type="file" name="file" id="fileInput" style="display: none;">
+                  <label for="fileInput" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
+                      <i class="ri-file-excel-2-fill"></i> <span>Importer</span>
+                  </label>
+                  <button type="submit" style="display: none;">Importer</button>
+              </form>
+              
+              <script>
+                  document.getElementById('fileInput').addEventListener('change', function() {
+                      document.getElementById('importForm').submit();
+                  });
+              </script>
             
                 <a href="{{ route('exportmateriel') }}" class="btn btn-outline-success btn-sm" style="margin-top: 0; margin-left: 10px;">
                     <i class="ri-file-excel-2-fill"></i> <span>Exporter</span>
                 </a>
             </div>
             
-              
+            @endif 
 					
              
 
@@ -256,7 +265,9 @@
                     <th class="text-success text-center">Site</th>
                     <th class="text-success text-center">Région</th>
                     <th class="text-success text-center">Direction</th>
+                    @if ($data->manageStock)
                     <th class="text-success text-center">Action</th>
+                    @endif
                   </tr>
                 </thead>
                 <tbody>
@@ -282,8 +293,9 @@
                       <td class="text-overflow text-center"></td>
                       <td class="text-overflow text-center"></td>
                       @endif
-                      
+                      @if ($data->manageStock)
                     <td class="text-overflow">
+                      
                       <div class="text-center">
                         <a href="#" class="delete text-success" data-toggle="modal" data-target="#consulter{{ $equip->id_equ}}">
                             <i class="bi bi-arrow-90deg-right"></i>
@@ -551,6 +563,7 @@
                     </div>
                   </div>
                     </td>
+                    @endif
                   </tr>
                   @endif
                   @endforeach
@@ -559,8 +572,9 @@
                 </tbody>
               </table>
             </div>
+            @if ($data->manageStock)
              <a href="formulaire"><button class="btn btn-outline-primary btn-sm "  style="display: inline-block; float:right; margin-top:10px; padding:6px" ><i class="bi bi-plus"></i> Ajouter un equipement</button></a> 
-             
+            @endif
              
             
 

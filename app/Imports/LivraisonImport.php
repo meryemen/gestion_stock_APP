@@ -6,39 +6,25 @@ use App\Models\Bon_commande;
 use App\Models\Bon_livraison;
 use App\Models\Fournisseur;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class LivraisonImport implements ToModel
+class LivraisonImport implements ToModel, WithHeadingRow
 {
-    private $interface;
-
-    public function __construct($interface)
-    {
-        $this->interface = $interface;
-    }
+  
     public function model(array $row)
     {
-        if (($this->interface === 'materiel')) {
-        $fournisseur = Fournisseur::where('nom_four', $row['Fournisseur'])->first();
-        $commande = Bon_commande::where('id_com', $row['Bon de commande'])->first();
+       
+        $fournisseur = Fournisseur::where('nom_four', $row['fournisseur'])->first();
+        $commande = Bon_commande::where('id_com', $row['bon_de_commande'])->first();
 
         return new Bon_livraison([
-            'id_livre' => $row['Bon de livraison'] ,
-            'date_livre' => $row['date de livraison'] ,
-            'qt_livre' => $row['Quantité livré'] ,
+            'id_livre' => $row['bon_de_livraison'] ,
+            'date_livre' => $row['date_de_livraison'] ,
+            'qt_livre' => str_replace('e', 'é', $row['quantite_livre']),
             'id_fourni' =>  $fournisseur ? $fournisseur->id_fourni : null,
             'id_com' => $commande ? $commande->id_com : null,
         ]);
-    }else{
-        $fournisseur = Fournisseur::where('nom_four', $row['Fournisseur'])->first();
-        $commande = Bon_commande::where('id_com', $row['Bon de commande'])->first();
-
-        return new Bon_livraison([
-            'id_livre' => $row['Bon de livraison'] ,
-            'date_livre' => $row['date de livraison'] ,
-            'qt_livre' => $row['Quantité livré'] ,
-            'id_fourni' =>  $fournisseur ? $fournisseur->id_fourni : null,
-            'id_com' => $commande ? $commande->id_com : null,
-        ]);
-    }
+  
  }
+ 
 }

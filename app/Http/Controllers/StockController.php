@@ -127,7 +127,7 @@ class StockController extends Controller
 
 
       if ($statut == 'In Use' || $statut == 'In Maintenace' ||$statut == 'Pending Install'|| $statut == 'Retirement'||$statut == 'Stolen' ||$statut == 'Don' ) {
-        $personneExistante = Personne::where('username', $username)->first();
+        $personneExistante = Personne::where('nom_prenom', $nomPrenom)->first();
         $fourni = Fournisseur::where('nom_four', $fournisseur)->first();
     
         if ($personneExistante) {
@@ -339,16 +339,17 @@ class StockController extends Controller
 
 
         if($request->input('statut') != "In Stock / Site" && $request->input('statut') != "In Stock / Munisys" && $request->input('statut') != "In Stock / Louis Rey") {
+            $username = $request->input('username');
+            $existingPersonne = Personne::where('username', $username)->first();
 
-            if (!$equip->personne) {
-                // Si la personne n'existe pas, créez une nouvelle instance de Personne
+            if (!$existingPersonne) {
                 $personne = new Personne();
                 // Définissez les propriétés de la personne à partir des données du formulaire
                 $personne->nom_prenom = $request->input('nom_prenom');
                 $personne->site = $request->input('site');
                 $personne->region = $request->input('region');
                 $personne->direction = $request->input('direction');
-                $personne->username = $request->input('username');
+                $personne->username = $username;
                 // Sauvegardez la personne
                 $personne->save();
                 
@@ -371,11 +372,13 @@ class StockController extends Controller
                 $equip->personne()->associate($personne);
             } else {
                 // Si la personne existe déjà, mettez simplement à jour ses propriétés
-                $equip->personne->nom_prenom = $request->input('nom_prenom');
-                $equip->personne->site = $request->input('site');
-                $equip->personne->region = $request->input('region');
-                $equip->personne->direction = $request->input('direction');
-                $equip->personne->username = $request->input('username');
+                $existingPersonne->nom_prenom = $request->input('nom_prenom');
+                $existingPersonne->site = $request->input('site');
+                $existingPersonne->region = $request->input('region');
+                $existingPersonne->direction = $request->input('direction');
+                $existingPersonne->username = $username;
+            
+                $equip->personne()->associate($existingPersonne);
                 
                 $equip->id_pers = $equip->personne->id_pers;
 
