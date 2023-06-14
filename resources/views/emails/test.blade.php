@@ -13,6 +13,6 @@
        <strong> Mot de passe : {{ $data['password'] }}</strong>  <br>
     </p>
    
-    <img src="unnamed.png" >
+  
 </body>
 </html>
